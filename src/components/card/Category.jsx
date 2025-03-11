@@ -1,28 +1,25 @@
 import React from 'react'
-import Home_1 from '../../assets/Home_1.png'
+import Home_1 from '@assets/Home_1.png'
 import {
     Card,
     CardContent,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 
 const Category = ({ title }) => {
     return (
-        <Card className={'w-[250px] '}>
-            <div >
-                <img src={Home_1} alt="banner" />
-            </div>
-            <CardHeader>
-                <CardTitle>{title}</CardTitle>
+        <Card className='w-[300px] hover:opacity-90 rounded-xl pt-0 bg-[#2B2B2B] border-none text-white'>
+            <CardHeader className='px-0'>
+                <img 
+                    src={Home_1} 
+                    alt={title} 
+                    className='w-full h-[200px] rounded-t-xl aspect-square object-cover' 
+                />
             </CardHeader>
             <CardContent>
-                <p>Card Content</p>
+                <CardTitle className='text-center'>{title}</CardTitle>
             </CardContent>
-            <CardFooter>
-                <p>Card Footer</p>
-            </CardFooter>
         </Card>
     )
 }

@@ -6,7 +6,7 @@ const Nav = () => {
     ]
 
     return (
-        <nav className='flex justify-between items-center text-white border-b-1 border-gray-500 py-3 px-5 fixed top-0 w-full bg-[#060606]'>
+        <nav className='flex justify-between items-center text-white border-b-1 border-gray-500 py-3 px-5 fixed z-10 top-0 w-full bg-[#060606]'>
             <a href="#" className="text-xl font-bold">PhotoTrade</a>
 
             <ul className='flex space-x-5'>

@@ -4,7 +4,7 @@ import Home_2 from '@assets/Home_2.png'
 import Home_3 from '@assets/Home_3.png'
 import Ellipse from '@assets/Ellipse.png'
 
-const Collection = () => {
+const collection = () => {
   return (
     <div>
         <div className='grid grid-cols-3 max-w-sm place-items-center gap-3'>
@@ -36,4 +36,4 @@ const Collection = () => {
     </div>
   )
 }
-export default Collection
+export default collection

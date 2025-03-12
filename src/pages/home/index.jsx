@@ -4,8 +4,9 @@ import Collection from '@components/card/Collection'
 import Footer from '@components/footer/footer'
 import Hero from '@layouts/Hero'
 import Rank from './Rank'
-import MainContent from './MainContent'
-import AllCategory from './AllCategory'
+import MainContent from './ContentMain'
+import AllCategory from './CategoryList'
+import { ContentSubTop, ContentSubBelow } from './ContentSub'
 
 const Index = () => {
   return (
@@ -39,8 +40,10 @@ const Index = () => {
         <AllCategory />
       </Hero>
 
+      <ContentSubTop />
+      <ContentSubBelow />
+      
       <Footer />
-
     </div>
   )
 }

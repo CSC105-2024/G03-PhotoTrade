@@ -9,7 +9,7 @@ import {
 
 const Category = ({ title }) => {
     return (
-        <Card className='w-[300px] hover:opacity-90 rounded-xl pt-0 bg-[#2B2B2B] border-none text-white'>
+        <Card className='w-[250px] hover:opacity-90 rounded-xl pt-0 bg-[#2B2B2B] border-none text-white'>
             <CardHeader className='px-0'>
                 <img 
                     src={Home_1} 

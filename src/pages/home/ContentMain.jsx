@@ -7,7 +7,7 @@ import Home_4 from '@assets/Home_4.png'
 import Home_5 from '@assets/Home_5.png'
 import Home_6 from '@assets/Home_6.png'
 
-const MainContent = () => {
+const ContentMain = () => {
     const pic = [
         Home_1,
         Home_2,
@@ -44,4 +44,4 @@ const MainContent = () => {
     )
 }
 
-export default MainContent
+export default ContentMain

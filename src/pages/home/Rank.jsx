@@ -1,4 +1,6 @@
 import React from 'react'
+import { userRank } from '../../constants'
+import MainLayout from '@layouts/MainLayouts'
 import {
     Table,
     TableBody,
@@ -9,63 +11,14 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-const Rank = () => {
-    const userRank = [
-        {
-            id: '1',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '2',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '3',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '4',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '5',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '6',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '7',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '8',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '9',
-            name: 'Mrnatural',
-            image: '10',
-        },
-        {
-            id: '10',
-            name: 'Mrnatural',
-            image: '10',
-        },
-    ]
 
+const Rank = () => {
     return (
-        <div className='mt-20'>
-            <Table className='mt-10 max-w-2xl mx-auto'>
+        <MainLayout 
+            title={'Top 10 Image Creators'}
+            description={'Discover the Most Popular Photographers and Artists on Our Platform'} 
+        >
+            <Table className='mt-10 max-w-2xl mx-auto text-white'>
                 <TableCaption>A list of Image Creater.</TableCaption>
                 <TableHeader>
                     <TableRow>
@@ -84,7 +37,7 @@ const Rank = () => {
                     ))}
                 </TableBody>
             </Table>
-        </div>
+        </MainLayout>
     )
 }
 

@@ -4,7 +4,7 @@ import Home_2 from '@assets/Home_2.png'
 import Home_3 from '@assets/Home_3.png'
 import Ellipse from '@assets/Ellipse.png'
 
-const collection = () => {
+const Collection = () => {
   return (
     <div>
         <div className='grid grid-cols-3 max-w-sm place-items-center gap-3'>
@@ -25,10 +25,10 @@ const collection = () => {
             </div>
         </div>
 
-        <div className='mt-10'>
+        <div className='mt-5 md:mt-10 text-white'>
             <span className='text-xl text-bold'>Sunset</span>
 
-            <div className='flex items-center mt-3'>
+            <div className='flex items-center my-5'>
                 <img src={Ellipse} alt="profile" />
                 <span className='ml-3'>YummyGuy</span>
             </div>
@@ -36,4 +36,4 @@ const collection = () => {
     </div>
   )
 }
-export default collection
+export default Collection

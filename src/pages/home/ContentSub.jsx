@@ -22,7 +22,7 @@ const ContentSection = ({ reverse = false }) => {
                 </p>
 
                 <div className='text-white mt-7'>
-                    <a href="#">Join Now →</a>
+                    {(reverse)? '': <a href="#">Join Now →</a>}
                 </div>
             </div>
 

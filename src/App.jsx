@@ -1,26 +1,18 @@
-import styles from "./style"
-import Navbar from "@components/nav/Navbar"
-import { Hero,  CategoryList, CollectionList, Rank, Footer } from '@pages/home'
+import { Hero, CategoryList, CollectionList, Rank, Footer, Navbar, Feature1, Feature2 } from '@pages/home'
 
 const App = () => (
-  <div className="bg-[#060606] w-full overflow-hidden">
-    <div className={`${styles.paddingX} ${styles.flexCenter}`}>
-      <div className={`${styles.boxWidth}`}>
-        <Navbar />
-      </div>
+  <>
+    <Navbar />
+    <div className="max-w-7xl mx-auto pt-20 px-10">
+      <Hero />
+      <CollectionList />
+      <Rank />
+      <CategoryList />
+      <Feature1 />
+      <Feature2 />
     </div>
-
-    <div className={`bg-[#060606] ${styles.flexCenter} ${styles.paddingX}`}>
-      <div className={`${styles.boxWidth}`}>
-        <Hero />
-        <CollectionList />
-        <Rank />
-        <CategoryList />
-      </div>
-    </div>
-    
     <Footer />
-  </div>
+  </>
 )
 
 export default App

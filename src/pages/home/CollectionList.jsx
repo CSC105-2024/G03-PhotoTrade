@@ -1,5 +1,5 @@
 import Collection from "@components/card/Collection"
-import MainLayout from "@layouts/MainLayouts"
+import MainLayout from "@layouts/MainLayout"
 
 const CollectionList = () => {
   return (
@@ -7,11 +7,13 @@ const CollectionList = () => {
         title={'Trending Collection'}  
         description={'Checkout Our Weekly Trending Collection On Our Platform'
         }>
-        <div className="grid grid-cols-1 md:grid-cols-3">
-            <Collection />
-            <Collection />
-            <Collection />
-        </div>
+        <div className="flex justify-center mt-10 md:justify-between"> 
+            <div className="grid grid-cols-1 md:grid-rows-auto md:grid-cols-3 md:gap-5">
+                <Collection />
+                <Collection />
+                <Collection />
+            </div>
+        </div>    
     </MainLayout>
   )
 }

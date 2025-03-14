@@ -1,14 +1,13 @@
-import React from 'react'
-import styles from '../style'
+import styles from "../style"
 
 const MainLayout = ({ title, description, children }) => {
     return (
-        <section>
-            <div className='text-white'>
+        <section className={`${styles.marginY}`}>
+            <div>
                 <h1 className='text-4xl font-bold'>{title}</h1>
-                <p className='mt-2 text-base'>{description}</p>
+                <p className='mt-2 text-neutral-500'>{description}</p>
             </div>
-            <div className={`${styles.flexCenter}`}>
+            <div>
                 {children}
             </div>
         </section>

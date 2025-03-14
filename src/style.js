@@ -12,9 +12,10 @@ const styles = {
     padding: "sm:px-16 px-6 sm:py-12 py-4",
 
     marginX: "sm:mx-16 mx-6",
-    marginY: "sm:my-16 my-6",
+    marginY: "sm:my-25 my-20",
 
-    underEffect: 'relative after:bg-[#A259FF] after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 after:rounded-sm hover:after:w-full after:transition-all after:duration-300'
+    underEffect: 'relative after:bg-[#A259FF] after:absolute after:h-1 after:w-0 after:bottom-0 after:left-0 after:rounded-sm hover:after:w-full after:transition-all after:duration-300',
+    bgCustom: 'bg-gradient-to-r from-purple-500 to-purple-900'
 };
 
 export const layout = {

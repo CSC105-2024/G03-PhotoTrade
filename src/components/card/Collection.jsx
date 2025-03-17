@@ -1,8 +1,8 @@
 import React from 'react'
-import Home_1 from '@assets/Home_1.png'
-import Home_2 from '@assets/Home_2.png'
-import Home_3 from '@assets/Home_3.png'
-import Ellipse from '@assets/Ellipse.png'
+import Home_1 from '@/assets/Home_1.png'
+import Home_2 from '@/assets/Home_2.png'
+import Home_3 from '@/assets/Home_3.png'
+import Ellipse from '@/assets/Ellipse.png'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import styles from '../../style'
 

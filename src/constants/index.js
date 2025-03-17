@@ -1,3 +1,5 @@
+import Ellipse from '@/assets/Ellipse.png'
+
 export const navLinks = [
     {
         id: 'home',
@@ -100,3 +102,11 @@ export const userRank = [
         image: '10',
     },
 ]
+
+export const user = {
+    name: 'shadcn',
+    email: 'm@example.com',
+    avatar: Ellipse
+}
+
+

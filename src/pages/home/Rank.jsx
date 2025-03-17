@@ -1,6 +1,6 @@
 import React from 'react'
-import { userRank } from '../../constants'
-import MainLayout from '@layouts/MainLayout'
+import { userRank } from '@/constants'
+import MainLayout from '@/layouts/main-layout'
 import {
     Table,
     TableBody,

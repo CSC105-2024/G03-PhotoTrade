@@ -1,6 +1,6 @@
 import React from 'react'
-import Category from '@components/card/Category'
-import { categories } from '../../constants'
+import Category from '@/components/card/category'
+import { categories } from '@/constants'
 import {
   Carousel,
   CarouselContent,
@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import MainLayout from '@layouts/MainLayout'
+import MainLayout from '@/layouts/main-layout'
 
 const CategoryList = () => {
   return (
@@ -19,7 +19,7 @@ const CategoryList = () => {
           opts={{ 
             align: "start" 
           }} 
-          className='w-full max-w-md md:max-w-4xl sm:my-16 my-16'>
+          className='w-full max-w-xs md:max-w-xl lg:max-w-4xl mt-16 mx-auto'>
           <CarouselContent>
             {categories.map((category) => (
               <CarouselItem key={category.id} className='flex justify-center md:basis-1/2 lg:basis-1/3'>
@@ -30,8 +30,8 @@ const CategoryList = () => {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious  className='left-[-50px]'/>
+          <CarouselNext className='right-[-50px] ' />
         </Carousel>
       </div>
     </MainLayout>

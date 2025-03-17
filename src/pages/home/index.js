@@ -1,11 +1,10 @@
-import Hero from './Hero'
-import CategoryList from './CategoryList'
-import CollectionList from './CollectionList'
+import Hero from './hero'
+import CategoryList from './category-list'
+import CollectionList from './collection-list'
 import Rank from './Rank'
-import Footer from '@components/footer/footer'
-import Navbar from '@components/nav/Navbar'
-import Feature1 from './Feature1'
-import Feature2 from './Feature2'
+import Footer from '@/components/footer/footer'
+import Feature1 from './feature-1'
+import Feature2 from './feature-2'
 
 export {
   Hero,
@@ -13,7 +12,6 @@ export {
   CollectionList,
   Rank,
   Footer,
-  Navbar,
   Feature1,
   Feature2
 }

@@ -1,6 +1,6 @@
 import React from 'react'
-import Protect from '@assets/Protect.png'
-import styles from '../../style'
+import Protect from '@/assets/Protect.png'
+import styles from '@/style'
 
 const Feature2 = () => {
     return (
@@ -13,7 +13,7 @@ const Feature2 = () => {
                 />
             </div>
 
-            <div>
+            <div className='text-center md:text-left'>
                 <h1 className='text-4xl font-bold tracking-wide'>
                     Protect Your Images with Watermark Security
                 </h1>

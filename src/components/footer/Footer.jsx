@@ -3,7 +3,7 @@ import styles from '../../style'
 
 const Footer = () => {
     return (
-        <footer className={`footer footer-horizontal footer-center ${styles.bgCustom} text-white p-10`}>
+        <footer className={`footer footer-horizontal footer-center ${styles.bgCustom} text-white p-10 mt-5`}>
             <nav className="grid grid-flow-col gap-4">
                 <a className="link link-hover">Home</a>
                 <a className="link link-hover">Marketplace</a>

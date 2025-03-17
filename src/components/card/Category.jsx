@@ -1,5 +1,5 @@
 import React from 'react'
-import Home_1 from '@assets/Home_1.png'
+import Home_1 from '@/assets/Home_1.png'
 import {
     Card,
     CardContent,

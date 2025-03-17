@@ -1,13 +1,13 @@
-import { navLinks } from "@constants"
+import { navLinks } from "@/constants"
 import { useState } from "react"
-import styles from "../../style"
+import styles from "@/style"
 
 const Navbar = () => {
     const [active, setActive] = useState('Home')
 
     return (
-        <nav className='sticky top-0 z-10 backdrop-blur-lg py-3 border-b border-neutral-700/80'>
-            <div className="container px-4 mx-auto relative md:text-sm">
+        <nav>
+            <div className="container relative md:text-sm mx-auto">
                 <div className="flex justify-between items-center">
                     <a href="#" className="text-xl font-bold">PhotoTrade</a>
 

@@ -3,25 +3,31 @@ import {
     CategoryList,
     CollectionList,
     Rank,
-    Footer,
     Feature1,
-    Feature2
+    Feature2,
 } from '@/pages/home'
-import MenuLayout from '@/layouts/menu-layout'
+import { Route, Routes } from 'react-router-dom'
+import Layout from '@/components/layout'
+import LoginPage from './login/login'
 
 const App = () => (
-    <>
-        <MenuLayout />
-        <div className="max-w-7xl mx-auto md:pt-0 px-10 pt-20">
-            <Hero />
-            <CollectionList />
-            <Rank />
-            <CategoryList />
-            <Feature1 />
-            <Feature2 />
-        </div>
-        <Footer />
-    </>
+
+    <Routes>
+        <Route path='/' element={<Layout />}>
+            <Route index element={
+                <div>
+                    <Hero />
+                    <CategoryList />
+                    <Rank />
+                    <CollectionList />
+                    <Feature1 />
+                    <Feature2 />
+                </div>
+            } />
+            <Route path='/login' element={<LoginPage />} />
+        </Route>
+    </Routes>
+
 )
 
 export default App

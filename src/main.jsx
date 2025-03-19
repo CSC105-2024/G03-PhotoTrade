@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import routes from "~react-pages"
 import {BrowserRouter, useRoutes} from 'react-router-dom'
-//import App from './App.jsx'
 
 const App = () => {
   return useRoutes(routes);

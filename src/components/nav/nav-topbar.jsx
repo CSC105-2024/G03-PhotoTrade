@@ -1,6 +1,7 @@
 import { navLinks } from "@/constants"
 import { useState } from "react"
 import styles from "@/style"
+import { Link, NavLink } from "react-router-dom"
 
 const Navbar = () => {
     const [active, setActive] = useState('Home')
@@ -15,21 +16,26 @@ const Navbar = () => {
                         {navLinks.map((item) => (
                             <li
                                 key={item.id}
-                                className={`cursor-pointe ${styles.underEffect} ${
-                                    active === item.title ? 'text-white' : 'text-gray-300'}`
+                                className={`cursor-pointe ${styles.underEffect} ${active === item.title ? 'text-white' : 'text-gray-300'}`
                                 }
                                 onClick={() => setActive(item.title)}
                             >
-                                <a href='#'>{item.title}</a>
+                                <NavLink to={`/${item.id}`}>
+                                    {item.title}
+                                </NavLink>
                             </li>
                         ))}
                     </ul>
 
-                    <div className='hidden md:flex justify-center space-x-12 items-center'>
-                        <a href="#" className={`${styles.bgCustom} py-2 px-3 rounded-md`}>
+                    <Link
+                        to="/login/login"
+                        className='hidden md:flex justify-center space-x-12 items-center'
+                    >
+                        <div className={`${styles.bgCustom} py-2 px-3 rounded-md`}>
+
                             Sign In
-                        </a>
-                    </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </nav>

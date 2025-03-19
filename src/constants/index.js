@@ -10,7 +10,7 @@ export const navLinks = [
         title: 'Market'
     },
     {
-        id: 'contact',
+        id: 'footer',
         title: 'Contact'
     }
 ]

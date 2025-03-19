@@ -2,7 +2,6 @@ import Hero from './hero'
 import CategoryList from './category-list'
 import CollectionList from './collection-list'
 import Rank from './rank'
-import Footer from '@/components/footer/footer'
 import Feature1 from './feature-1'
 import Feature2 from './feature-2'
 
@@ -11,8 +10,7 @@ export {
   CategoryList,
   CollectionList,
   Rank,
-  Footer,
   Feature1,
-  Feature2
+  Feature2,
 }
 

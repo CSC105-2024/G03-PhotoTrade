@@ -7,7 +7,7 @@ const Header = () => {
         <header className="fixed w-full top-0 z-10 backdrop-blur-lg py-3 border-b border-neutral-700/80">
             <div className="flex md:block justify-between px-4">
                 <Navbar />
-                <SidebarTrigger className="flex md:hidden" />
+                <SidebarTrigger className="flex md:hidden cursor-pointer" />
             </div>
         </header>
     )

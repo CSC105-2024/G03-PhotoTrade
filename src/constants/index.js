@@ -2,7 +2,7 @@ import Ellipse from '@/assets/Ellipse.png'
 
 export const navLinks = [
     {
-        id: 'home',
+        id: '',
         title: 'Home'
     },
     {

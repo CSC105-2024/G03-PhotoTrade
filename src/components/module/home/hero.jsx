@@ -1,6 +1,6 @@
 import React from "react"
 import { Button } from "@/components/ui/button"
-import styles from "../../style"
+import styles from "../../../style"
 import Home_1 from "@/assets/Home_1.png"
 import Home_2 from "@/assets/Home_2.png"
 import Home_3 from "@/assets/Home_3.png"

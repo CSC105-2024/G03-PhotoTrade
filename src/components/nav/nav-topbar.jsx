@@ -1,17 +1,29 @@
 import { navLinks } from "@/constants"
 import { useState } from "react"
 import styles from "@/style"
-import { Link, NavLink } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
     const [active, setActive] = useState('Home')
+    const navigate = useNavigate();
 
     return (
         <nav>
             <div className="container relative md:text-sm mx-auto">
                 <div className="flex justify-between items-center">
-                    <a href="#" className="text-xl font-bold">PhotoTrade</a>
 
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <Link
+                            to="/"
+                            className="text-xl font-bold"
+                        >
+                            PhotoTrade
+                        </Link>
+                    </motion.div>
                     <ul className='space-x-6 sm:flex hidden'>
                         {navLinks.map((item) => (
                             <li
@@ -20,22 +32,19 @@ const Navbar = () => {
                                 }
                                 onClick={() => setActive(item.title)}
                             >
-                                <NavLink to={`/${item.id}`}>
+                                <Link to={`/${item.id}`}>
                                     {item.title}
-                                </NavLink>
+                                </Link>
                             </li>
                         ))}
                     </ul>
 
-                    <Link
-                        to="/login/login"
-                        className='hidden md:flex justify-center space-x-12 items-center'
+                    <button
+                        className={`${styles.bgCustom} py-2 px-3 rounded-md hidden md:flex justify-center space-x-12 items-center cursor-pointer hover:opacity-90`}
+                        onClick={() => navigate("/login")}
                     >
-                        <div className={`${styles.bgCustom} py-2 px-3 rounded-md`}>
-
-                            Sign In
-                        </div>
-                    </Link>
+                        Sign In
+                    </button>
                 </div>
             </div>
         </nav>

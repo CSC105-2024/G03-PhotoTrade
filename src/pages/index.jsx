@@ -5,29 +5,18 @@ import {
     Rank,
     Feature1,
     Feature2,
-} from '@/pages/home'
-import { Route, Routes } from 'react-router-dom'
-import Layout from '@/components/layout'
-import LoginPage from './login/login'
+} from '@/components/module/home'
+import Layout from '@/layouts/root-layout'
 
 const App = () => (
-
-    <Routes>
-        <Route path='/' element={<Layout />}>
-            <Route index element={
-                <div>
-                    <Hero />
-                    <CategoryList />
-                    <Rank />
-                    <CollectionList />
-                    <Feature1 />
-                    <Feature2 />
-                </div>
-            } />
-            <Route path='/login' element={<LoginPage />} />
-        </Route>
-    </Routes>
-
+    <Layout>
+        <Hero />
+        <CollectionList />
+        <Rank />
+        <CategoryList />
+        <Feature1 />
+        <Feature2 />
+    </Layout>
 )
 
 export default App

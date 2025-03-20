@@ -1,8 +1,9 @@
 import React from 'react'
+import { Header } from '@/components/module/market'
 
 const Market = () => {
   return (
-    <div>Market</div>
+    <Header />
   )
 }
 

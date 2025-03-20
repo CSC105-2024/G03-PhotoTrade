@@ -4,7 +4,7 @@ import Header from "@/components/nav/header"
 
 const MenuLayout = () => {
     return (
-        <SidebarProvider >
+        <SidebarProvider defaultOpen={false}>
             <main className="w-full">
                 <Header />
             </main>

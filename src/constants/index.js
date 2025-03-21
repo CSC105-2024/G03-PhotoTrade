@@ -2,7 +2,7 @@ import Ellipse from '@/assets/Ellipse.png'
 
 export const navLinks = [
     {
-        id: 'home',
+        id: '',
         title: 'Home'
     },
     {
@@ -10,7 +10,7 @@ export const navLinks = [
         title: 'Market'
     },
     {
-        id: 'contact',
+        id: 'footer',
         title: 'Contact'
     }
 ]

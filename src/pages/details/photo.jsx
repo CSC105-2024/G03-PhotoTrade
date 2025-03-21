@@ -1,37 +1,40 @@
 import React from "react";
 import detail from "@/assets/detail.png";
-import Heart from "@/assets/Heart.png";
 import Ellipse from "@/assets/Ellipse.png";
+import Imageja from "./changeimage";
 
 const Photo = () => {
   return (
-    <div className="bg-black w-auto h-auto pb-10 relative">
-      <img src={detail} className="w-full h-100 object-fit"></img>
+    <div className="bg-black w-screen h-auto xl:h-screen pb-10 relative">
+      <img src={detail} className="w-full object-fit lg:h-100"></img>
 
-      <div className="ml-[170px] mt-[77px]">
-        <div className="mb-[59px] relative">
-          <p className="text-5xl mb-[10px] font-bold text-white">
-            Sunset in Thailand
-          </p>
-          <p className="text-base text-gray-400">Minted on Sep 30, 2022</p>
-        
-          <div className="absolute top-0 right-[170px] flex items-center">
-            <img src={Heart} className="w-[24px] h-[24px]"></img>
-            <p className="text-[24px] ml-[8px] text-white">258</p>
+      <div className="lg:ml-[170px] lg:mr-[170px] mt-[77px] ml-[20px] mr-[40px]">
+        <div className="mb-[20px] flex justify-between">
+          <div>
+            <p className="text-3xl  font-bold text-white">Sunset in Thailand</p>
+            <p className="text-gray-400">Minted on Sep 30, 2022</p>
+          </div>
+          <div className="hidden sm:block">
+            <Imageja />
           </div>
         </div>
 
-        <div className="mb-[38px]">
-          <p className="font-bold text-[24px] text-white">Created By</p>
-          <div className="flex">
-            <img src={Ellipse} className="mt-[7px] w-[40px] h-[40px]"></img>
-            <p className="ml-[8px] mt-[14px] text-white">Mrnatural</p>
+        <div className="mb-[38px] flex justify-between">
+          <div className="">
+            <p className="font-bold text-2xl text-white">Created By</p>
+            <div className="flex">
+              <img src={Ellipse} className="mt-[7px] w-[40px] h-[40px]"></img>
+              <p className="ml-[8px] mt-[14px] text-white">Mrnatural</p>
+            </div>
+          </div>
+          <div className="lg:hidden block">
+            <Imageja />
           </div>
         </div>
 
         <div className="mb-[13px]">
-          <p className="font-bold text-[24px] text-white">Description</p>
-          <p className="text-[16px] text-gray-400 container h-auto w-[590px]">
+          <h2 className="font-bold text-2xl text-white">Description</h2>
+          <p className="text-gray-400">
             This stunning sunset was captured in Thailand, showcasing vibrant
             orange and pink hues blending seamlessly across the sky. The calm
             water reflects the beauty of the evening, creating a serene and
@@ -42,22 +45,21 @@ const Photo = () => {
 
         <div className="mb-[37px]">
           <p className="font-bold text-[24px] mb-[17px] text-white">Category</p>
-          <div className="flex">
-            <p className="flex h-[46px] w-auto px-[30px] rounded-[20px] justify-center items-center bg-[#3B3B3B] mr-[20px] text-white">
-              Nature & Landscapes
-            </p>
-            <p className="flex h-[46px] w-auto px-[30px] rounded-[20px] justify-center items-center bg-[#3B3B3B] mr-[20px] text-white">
-              Lifestyle
-            </p>
-            <p className="flex h-[46px] w-auto px-[30px] rounded-[20px] justify-center items-center bg-[#3B3B3B] mr-[20px] text-white">
-              Animals & Pets
-            </p>
+          <div className="flex flex-wrap gap-[8px]">
+            <span className="px-[24px] py-[11px] bg-[#3B3B3B] rounded-[17px] text-[16px] font-[600] text-white">
+              Nature & Wildlife
+            </span>
+            <span className="px-[24px] py-[11px] bg-[#3B3B3B] rounded-[17px] text-[16px] font-[600] text-white">
+              People & Lifestyle
+            </span>
+            <span className="px-[24px] py-[11px] bg-[#3B3B3B] rounded-[17px] text-[16px] font-[600] text-white">
+              Business & Technology
+            </span>
           </div>
         </div>
 
-        <div className="flex flex-col h-[85px] w-[200px] px-[15px] rounded-[15px] justify-around items-center bg-[#A0DE35] font-bold text-white text-[24px]">
-          <p>Buy now</p>
-          <p>Price: 100 THB</p>
+        <div className="flex flex-col w-[230px] px-[15px] rounded-[15px] justify-around items-center bg-[#1cd31c] font-bold text-white text-[24px] p-2 ">
+          <p>Buy now 100 THB</p>
         </div>
       </div>
     </div>

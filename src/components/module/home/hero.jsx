@@ -1,6 +1,5 @@
 import React from "react"
-import { Button } from "@/components/ui/button"
-import styles from "../../style"
+import styles from "../../../style"
 import Home_1 from "@/assets/Home_1.png"
 import Home_2 from "@/assets/Home_2.png"
 import Home_3 from "@/assets/Home_3.png"
@@ -32,9 +31,9 @@ const Hero = () => {
           images and connect with buyers who appreciate your creativity.
         </p>
 
-        <Button className={`${styles.bgCustom} cursor-pointer`}>
+        <button className={`${styles.bgCustom} text-sm py-2 px-3 rounded-md cursor-pointer hover:opacity-90`}>
           Explore
-        </Button>
+        </button>
       </div>
 
       <div className="flex justify-center items-center order-1 md:order-2">

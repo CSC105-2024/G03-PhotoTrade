@@ -1,21 +1,21 @@
-name: Fronted Test
+name: Frontend Test
 
 on:
-    push: 
-        branches:
-        - main
-        - develop
-        - feature/*
+  push:
+    branches:
+      - main
+      - develop
+      - feature/*
 
-    pull_request:
-        branches:
-        - main
-        - develop
-        - develop/*
+  pull_request:
+    branches:
+      - main
+      - develop
+      - feature/*
 
 jobs:
   build:
-    name: Lint Code Base
+    name: Run Build
     runs-on: ubuntu-latest
 
     steps:
@@ -25,9 +25,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: true
-          VALIDATE_JAVASCRIPT_ES: false
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Build
+        run: npm run build
+
+      - name: Run Dev (Optional)
+        run: npm run dev

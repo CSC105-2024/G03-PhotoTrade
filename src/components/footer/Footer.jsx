@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from '../../style'
 import { Link } from 'react-router-dom'
+
 const Footer = () => {
     return (
-        <footer className={`footer footer-horizontal footer-center ${styles.bgCustom} text-white p-10 mt-5`}>
+        <footer className={`footer relative z-10 footer-horizontal footer-center ${styles.bgCustom} text-white p-10 mt-5`}>
             <nav className="grid grid-flow-col gap-4">
                 <Link
                     to="/"

@@ -15,7 +15,7 @@ const Navbar = () => {
     
     return (
         <nav>
-            <div className="container relative md:text-sm mx-auto">
+            <div className="container relative md:text-sm mx-auto z-10">
                 <div className="flex justify-between items-center">
 
                     <motion.div

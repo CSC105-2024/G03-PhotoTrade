@@ -12,20 +12,25 @@ import {
 
 const MarketList = () => {
     return (
-        <div>
-            <div className='grid grid-cols-1 md:grid-cols-3'>
-                <Picture />
-                <Picture />
-                <Picture />
+        <section>
+            <div className="flex justify-center mt-10 md:justify-between items-center">
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+                    <Picture />
+                    <Picture />
+                    <Picture />
+                    <Picture />
+                    <Picture />
+                    <Picture />
+                </div>
             </div>
 
-            <Pagination>
+            <Pagination className="relative z-10 my-4">
                 <PaginationContent>
                     <PaginationItem>
                         <PaginationPrevious href="#" />
                     </PaginationItem>
                     <PaginationItem>
-                        <PaginationLink href="#">1</PaginationLink>
+                        <PaginationLink href="#" isActive>1</PaginationLink>
                     </PaginationItem>
                     <PaginationItem>
                         <PaginationLink href="#">2</PaginationLink>
@@ -41,7 +46,7 @@ const MarketList = () => {
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
-        </div >
+        </section >
     )
 }
 

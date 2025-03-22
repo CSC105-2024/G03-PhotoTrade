@@ -14,6 +14,8 @@ import {
   Frame,
   PieChart,
   Map,
+  Store,
+  CircleUser,
 } from "lucide-react";
 
 import {
@@ -29,33 +31,25 @@ import {
 } from "@/components/ui/sidebar"
 
 import NavUser from "./nav-user"
+import { navLinks } from "@/constants";
+import { Link } from "react-router-dom";
 
 // Menu items.
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Market",
+    url: "/market",
+    icon: Store,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Contact",
+    url: "/footer",
+    icon: CircleUser,
   },
 ]
 
@@ -193,16 +187,18 @@ const AppSidebar = ({...props}) => {
     <Sidebar {...props}>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>PhotoTrade</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link
+                      to={item.url}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

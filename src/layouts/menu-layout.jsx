@@ -5,7 +5,7 @@ import Header from "@/components/nav/app-header"
 const MenuLayout = () => {
     return (
         <SidebarProvider defaultOpen={false}>
-            <main className="w-full">
+            <main>
                 <Header />
             </main>
             <AppSidebar side='right'/>

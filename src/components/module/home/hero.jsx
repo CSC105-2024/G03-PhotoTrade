@@ -30,7 +30,7 @@ const Hero = () => {
         </button>
       </div>
 
-      <div className="flex justify-center items-center order-1 md:order-2">
+      <div className="flex justify-center items-center order-1 md:order-2 z-1">
         <div className="carousel carousel-center bg-neutral rounded-box max-w-md space-x-10 shadow-[0_20px_50px_rgba(162,_89,_255,_0.7)]">
           {pic.map((src, index) => (
             <div className="carousel-item max-h-150" key={index}>

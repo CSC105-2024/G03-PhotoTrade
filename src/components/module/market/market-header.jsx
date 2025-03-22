@@ -1,25 +1,16 @@
 import React from 'react'
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User,
-  Search
-} from "lucide-react"
+import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
-
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from "@/components/ui/command"
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { categories } from '@/constants'
 
 const Header = () => {
   return (
@@ -30,12 +21,30 @@ const Header = () => {
       </div>
 
       <div className="relative ml-auto flex-1 md:grow-0 mt-6">
-        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          type="search"
-          placeholder="Search..."
-          className="w-full rounded-lg  pl-8 md:w-[200px] lg:w-[336px]"
-        />
+
+        <div className='flex space-x-3'>
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search..."
+            className="w-full rounded-lg  pl-8 md:w-[200px] lg:w-[336px]"
+          />
+
+          <Select>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Catagory</SelectLabel>
+
+                {categories.map((category) => (
+                  <SelectItem key={category.id} value={category.name}>{category.name}</SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </section>
   )

@@ -11,11 +11,10 @@ const App = () => {
     '/',
     '/market',
   ]
-  
-  // return routes.filter(() => path.includes(location.pathname))
-  //   .map(() => (
-  //     <Layout>{useRoutes(routes)}</Layout>
-  //   ))[0] || useRoutes(routes)
+
+  if (path.includes(location.pathname)) {
+    return <Layout>{useRoutes(routes)}</Layout>
+  }
   
   return useRoutes(routes)
 }

@@ -14,7 +14,7 @@ const Picture = () => {
     const [like, setLike] = useState(false)
 
     return (
-        <Card className='w-[250px] hover:opacity-90 rounded-xl pt-0 bg-[#2B2B2B] border-none text-white'>
+        <Card className='w-[250px] hover:opacity-90 rounded-xl pt-0 bg-[#2B2B2B] border-none text-white mb-5 cursor-pointer'>
             <CardHeader className='px-0'>
                 <img
                     src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
@@ -41,7 +41,7 @@ const Picture = () => {
                 </div>
                 <Heart
                     onClick={() => setLike(!like)}
-                    className={`cursor-pointer transition-all ${like ? 'text-red-500 fill-red-500' : 'text-white'}`}
+                    className={`cursor-pointer transition-all z-10 ${like ? 'text-red-500 fill-red-500' : 'text-white'}`}
                 />
             </CardFooter>
         </Card>

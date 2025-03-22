@@ -7,6 +7,12 @@ on:
         - develop
         - feature/*
 
+    pull_request:
+        branches:
+        - main
+        - develop
+        - develop/*
+
 jobs:
   build:
     name: Lint Code Base

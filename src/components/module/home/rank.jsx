@@ -14,9 +14,9 @@ import {
 
 const Rank = () => {
     return (
-        <MainLayout 
+        <MainLayout
             title={'Top 10 Image Creators'}
-            description={'Discover the Most Popular Photographers and Artists on Our Platform'} 
+            description={'Discover the Most Popular Photographers and Artists on Our Platform'}
         >
             <Table className='mt-10 max-w-2xl mx-auto text-white'>
                 <TableCaption>A list of Image Creater.</TableCaption>

@@ -3,16 +3,21 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import routes from "~react-pages"
 import {BrowserRouter, useLocation, useRoutes} from 'react-router-dom'
-import Layout from './layouts/root-layout'
+import Layout from '@/layouts/root-layout'
 
 const App = () => {
-  const element = useRoutes(routes)
   const location = useLocation()
+  const path = [
+    '/',
+    '/market',
+  ]
   
-  return routes.filter(() => location.pathname ==='/' || location.pathname === '/market')
-    .map(() => (
-      <Layout>{element}</Layout>
-    ))[0] || element
+  // return routes.filter(() => path.includes(location.pathname))
+  //   .map(() => (
+  //     <Layout>{useRoutes(routes)}</Layout>
+  //   ))[0] || useRoutes(routes)
+  
+  return useRoutes(routes)
 }
 
 createRoot(document.getElementById('root')).render(

@@ -1,12 +1,23 @@
 import React from 'react'
 import styles from '../../style'
-
+import { Link } from 'react-router-dom'
 const Footer = () => {
     return (
         <footer className={`footer footer-horizontal footer-center ${styles.bgCustom} text-white p-10 mt-5`}>
             <nav className="grid grid-flow-col gap-4">
-                <a className="link link-hover">Home</a>
-                <a className="link link-hover">Marketplace</a>
+                <Link
+                    to="/"
+                    className="link link-hover"
+                >
+                    Home
+                </Link>
+
+                <Link
+                    to="/market"
+                    className="link link-hover"
+                >
+                    Market
+                </Link>
             </nav>
             <nav>
                 <div className="grid grid-flow-col gap-4">

@@ -1,14 +1,18 @@
 import { navLinks } from "@/constants"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styles from "@/style"
-import { Link, useNavigate, useLocation } from "react-router-dom"
-import { motion } from 'framer-motion';
+import { Link, useNavigate, useLocation  } from "react-router-dom"
+import { motion } from 'framer-motion'
 
 const Navbar = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
+    const navigate = useNavigate()
+    const location = useLocation()
     const [active, setActive] = useState(location.pathname)
 
+    useEffect(() => {
+        setActive(location.pathname)
+    }, [location.pathname])
+    
     return (
         <nav>
             <div className="container relative md:text-sm mx-auto">
@@ -28,15 +32,17 @@ const Navbar = () => {
                             PhotoTrade
                         </Link>
                     </motion.div>
+
                     <ul className='space-x-6 md:flex hidden'>
                         {navLinks.map((item) => (
                             <li
                                 key={item.id}
-                                className={`cursor-pointe ${styles.underEffect} ${active === `/${item.id}` ? 'text-white' : ' text-neutral-500'}`
-                                }
-                                onClick={() => setActive(`/${item.id}`)}
+                                className={`cursor-pointer ${styles.underEffect} ${active === `/${item.id}` ? 'text-white' : ' text-neutral-500'}`}
                             >
-                                <Link to={`/${item.id}`}>
+                                <Link 
+                                    to={`/${item.id}`}
+                                    aria-current={active === `/${item.id}` ? "pages" : undefined}
+                                >
                                     {item.title}
                                 </Link>
                             </li>

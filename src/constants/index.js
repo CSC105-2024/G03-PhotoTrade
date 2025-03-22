@@ -1,4 +1,10 @@
 import Ellipse from '@/assets/Ellipse.png'
+import Home_1 from "@/assets/Home_1.png"
+import Home_2 from "@/assets/Home_2.png"
+import Home_3 from "@/assets/Home_3.png"
+import Home_4 from "@/assets/Home_4.png"
+import Home_5 from "@/assets/Home_5.png"
+import Home_6 from "@/assets/Home_6.png"
 
 export const navLinks = [
     {
@@ -103,10 +109,20 @@ export const userRank = [
     },
 ]
 
+
 export const user = {
     name: 'shadcn',
     email: 'm@example.com',
     avatar: Ellipse
 }
+
+export const pic = [
+    Home_1, 
+    Home_2, 
+    Home_3, 
+    Home_4, 
+    Home_5, 
+    Home_6,
+]
 
 

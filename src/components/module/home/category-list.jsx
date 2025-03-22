@@ -15,10 +15,10 @@ const CategoryList = () => {
     <MainLayout title={'Picture Category'}>
       <div className='flex justify-center'>
 
-        <Carousel 
-          opts={{ 
-            align: "start" 
-          }} 
+        <Carousel
+          opts={{
+            align: "start"
+          }}
           className='w-full max-w-xs md:max-w-xl lg:max-w-4xl mt-16 mx-auto'>
           <CarouselContent>
             {categories.map((category) => (
@@ -30,7 +30,7 @@ const CategoryList = () => {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious  className='left-[-50px]'/>
+          <CarouselPrevious className='left-[-50px]' />
           <CarouselNext className='right-[-50px] ' />
         </Carousel>
       </div>

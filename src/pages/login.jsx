@@ -1,18 +1,15 @@
-import { GalleryVerticalEnd } from "lucide-react"
-
-import LoginForm from "@/components/module/login/login-form"
-import { Link } from "react-router-dom"
+import { SquareArrowLeft } from "lucide-react";
+import LoginForm from "@/components/module/login/login-form";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
-
         <div className="flex justify-center gap-2 md:justify-start">
-          <Link 
-            to="/"
-            className="flex items-center gap-2 text-xl font-bold"
-          >
+          <Link to="/" className="flex items-center gap-2 text-xl font-bold">
             PhotoTrade
           </Link>
         </div>
@@ -22,6 +19,11 @@ const LoginPage = () => {
             <LoginForm />
           </div>
         </div>
+
+        <SquareArrowLeft
+          className="size-6 cursor-pointer"
+          onClick={() => navigate("/")}
+        />
       </div>
 
       <div className="relative hidden bg-muted lg:block">
@@ -32,7 +34,7 @@ const LoginPage = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

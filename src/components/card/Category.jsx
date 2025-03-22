@@ -11,10 +11,10 @@ const Category = ({ title }) => {
     return (
         <Card className='w-[250px] hover:opacity-90 rounded-xl pt-0 bg-[#2B2B2B] border-none text-white'>
             <CardHeader className='px-0'>
-                <img 
-                    src={Home_1} 
-                    alt={title} 
-                    className='w-full h-[200px] rounded-t-xl aspect-square object-cover' 
+                <img
+                    src={Home_1}
+                    alt={title}
+                    className='w-full h-[200px] rounded-t-xl aspect-square object-cover'
                 />
             </CardHeader>
             <CardContent>

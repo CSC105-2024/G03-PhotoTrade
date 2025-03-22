@@ -6,8 +6,8 @@ const Feature2 = () => {
     return (
         <section className={`grid grid-cols-1 md:grid-cols-2 items-center ${styles.paddingY}`}>
             <div className='mb-10 md:pr-20'>
-                <img 
-                    src={Protect} 
+                <img
+                    src={Protect}
                     alt="Illustration of a sales incentive program"
                     className='rounded-md w-[100%] h-[100%]'
                 />

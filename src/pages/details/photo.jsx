@@ -5,7 +5,7 @@ import Imageja from "./changeimage";
 
 const Photo = () => {
   return (
-    <div className="bg-black w-screen h-auto xl:h-screen pb-10 relative">
+    <div className="bg-black w-screen h-auto xl:h-screen pb-10 ">
       <img src={detail} className="w-full object-fit lg:h-100"></img>
 
       <div className="lg:ml-[170px] lg:mr-[170px] mt-[77px] ml-[20px] mr-[40px]">

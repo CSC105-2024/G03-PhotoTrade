@@ -6,7 +6,6 @@ import {
   Feature1,
   Feature2,
 } from "@/components/module/home";
-import { NavMarket } from "@/components/module/market";
 
 const App = () => (
   <>

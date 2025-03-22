@@ -15,11 +15,13 @@ const Imageja = () => {
 
   return (
     <div className="flex items-center justify-center gap-2 mt-4">
-      {like ? (
-        <Heart size={40} onClick={Change} fill="red" color="red" />
-      ) : (
-        <Heart size={40} onClick={Change} color="red" />
-      )}
+
+      <Heart
+        onClick={ Change }
+        className={`cursor-pointer transition-all z-10 ${
+          like ? "text-red-500 fill-red-500" : "text-white"
+        }`}
+      />
       <p className="text-xl text-white">{likecount}</p>
     </div>
   );

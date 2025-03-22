@@ -10,6 +10,7 @@ const App = () => {
   const path = [
     '/',
     '/market',
+    '/market/detail'
   ]
 
   if (path.includes(location.pathname)) {

@@ -3,7 +3,7 @@ import detail from "@/assets/detail.png";
 import Ellipse from "@/assets/Ellipse.png";
 import Imageja from "./changeimage";
 
-const Photo = () => {
+const Detail = () => {
   return (
     <div className="bg-black w-screen h-auto xl:h-screen pb-10 relative">
       <img src={detail} className="w-full object-fit lg:h-100"></img>
@@ -66,4 +66,4 @@ const Photo = () => {
   );
 };
 
-export default Photo;
+export default Detail;

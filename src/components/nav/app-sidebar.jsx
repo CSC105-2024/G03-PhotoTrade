@@ -1,9 +1,5 @@
 import {
-  Calendar,
   Home,
-  Inbox,
-  Search,
-  Settings,
   GalleryVerticalEnd,
   AudioWaveform,
   Command,

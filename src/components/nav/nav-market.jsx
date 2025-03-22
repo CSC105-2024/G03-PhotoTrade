@@ -1,18 +1,18 @@
 import React from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
-const NavMarket = () => {
+const NavMarket = ({ children }) => {
     return (
-        <Tabs defaultValue="password" className="w-[400px]">
-            <TabsList>
-                <TabsTrigger value="account">Account</TabsTrigger>
-                <TabsTrigger value="password">Password</TabsTrigger>
+        <Tabs defaultValue="photo" className="relative z-1">
+            <TabsList className="w-full">
+                <TabsTrigger value="photo" className="cursor-pointer">Photo</TabsTrigger>
+                <TabsTrigger value="collections" className="cursor-pointer">Collections</TabsTrigger>
             </TabsList>
-            <TabsContent value="account">Make changes to your account here.</TabsContent>
-            <TabsContent value="password">Change your password here.</TabsContent>
+            {children}
+            {/* <TabsContent value="photo">{photo}</TabsContent> */}
+            {/* <TabsContent value="collections">{collection}</TabsContent> */}
         </Tabs>
-
     )
 }
 

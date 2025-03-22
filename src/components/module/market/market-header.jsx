@@ -20,7 +20,7 @@ const Header = () => {
         <p className='mt-2 text-neutral-500'>Browse through more than 50k Photo on the Photo Marketplace.</p>
       </div>
 
-      <div className="relative ml-auto flex-1 md:grow-0 mt-6">
+      <div className="relative ml-auto flex-1 md:grow-0 my-6">
 
         <div className='flex space-x-3'>
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

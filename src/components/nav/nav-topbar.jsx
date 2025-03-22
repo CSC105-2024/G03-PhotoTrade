@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 const Navbar = () => {
     const navigate = useNavigate()
     const location = useLocation()
+
     const [active, setActive] = useState(location.pathname)
 
     useEffect(() => {

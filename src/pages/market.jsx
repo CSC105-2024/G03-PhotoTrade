@@ -7,6 +7,7 @@ const Market = () => {
       <Header />
       <MarketList />
     </>
+
   )
 }
 

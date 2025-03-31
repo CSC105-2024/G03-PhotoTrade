@@ -1,5 +1,5 @@
 import Collection from "@/components/card/collection"
-import MainLayout from "@/layouts/main-layout"
+import MainLayout from "@/components/layouts/main-layout"
 
 const CollectionList = () => {
   return (

@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import MainLayout from '@/layouts/main-layout'
+import MainLayout from '@/components/layouts/main-layout'
 
 const CategoryList = () => {
   return (

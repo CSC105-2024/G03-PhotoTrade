@@ -1,13 +1,37 @@
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import styles from "@/style"
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCredentials } from '@/reducer/validate'
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
-const LoginForm = ({ className, ...props }) => {
+const LoginForm = () => {
+    const { email, password, error } = useSelector((state) => state.validate)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
+    const submitForm = (data) => {
+        dispatch(setCredentials(data))
+      }
+
+    const { register, handleSubmit } = useForm({
+        defaultValues: {
+            email,
+            password
+        }
+    })
+
+    useEffect(() => {
+        if (email) {
+            navigate('/')
+        }
+    }, [navigate, email])
+    
     return (
-        <form className={cn("flex flex-col gap-6", className)} {...props}>
+        <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-6">
             <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-4xl font-bold">Welcome Back</h1>
                 <p className="text-balance text-sm text-muted-foreground">
@@ -17,14 +41,30 @@ const LoginForm = ({ className, ...props }) => {
             <div className="grid gap-6">
                 <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="m@example.com" required />
+                    <Input 
+                        id="email" 
+                        type="email" 
+                        placeholder="m@example.com"
+                        {...register('email')}
+                        required 
+                    />
                 </div>
+
+                {error?.email && <p className="text-red-500 text-sm">Invalid email address</p>}
+
                 <div className="grid gap-2">
                     <div className="flex items-center">
                         <Label htmlFor="password">Password</Label>
                     </div>
 
-                    <Input id="password" type="password" required />
+                    <Input 
+                        id="password" 
+                        type="password" 
+                        {...register('password')}
+                        required 
+                    />
+        
+                    {error?.password && <p className="text-red-500 text-sm">Must be 8 or more characters long</p>}
 
                     <a
                         href="#"

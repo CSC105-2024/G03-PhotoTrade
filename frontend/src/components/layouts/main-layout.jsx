@@ -1,4 +1,4 @@
-import styles from "../style"
+import styles from "@/style"
 
 const MainLayout = ({ title, description, children }) => {
     return (

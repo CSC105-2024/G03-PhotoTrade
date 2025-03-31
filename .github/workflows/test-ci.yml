@@ -1,0 +1,21 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Node.js frontend and backend build
+        uses: melvinsamuel070/nodejs-frontend-backend-build@v1
+        with:
+          frontend_directory: './frontend'
+          backend_directory: './backend'

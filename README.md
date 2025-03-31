@@ -7,7 +7,7 @@ npm run dev --workspace frontend
 
 ## Run Backend
 ```bash
-npm run dev --workspace backen
+npm run dev --workspace backend
 ```
 
 ## Run Script Both

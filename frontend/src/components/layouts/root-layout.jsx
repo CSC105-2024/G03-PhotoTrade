@@ -1,5 +1,5 @@
-import MenuLayout from '@/components/layouts/menu-layout'
-import Footer from '@/components/footer/footer'
+import MenuLayout from "@/components/layouts/menu-layout";
+import Footer from "@/components/footer/footer";
 
 const Layout = ({ children }) => {
   return (
@@ -10,8 +10,7 @@ const Layout = ({ children }) => {
       </main>
       <Footer />
     </div>
+  );
+};
 
-  )
-}
-
-export default Layout
+export default Layout;

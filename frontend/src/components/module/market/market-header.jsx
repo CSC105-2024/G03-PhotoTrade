@@ -1,6 +1,6 @@
-import React from 'react'
-import { Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import React from "react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -9,20 +9,21 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { categories } from '@/constants'
+} from "@/components/ui/select";
+import { categories } from "@/constants";
 
 const Header = () => {
   return (
-    <section className='pt-6 md:pt-26'>
+    <section className="pt-6 md:pt-26">
       <div>
-        <h1 className='text-4xl font-bold'>Browse Marketplace</h1>
-        <p className='mt-2 text-neutral-500'>Browse through more than 50k Photo on the Photo Marketplace.</p>
+        <h1 className="text-4xl font-bold">Browse Marketplace</h1>
+        <p className="mt-2 text-neutral-500">
+          Browse through more than 50k Photo on the Photo Marketplace.
+        </p>
       </div>
 
       <div className="relative ml-auto flex-1 md:grow-0 my-6">
-
-        <div className='flex space-x-3'>
+        <div className="flex space-x-3">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
@@ -39,7 +40,9 @@ const Header = () => {
                 <SelectLabel>Catagory</SelectLabel>
 
                 {categories.map((category) => (
-                  <SelectItem key={category.id} value={category.name}>{category.name}</SelectItem>
+                  <SelectItem key={category.id} value={category.name}>
+                    {category.name}
+                  </SelectItem>
                 ))}
               </SelectGroup>
             </SelectContent>
@@ -47,7 +50,7 @@ const Header = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

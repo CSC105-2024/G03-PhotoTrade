@@ -14,37 +14,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-            
+
       - name: Run Node.js frontend and backend build
-        uses: melvinsamuel070/nodejs-frontend-backend-build@v1
+        uses: melvinsamuel070/nodejs-frontend-backend-build@v2
         with:
-          frontend_directory: './frontend'
-          backend_directory: './backend'
-              
+          frontend_directory: "./frontend"
+          backend_directory: "./backend"
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
-              
+          cache: "npm"
+
       - name: Install dependencies
         run: npm install
         working-directory: backend
-              
+
       - name: Build Project
         run: npm run build
         working-directory: backend
-              
+
       - name: Install dependencies
         run: npm install
         working-directory: frontend
-              
+
       - name: Build Project
         run: npm run build
         working-directory: frontend
-              
-      - name: Run npm.sh 
-        shell: bash
-        run: |
-          chmod +x ./npm.sh
-          ./npm.sh ./frontend ./backend

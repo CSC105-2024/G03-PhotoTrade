@@ -1,34 +1,38 @@
-import React from 'react'
-import Protect from '@/assets/Protect.png'
-import styles from '@/style'
+import React from "react";
+import Protect from "@/assets/Protect.png";
+import styles from "@/style";
 
 const Feature2 = () => {
-    return (
-        <section className={`grid grid-cols-1 md:grid-cols-2 items-center ${styles.paddingY}`}>
-            <div className='mb-10 md:pr-20'>
-                <img
-                    src={Protect}
-                    alt="Illustration of a sales incentive program"
-                    className='rounded-md w-[100%] h-[100%]'
-                />
-            </div>
+  return (
+    <section
+      className={`grid grid-cols-1 md:grid-cols-2 items-center ${styles.paddingY}`}
+    >
+      <div className="mb-10 md:pr-20">
+        <img
+          src={Protect}
+          alt="Illustration of a sales incentive program"
+          className="rounded-md w-[100%] h-[100%]"
+        />
+      </div>
 
-            <div className='text-center md:text-left'>
-                <h1 className='text-4xl font-bold tracking-wide'>
-                    Protect Your Images with Watermark Security
-                </h1>
+      <div className="text-center md:text-left">
+        <h1 className="text-4xl font-bold tracking-wide">
+          Protect Your Images with Watermark Security
+        </h1>
 
-                <p className='text-neutral-500 mt-7'>
-                    Our Secure Image Licensing System ensures that your work is safeguarded with watermarks, preventing unauthorized use. This feature allows photographers to confidently showcase their portfolios while maintaining control over their images.
-                </p>
+        <p className="text-neutral-500 mt-7">
+          Our Secure Image Licensing System ensures that your work is
+          safeguarded with watermarks, preventing unauthorized use. This feature
+          allows photographers to confidently showcase their portfolios while
+          maintaining control over their images.
+        </p>
 
-                <div className='mt-7'>
-                    <a href="#">Join Now →</a>
-                </div>
-            </div>
+        <div className="mt-7">
+          <a href="#">Join Now →</a>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-        </section>
-    )
-}
-
-export default Feature2
+export default Feature2;

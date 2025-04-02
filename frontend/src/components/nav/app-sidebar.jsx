@@ -24,9 +24,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarFooter,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-import NavUser from "./nav-user"
+import NavUser from "./nav-user";
 import { navLinks } from "@/constants";
 import { Link } from "react-router-dom";
 
@@ -47,7 +47,7 @@ const items = [
     url: "/footer",
     icon: CircleUser,
   },
-]
+];
 
 const data = {
   user: {
@@ -176,9 +176,9 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
-const AppSidebar = ({...props}) => {
+const AppSidebar = ({ ...props }) => {
   return (
     <Sidebar {...props}>
       <SidebarContent>
@@ -189,9 +189,7 @@ const AppSidebar = ({...props}) => {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link
-                      to={item.url}
-                    >
+                    <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>
@@ -206,7 +204,7 @@ const AppSidebar = ({...props}) => {
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
-}
+  );
+};
 
-export default AppSidebar
+export default AppSidebar;

@@ -1,31 +1,31 @@
-import React from "react"
-import styles from "../../../style"
-import { pic } from "@/constants"
+import React from "react";
+import styles from "../../../style";
+import { pic } from "@/constants";
 
 const Hero = () => {
-
   return (
-    <section className={`grid md:grid-cols-2 gap-10 items-center ${styles.paddingY} min-h-screen`}>
-
+    <section
+      className={`grid md:grid-cols-2 gap-10 items-center ${styles.paddingY} min-h-screen`}
+    >
       <div className="text-center md:text-left w-full max-w-lg space-y-6 order-2 mt-5 md:order-1">
         <h1 className="text-5xl font-bold tracking-wide leading-tight">
           Unlock Your
-
           <span className={`text-transparent bg-clip-text ${styles.bgCustom}`}>
-
-            {' '} Creative Potential with
-          </span>
-
-          {' '} PhotoTrade
+            {" "}
+            Creative Potential with
+          </span>{" "}
+          PhotoTrade
         </h1>
 
         <p className="text-neutral-500">
           PhotoTrade is the premier marketplace for photographers and digital
-          artists to showcase and sell their work. Join us to secure your
-          images and connect with buyers who appreciate your creativity.
+          artists to showcase and sell their work. Join us to secure your images
+          and connect with buyers who appreciate your creativity.
         </p>
 
-        <button className={`${styles.bgCustom} text-sm py-2 px-3 rounded-md cursor-pointer hover:opacity-90`}>
+        <button
+          className={`${styles.bgCustom} text-sm py-2 px-3 rounded-md cursor-pointer hover:opacity-90`}
+        >
           Explore
         </button>
       </div>
@@ -43,9 +43,8 @@ const Hero = () => {
           ))}
         </div>
       </div>
-
     </section>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

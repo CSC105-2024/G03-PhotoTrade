@@ -48,9 +48,7 @@ const Detail = () => {
           </div>
 
           <div className="mb-[37px]">
-            <p className="font-bold text-2xl mb-[17px] text-white">
-              Category
-            </p>
+            <p className="font-bold text-2xl mb-[17px] text-white">Category</p>
             <div className="flex flex-wrap gap-[8px]">
               <span className="px-[24px] py-[11px] bg-[#3B3B3B] rounded-[17px]   text-white">
                 Nature & Wildlife

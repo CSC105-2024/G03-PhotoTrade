@@ -3,10 +3,10 @@ import counterSlice from "@/reducer/counter";
 import valSlice from "./reducer/validate";
 
 const store = configureStore({
-    reducer: {
-        counter: counterSlice,
-        validate: valSlice,
-    }
-})
+  reducer: {
+    counter: counterSlice,
+    validate: valSlice,
+  },
+});
 
-export default store
+export default store;

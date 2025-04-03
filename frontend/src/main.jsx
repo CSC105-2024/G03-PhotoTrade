@@ -14,7 +14,6 @@ const App = () => {
   if (path.includes(location.pathname)) {
     return <Layout>{useRoutes(routes)}</Layout>;
   }
-
   return useRoutes(routes);
 };
 

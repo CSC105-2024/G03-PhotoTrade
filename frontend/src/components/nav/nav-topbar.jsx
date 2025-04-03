@@ -3,12 +3,24 @@ import { useState, useEffect } from "react";
 import styles from "@/style";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { CircleUser } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [active, setActive] = useState(location.pathname);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     setActive(location.pathname);
@@ -46,12 +58,35 @@ const Navbar = () => {
             ))}
           </ul>
 
-          <button
-            className={`${styles.bgCustom} text-sm py-2 px-3 rounded-md hidden md:flex justify-center space-x-12 items-center cursor-pointer hover:opacity-90`}
-            onClick={() => navigate("/login")}
-          >
-            Sign In
-          </button>
+          {isAuthenticated ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full hidden md:flex"
+                >
+                  <CircleUser className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <button
+              className={`${styles.bgCustom} text-sm py-2 px-3 rounded-md hidden md:flex justify-center space-x-12 items-center cursor-pointer hover:opacity-90`}
+              onClick={() => navigate("/user/unauth/login")}
+            >
+              Sign In
+            </button>
+          )}
         </div>
       </div>
     </nav>

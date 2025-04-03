@@ -5,30 +5,38 @@ import styles from "@/style";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/reducer/validate";
+import { loginStatus } from "@/reducer/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const { email, password, error } = useSelector((state) => state.validate);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const submitForm = (data) => {
-    dispatch(setCredentials(data));
-  };
-
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      email,
-      password,
+      email: email || "",
+      password: password || "",
     },
   });
 
+  const submitForm = (data) => {
+    dispatch(setCredentials(data));
+    dispatch(loginStatus({ email: data.email, token: "mock-token" }));
+  };
+
   useEffect(() => {
-    if (email) {
+    if (isAuthenticated) {
       navigate("/");
     }
-  }, [navigate, email]);
+  }, [navigate, isAuthenticated]);
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-6">
@@ -38,6 +46,7 @@ const LoginForm = () => {
           Enter your email below to login to your account
         </p>
       </div>
+
       <div className="grid gap-6">
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
@@ -45,44 +54,30 @@ const LoginForm = () => {
             id="email"
             type="email"
             placeholder="m@example.com"
-            {...register("email")}
-            required
+            {...register("email", { required: "Email is required" })}
           />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+          {error?.email && <p className="text-red-500 text-sm">Invalid email address</p>}
         </div>
-
-        {error?.email && (
-          <p className="text-red-500 text-sm">Invalid email address</p>
-        )}
 
         <div className="grid gap-2">
           <div className="flex items-center">
             <Label htmlFor="password">Password</Label>
           </div>
-
           <Input
             id="password"
             type="password"
-            {...register("password")}
-            required
+            {...register("password", { required: "Password is required", minLength: 8 })}
           />
+          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+          {error?.password && <p className="text-red-500 text-sm">Must be 8 or more characters long</p>}
 
-          {error?.password && (
-            <p className="text-red-500 text-sm">
-              Must be 8 or more characters long
-            </p>
-          )}
-
-          <a
-            href="#"
-            className="ml-auto text-sm underline-offset-4 hover:underline text-purple-700"
-          >
+          <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline text-purple-700">
             Forgot your password?
           </a>
         </div>
-        <Button
-          type="submit"
-          className={`${styles.bgCustom} w-full hover:opacity-90`}
-        >
+
+        <Button type="submit" className={`${styles.bgCustom} w-full hover:opacity-90`}>
           Login
         </Button>
       </div>

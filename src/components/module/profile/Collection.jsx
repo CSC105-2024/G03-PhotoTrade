@@ -19,6 +19,10 @@ const PCollection = () => {
           <p className="mb-5">
             <Collection />
           </p>
+          <p className="mb-5">
+            <Collection />
+          </p>
+          
         </div>
       </div>
       <Paginationprofile />

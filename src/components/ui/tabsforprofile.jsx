@@ -9,7 +9,7 @@ const ProfileTabs = () => {
   return (
     <div className="mt-6 w-fit">
       <Tabs defaultValue="listings" className="w-fit">
-        <TabsList className="flex justify-center bg-white border border-gray-300 rounded-none w-full">
+        <TabsList className="flex justify-center bg-white border border-gray-300 rounded-none w-full lg:rounded-2xl">
           <TabsTrigger
             value="listings"
             className="px-3 lg:px-17 text-sm lg:text-xl font-medium text-gray-500 hover:text-black data-[state=active]:text-black data-[state=active]:border-b-2 data-[state=active]:border-purple-500"

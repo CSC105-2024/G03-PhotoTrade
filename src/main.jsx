@@ -11,7 +11,8 @@ const App = () => {
     '/',
     '/market',
     '/market/detail',
-    '/profile/profile'
+    '/profile/profile',
+    '/profile/profiledit',
   ]
 
   if (path.includes(location.pathname)) {

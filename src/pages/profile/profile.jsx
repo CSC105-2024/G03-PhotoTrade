@@ -77,10 +77,11 @@ const Mainprofile = () => {
             <Instagram color="#787878" size={32} className="mr-3" />
           </div>
         </div>
-        <div className="flex justify-center items-center lg:w-screen">
+        <div className="flex justify-center items-center ">
           <ProfileTabs />
         </div>
       </div>
+    <p className="mb-1150 lg:mb-600"></p>
     </div>
   );
 };

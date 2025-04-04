@@ -9,11 +9,11 @@ import styles from "../../style";
 const Collection = () => {
   return (
     <div>
-      <div className="grid grid-cols-3 max-w-sm place-items-center gap-3">
-        <div className="col-span-3 h-[400px]">
+      <div className="grid grid-cols-3  md:max-h-md  gap-3">
+        <div className="col-span-3 max-h-96 overflow-hidden rounded-md">
           <img
             src={Home_1}
-            className="rounded-md h-full w-full object-cover"
+            className="w-full h-full object-cover"
             alt="1"
           />
         </div>
@@ -33,7 +33,7 @@ const Collection = () => {
         </div>
       </div>
 
-      <div className="mt-5 md:mt-10">
+      <div className="mt-5 md:mt-6">
         <span className="text-xl text-bold">Sunset</span>
 
         <div className="flex items-center my-5">

@@ -2,72 +2,58 @@ import React from "react";
 import detail from "@/assets/detail.png";
 import Ellipse from "@/assets/Ellipse.png";
 import Imageja from "./changeimage";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button"
+import BreadcrumbTop from "@/components/breadcrumb/breadcrumb-top";
 
 const Detail = () => {
   return (
-    <div className="pb-5">
-      <p className=" bg-black h-15"></p>
-      <div className="bg-black h-auto xl:h-screen pb-10 ">
-        <img src={detail} className="w-full object-fit lg:h-100"></img>
+    <div className="pt-6 md:pt-26">
+      <BreadcrumbTop />
+      <AspectRatio ratio={3 / 2} className="border border-gray-500 rounded-md">
+        <img
+          src={detail}
+          alt="Image"
+          className="w-full h-full rounded-md object-contain"
+        />
+      </AspectRatio>
 
-        <div className=" lg:mr-[170px] mt-[77px] ml-[20px] mr-[40px]">
-          <div className="mb-[20px] flex justify-between">
-            <div>
-              <p className="text-3xl  font-bold text-white">
-                Sunset in Thailand
-              </p>
-              <p className="text-gray-400">Minted on Sep 30, 2022</p>
-            </div>
-            <div className="hidden sm:block">
-              <Imageja />
-            </div>
-          </div>
-
-          <div className="mb-[38px] flex justify-between">
-            <div className="">
-              <p className="font-bold text-2xl text-white">Created By</p>
-              <div className="flex">
-                <img src={Ellipse} className="mt-[7px] w-[40px] h-[40px]"></img>
-                <p className="ml-[8px] mt-[14px] text-white">Mrnatural</p>
-              </div>
-            </div>
-            <div className="lg:hidden block">
-              <Imageja />
-            </div>
-          </div>
-
-          <div className="mb-7">
-            <h2 className="font-bold text-2xl text-white">Description</h2>
-            <p className="text-gray-400">
-              This stunning sunset was captured in Thailand, showcasing vibrant
-              orange and pink hues blending seamlessly across the sky. The calm
-              water reflects the beauty of the evening, creating a serene and
-              peaceful atmosphere. Perfect for nature enthusiasts and landscape
-              lovers.
-            </p>
-          </div>
-
-          <div className="mb-[37px]">
-            <p className="font-bold text-2xl mb-[17px] text-white">Category</p>
-            <div className="flex flex-wrap gap-[8px]">
-              <span className="px-[24px] py-[11px] bg-[#3B3B3B] rounded-[17px]   text-white">
-                Nature & Wildlife
-              </span>
-              <span className="px-[24px] py-[11px] bg-[#3B3B3B] rounded-[17px]   text-white">
-                People & Lifestyle
-              </span>
-              <span className="px-[24px] py-[11px] bg-[#3B3B3B] rounded-[17px]   text-white">
-                Business & Technology
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-col w-[230px] px-[15px] rounded-[15px] justify-around items-center bg-[#1cd31c] font-bold text-white text-[24px] p-2 ">
-            <p>Buy now 100 THB</p>
-          </div>
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-2">
+        <div className="mt-10">
+          <h1 className="text-3xl font-bold text-white">Sunset in Thailand</h1>
+          <p className="text-gray-400">Sep 30, 2022</p>
         </div>
+        {/* <div className="hidden sm:block">
+          <Imageja />
+        </div> */}
       </div>
-      <p className=" bg-black h-15 mb-30"></p>
+
+      <div className="mb-26">
+        <p className="text-gray-400">
+          This stunning sunset was captured in Thailand, showcasing vibrant
+          orange and pink hues blending seamlessly across the sky. The calm
+          water reflects the beauty of the evening, creating a serene and
+          peaceful atmosphere. Perfect for nature enthusiasts and landscape
+          lovers.
+        </p>
+      </div>
+
+      <div className="flex items-center my-5">
+        <Avatar>
+          <AvatarImage src={Ellipse} alt="first" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <span className="ml-3">YummyGuy</span>
+      </div>
+
+      <div className="space-x-2 mb-10">
+        <Button variant="outline">Nature & Wildlife</Button>
+        <Button variant="outline">Travel & Destinations</Button>
+        <Button variant="outline">People & Lifestyle</Button>
+      </div>
+
+      <Button variant="primary" className='w-full bg-green-500 md:hidden'>Buy now 100 THB</Button>
     </div>
   );
 };

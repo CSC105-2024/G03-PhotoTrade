@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# G03-PhotoTrade
-
-=======
 # Running a command
 
 ## Run Frontend
@@ -21,4 +17,3 @@ npm run dev --workspace backend
 ```bash
 npm run dev --workspaces
 ```
->>>>>>> develop

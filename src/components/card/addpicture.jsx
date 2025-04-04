@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ImagePlus, ImageUp } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import Dropdowncategoryprofile from "@/components/ui/dropdowncategoryprofile";
 
 const AddPicture = () => {
   return (
@@ -19,7 +20,7 @@ const AddPicture = () => {
         </Card>
       </DialogTrigger>
 
-      <DialogContent className="bg-[#2B2B2B] text-white rounded-lg p-8  mx-auto">
+      <DialogContent className="bg-[#2B2B2B] text-white rounded-lg p-8 mx-auto">
         <div className="lg:flex lg:gap-8">
           <div className="lg:w-[40%] w-full h-40 lg:h-auto bg-[#3B3B3B] rounded-xl flex items-center justify-center mb-5">
             <ImageUp size={100} strokeWidth={1.75} color="#787878" />
@@ -43,7 +44,7 @@ const AddPicture = () => {
             />
 
             <label className="block text-sm mb-1">Price</label>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-3">
               <Input
                 type="number"
                 placeholder="Enter price"
@@ -52,7 +53,8 @@ const AddPicture = () => {
               <p>THB</p>
             </div>
 
-            <button className="mt-6 w-full bg-purple-500 text-white py-3 px-6 rounded-lg">
+            <Dropdowncategoryprofile/>
+            <button className="mt-3 w-full bg-purple-500 text-white py-3 px-6 rounded-lg">
               Upload
             </button>
           </div>

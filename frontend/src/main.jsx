@@ -9,7 +9,13 @@ import store from "@/store";
 
 const App = () => {
   const location = useLocation();
-  const path = ["/", "/market", "/market/detail"];
+  const path = [
+    "/",
+    "/market",
+    "/market/detail",
+    "/profile/profile",
+    "/profile/profiledit",
+  ];
 
   if (path.includes(location.pathname)) {
     return <Layout>{useRoutes(routes)}</Layout>;
@@ -24,5 +30,5 @@ createRoot(document.getElementById("root")).render(
         <App />
       </BrowserRouter>
     </StrictMode>
-  </Provider>,
+  </Provider>
 );

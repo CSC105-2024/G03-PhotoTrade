@@ -1,5 +1,5 @@
 import React from "react";
-import Paginationprofile from "@/components/ui/paginationprofile";
+import Paginationprofile from "@/components/pagination/paginationprofile";
 import Pictureatprofile from "@/components/card/Pictureatprofile";
 
 const Purchases = () => {

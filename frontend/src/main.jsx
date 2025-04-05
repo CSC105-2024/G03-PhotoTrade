@@ -11,7 +11,7 @@ import ScrollToTop from "./components/scoll-to-top";
 const App = () => {
   const location = useLocation();
   const currentPath = (location.pathname);
-  const path = ['/', '/market'];
+  const path = ['/', '/market' , '/profile/profile'];
 
   const isLayoutRoute =
     path.includes(currentPath) ||

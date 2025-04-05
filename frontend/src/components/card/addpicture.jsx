@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ImagePlus, ImageUp } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import Dropdowncategoryprofile from "@/components/ui/dropdowncategoryprofile";
+import Dropdowncategoryprofile from "@/components/dropdown/selectcategory";
 
 const AddPicture = () => {
   return (

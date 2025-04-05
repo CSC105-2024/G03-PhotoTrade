@@ -1,6 +1,6 @@
 import React from "react";
 import Pictureatprofile from "@/components/card/Pictureatprofile";
-import Paginationprofile from "@/components/ui/paginationprofile";
+import Paginationprofile from "@/components/pagination/paginationprofile";
 
 const Favorites = () => {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import AddPicture from "@/components/card/addpicture";
-import Paginationprofile from "@/components/ui/paginationprofile";
+import Paginationprofile from "@/components/pagination/paginationprofile";
 import Pictureatprofile from "@/components/card/Pictureatprofile";
 
 const Listing = () => {

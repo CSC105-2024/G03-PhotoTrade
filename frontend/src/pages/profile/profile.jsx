@@ -10,7 +10,7 @@ import {
   Instagram,
   LogOut,
 } from "lucide-react";
-import ProfileTabs from "@/components/ui/tabsforprofile";
+import ProfileTabs from "@/components/tab/tabsforprofile";
 
 const Mainprofile = () => {
   return (

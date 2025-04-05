@@ -32,7 +32,7 @@ const MarketList = () => {
 
         <TabsContent value="collections">
           <div className="flex justify-center mt-10 md:justify-between items-center">
-            <div className="grid grid-cols-2 mx-auto gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 mx-auto gap-4">
               <Collection />
               <Collection />
               <Collection />

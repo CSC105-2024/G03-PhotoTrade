@@ -6,6 +6,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button"
 import BreadcrumbTop from "@/components/breadcrumb/breadcrumb-top";
+import { ShoppingCart } from 'lucide-react';
 
 const Detail = () => {
   return (
@@ -53,7 +54,10 @@ const Detail = () => {
         <Button variant="outline">People & Lifestyle</Button>
       </div>
 
-      <Button variant="primary" className='w-full bg-green-500 md:hidden'>Buy now 100 THB</Button>
+      <Button variant="primary" className='w-full bg-green-500'>
+        <ShoppingCart />
+        Buy Now
+        </Button>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { navLinks } from "@/constants";
-import { useState, useEffect } from "react";
+import { useState, useEffect, act } from "react";
 import styles from "@/style";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
-import { CircleUser } from "lucide-react";
+import { CircleUser, LogOut } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -73,10 +73,19 @@ const Navbar = () => {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
+  
+                <Link
+                  to={'user/auth/dashboard'}
+                >
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                </Link>
+
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LogOut />
+                  Log out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

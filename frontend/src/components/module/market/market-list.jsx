@@ -1,7 +1,7 @@
 import React from "react";
 import Picture from "@/components/card/picture";
 import NavMarket from "@/components/nav/nav-market";
-import Collection from "@/components/card/Collection";
+import Collection from "@/components/card/collection";
 import {
   Pagination,
   PaginationContent,
@@ -19,7 +19,7 @@ const MarketList = () => {
       <NavMarket>
         <TabsContent value="photo">
           <div className="flex justify-center mt-10 md:justify-between items-center">
-            <div className="grid grid-cols-2 md:grid-cols-3 mx-auto gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 mx-auto gap-4">
               <Picture />
               <Picture />
               <Picture />
@@ -32,7 +32,7 @@ const MarketList = () => {
 
         <TabsContent value="collections">
           <div className="flex justify-center mt-10 md:justify-between items-center">
-            <div className="grid grid-cols-2 mx-auto gap-6">
+            <div className="grid grid-cols-2 mx-auto gap-4">
               <Collection />
               <Collection />
               <Collection />

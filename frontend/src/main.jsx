@@ -2,25 +2,31 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import routes from "~react-pages";
-import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
+import { BrowserRouter, matchPath, useLocation, useRoutes } from "react-router-dom";
 import Layout from "@/components/layouts/root-layout";
 import { Provider } from "react-redux";
 import store from "@/store";
+import ScrollToTop from "./components/scoll-to-top";
 
 const App = () => {
   const location = useLocation();
-  const path = [
-    "/",
-    "/market",
-    "/market/detail",
-    "/profile/profile",
-    "/profile/profiledit",
-  ];
+  const currentPath = (location.pathname);
+  const path = ['/', '/market'];
 
-  if (path.includes(location.pathname)) {
-    return <Layout>{useRoutes(routes)}</Layout>;
-  }
-  return useRoutes(routes);
+  const isLayoutRoute =
+    path.includes(currentPath) ||
+    matchPath("/market/:id", currentPath);
+
+  return (
+    <>
+      <ScrollToTop />
+      {isLayoutRoute ? (
+        <Layout>{useRoutes(routes)}</Layout>
+      ) : (
+        useRoutes(routes)
+      )}
+    </>
+  )
 };
 
 createRoot(document.getElementById("root")).render(

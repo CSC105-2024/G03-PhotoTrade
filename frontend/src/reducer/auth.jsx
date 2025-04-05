@@ -12,7 +12,7 @@ export const authSlice = createSlice({
     token,
     error: null,
     success: false,
-    isAuthenticated: false,
+    isAuthenticated: true,
   },
   reducers: {
     loginStatus: (state, action) => {

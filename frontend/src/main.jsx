@@ -6,7 +6,7 @@ import { BrowserRouter, matchPath, useLocation, useRoutes } from "react-router-d
 import Layout from "@/components/layouts/root-layout";
 import { Provider } from "react-redux";
 import store from "@/store";
-import ScrollToTop from "./components/scoll-to-top";
+import ScrollToTop from "./hooks/scoll-to-top";
 
 const App = () => {
   const location = useLocation();

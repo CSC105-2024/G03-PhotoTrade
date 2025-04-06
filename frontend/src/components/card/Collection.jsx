@@ -11,11 +11,7 @@ const Collection = () => {
     <div>
       <div className="grid grid-cols-3  md:max-h-md  gap-3">
         <div className="col-span-3 max-h-96 overflow-hidden rounded-md">
-          <img
-            src={Home_1}
-            className="w-full h-full object-cover"
-            alt="1"
-          />
+          <img src={Home_1} className="w-full h-full object-cover" alt="1" />
         </div>
 
         <div className="col-span-1">

@@ -46,6 +46,6 @@ const BreadcrumbTop = () => {
       </BreadcrumbList>
     </Breadcrumb>
   );
-}
+};
 
-export default BreadcrumbTop
+export default BreadcrumbTop;

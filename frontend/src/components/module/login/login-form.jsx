@@ -56,8 +56,12 @@ const LoginForm = () => {
             placeholder="m@example.com"
             {...register("email", { required: "Email is required" })}
           />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-          {error?.email && <p className="text-red-500 text-sm">Invalid email address</p>}
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+          {error?.email && (
+            <p className="text-red-500 text-sm">Invalid email address</p>
+          )}
         </div>
 
         <div className="grid gap-2">
@@ -67,17 +71,32 @@ const LoginForm = () => {
           <Input
             id="password"
             type="password"
-            {...register("password", { required: "Password is required", minLength: 8 })}
+            {...register("password", {
+              required: "Password is required",
+              minLength: 8,
+            })}
           />
-          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
-          {error?.password && <p className="text-red-500 text-sm">Must be 8 or more characters long</p>}
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
+          {error?.password && (
+            <p className="text-red-500 text-sm">
+              Must be 8 or more characters long
+            </p>
+          )}
 
-          <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline text-purple-700">
+          <a
+            href="#"
+            className="ml-auto text-sm underline-offset-4 hover:underline text-purple-700"
+          >
             Forgot your password?
           </a>
         </div>
 
-        <Button type="submit" className={`${styles.bgCustom} w-full hover:opacity-90`}>
+        <Button
+          type="submit"
+          className={`${styles.bgCustom} w-full hover:opacity-90`}
+        >
           Login
         </Button>
       </div>

@@ -37,7 +37,6 @@ const Purchases = () => {
         </div>
       </div>
       <Paginationprofile />
-      
     </div>
   );
 };

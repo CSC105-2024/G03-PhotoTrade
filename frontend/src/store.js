@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
     counter: counterSlice,
     validate: valSlice,
-    auth: authSlice
+    auth: authSlice,
   },
 });
 

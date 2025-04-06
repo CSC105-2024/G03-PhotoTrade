@@ -53,7 +53,7 @@ const AddPicture = () => {
               <p>THB</p>
             </div>
 
-            <Dropdowncategoryprofile/>
+            <Dropdowncategoryprofile />
             <button className="mt-3 w-full bg-purple-500 text-white py-3 px-6 rounded-lg">
               Upload
             </button>

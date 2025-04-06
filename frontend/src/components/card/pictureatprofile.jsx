@@ -30,9 +30,7 @@ const Pictureatprofile = () => {
       <CardContent>
         <div className="flex justify-between items-center">
           <CardTitle className="text-xl">Sun</CardTitle>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
+          <button onClick={() => setMenuOpen(!menuOpen)}>
             <MoreHorizontal className="text-white" />
           </button>
 

@@ -12,23 +12,23 @@ export const authSlice = createSlice({
     token,
     error: null,
     success: false,
-    isAuthenticated: true,
+    isAuthenticated: false,
   },
   reducers: {
     loginStatus: (state, action) => {
-      state.userInfo = action.payload
+      state.userInfo = action.payload;
       state.isAuthenticated = true;
       // state.token = action.payload.token;
       // localStorage.setItem("token", action.payload.token);
     },
     logoutStatus: (state) => {
-      state.userInfo = {}
+      state.userInfo = {};
       state.isAuthenticated = false;
       // state.token = null;
       // localStorage.removeItem("token");
-    }
+    },
   },
 });
 
-export const  { loginStatus, logoutStatus } = authSlice.actions
+export const { loginStatus, logoutStatus } = authSlice.actions;
 export default authSlice.reducer;

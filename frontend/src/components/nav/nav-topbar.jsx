@@ -73,10 +73,8 @@ const Navbar = () => {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-  
-                <Link
-                  to={'user/auth/dashboard'}
-                >
+
+                <Link to={"user/auth/dashboard"}>
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                 </Link>
 

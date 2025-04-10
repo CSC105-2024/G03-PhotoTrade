@@ -1,8 +1,8 @@
 import { SquareArrowLeft } from "lucide-react";
-import LoginForm from "@/components/module/system/login-form";
+import RegisterForm from "@/components/module/system/register-form";
 import { Link, useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -16,7 +16,7 @@ const LoginPage = () => {
 
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
-            <LoginForm />
+            <RegisterForm />
           </div>
         </div>
 
@@ -37,4 +37,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

@@ -29,7 +29,7 @@ const LoginForm = () => {
   const submitForm = (data) => {
     dispatch(setCredentials(data));
     dispatch(loginStatus({ email: data.email, token: "fake-token" }));
-    navigate("/user/auth/dashboard")
+    navigate("/user/auth/dashboard/1")
   };
 
   return (
@@ -97,7 +97,12 @@ const LoginForm = () => {
 
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
-        <a href="#" className="underline underline-offset-4 text-purple-700">
+        <a 
+          className="underline underline-offset-4 text-purple-700"
+          onClick={() => {
+            navigate("/user/unauth/register")
+          }}
+        >
           Sign up
         </a>
       </div>

@@ -4,8 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { UserPen, UserPlus, Dot } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 
 const ProfileHeader = () => {
+  const navigate = useNavigate();
   return (
     <div className="mb-6 md:pt-20">
       {/* <AspectRatio ratio={3 / 1}>
@@ -36,7 +38,12 @@ const ProfileHeader = () => {
           </div>
 
           <div className="ml-auto space-x-2 hidden md:block">
-            <Button variant="outline">
+            <Button 
+              variant="outline"
+              onClick={() => {
+                navigate("/user/auth/edit")
+              }}
+            >
               <UserPen />
               Edit
             </Button>

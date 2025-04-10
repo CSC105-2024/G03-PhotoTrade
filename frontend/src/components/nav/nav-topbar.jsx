@@ -100,7 +100,7 @@ const Navbar = () => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
-                  <Link to={"user/auth/dashboard"}>
+                  <Link to={"user/auth/dashboard/1"}>
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                   </Link>
 

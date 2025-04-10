@@ -48,23 +48,14 @@ const Picture = () => {
                 size="icon"
                 className="ml-auto"
               >
-                <Ellipsis size={10}/>
+                <Ellipsis size={10} className="dark:text-white text-black"/>
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuItem>Add collection</DropdownMenuItem>
               <DropdownMenuSeparator />
-
-              <Link to={"user/auth/dashboard"}>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-              </Link>
-
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                Log out
-              </DropdownMenuItem>
+              <DropdownMenuItem>Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           )}

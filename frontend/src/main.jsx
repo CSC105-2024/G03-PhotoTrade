@@ -18,13 +18,21 @@ import { ThemeProvider } from "@/components/theme-provider";
 const App = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+  let isLayout = <Layout>{useRoutes(routes)}</Layout>
+  
+  if (currentPath === "/user/unauth/login" || currentPath === "/user/unauth/register") {
+    isLayout = useRoutes(routes)
+  }
+
+  if (matchPath("/user/auth/dashboard/:id", currentPath) || currentPath === "/user/auth/edit") {
+    isLayout = <ProtectRoute><Layout>{useRoutes(routes)}</Layout></ProtectRoute>
+  }
 
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <ScrollToTop />
-        <Layout>{useRoutes(routes)}</Layout>
-        {/* {useRoutes(routes)} */}
+        {isLayout}
       </ThemeProvider>
     </>
   );

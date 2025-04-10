@@ -26,7 +26,7 @@ const LoginPage = () => {
         />
       </div>
 
-      <div className="flex relative hidden bg-muted lg:block">
+      <div className="flex relative bg-muted lg:block hidden">
         <img
           src="/placeholder.svg"
           alt="Image"

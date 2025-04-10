@@ -46,7 +46,6 @@ function PaginationLink({ className, isActive, size = "icon", ...props }) {
           size,
         }),
         className,
-        isActive && "text-black",
       )}
       {...props}
     />

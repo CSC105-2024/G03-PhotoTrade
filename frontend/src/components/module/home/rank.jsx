@@ -19,7 +19,7 @@ const Rank = () => {
         "Discover the Most Popular Photographers and Artists on Our Platform"
       }
     >
-      <Table className="mt-10 max-w-2xl mx-auto text-white">
+      <Table className="mt-10 max-w-2xl mx-auto">
         <TableCaption>A list of Image Creater.</TableCaption>
         <TableHeader>
           <TableRow>

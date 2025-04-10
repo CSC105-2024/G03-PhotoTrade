@@ -18,7 +18,7 @@ const CategoryList = () => {
           opts={{
             align: "start",
           }}
-          className="w-full max-w-xs md:max-w-xl lg:max-w-4xl mt-16 mx-auto"
+          className="w-full max-w-xs md:max-w-xl lg:max-w-4xl mx-auto"
         >
           <CarouselContent>
             {categories.map((category) => (

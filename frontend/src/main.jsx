@@ -11,28 +11,21 @@ import {
 import Layout from "@/components/layouts/root-layout";
 import { Provider } from "react-redux";
 import store from "@/store";
-import ScrollToTop from "./hooks/scoll-to-top";
+import ScrollToTop from "./hooks/use-scroll";
 import ProtectRoute from "./routes/protect-route";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const App = () => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const path = ["/", "/market", "/profile/profile"];
-
-  const isProtectedRoute =
-    currentPath === "/user/auth" || matchPath("user/auth/:id", currentPath);
-
-  const protectedElement = isProtectedRoute ? 
-    (<ProtectRoute>{useRoutes(routes)}</ProtectRoute>) :
-    (useRoutes(routes));
-
-  const isLayoutRoute =
-    path.includes(currentPath) || matchPath("/market/:id", currentPath);
 
   return (
     <>
-      <ScrollToTop />
-      {isLayoutRoute ? <Layout>{useRoutes(routes)}</Layout> : protectedElement}
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ScrollToTop />
+        <Layout>{useRoutes(routes)}</Layout>
+        {/* {useRoutes(routes)} */}
+      </ThemeProvider>
     </>
   );
 };

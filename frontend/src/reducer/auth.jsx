@@ -12,20 +12,20 @@ export const authSlice = createSlice({
     token,
     error: null,
     success: false,
-    isAuthenticated: false,
+    isAuthenticated: !!token,
   },
   reducers: {
     loginStatus: (state, action) => {
       state.userInfo = action.payload;
       state.isAuthenticated = true;
-      // state.token = action.payload.token;
-      // localStorage.setItem("token", action.payload.token);
+      state.token = action.payload.token;
+      localStorage.setItem("token", action.payload.token);
     },
     logoutStatus: (state) => {
       state.userInfo = {};
       state.isAuthenticated = false;
-      // state.token = null;
-      // localStorage.removeItem("token");
+      state.token = null;
+      localStorage.removeItem("token");
     },
   },
 });

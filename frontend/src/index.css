@@ -118,11 +118,8 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
     font-family: "Roboto", sans-serif;
-    @apply bg-black text-white;
+    @apply dark:bg-black dark:text-white;
   }
 }

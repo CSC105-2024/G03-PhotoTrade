@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/sidebar";
 
 import { user } from "@/constants";
-import { useState } from "react";
 
 const NavUser = () => {
   const { isMobile } = useSidebar();

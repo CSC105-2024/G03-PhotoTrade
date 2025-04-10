@@ -1,15 +1,15 @@
 import React from "react";
 import detail from "@/assets/detail.png";
 import Ellipse from "@/assets/Ellipse.png";
-import Imageja from "./changeimage";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import BreadcrumbTop from "@/components/breadcrumb/breadcrumb-top";
+import { ShoppingCart } from 'lucide-react';
 
 const Detail = () => {
   return (
-    <div className="pt-6 md:pt-26">
+    <div className="md:pt-16">
       <BreadcrumbTop />
       <AspectRatio ratio={3 / 2} className="border border-gray-500 rounded-md">
         <img
@@ -53,8 +53,9 @@ const Detail = () => {
         <Button variant="outline">People & Lifestyle</Button>
       </div>
 
-      <Button variant="primary" className="w-full bg-green-500 md:hidden">
-        Buy now 100 THB
+      <Button variant="primary" className="w-full bg-green-500">
+        <ShoppingCart />
+        Buy now
       </Button>
     </div>
   );

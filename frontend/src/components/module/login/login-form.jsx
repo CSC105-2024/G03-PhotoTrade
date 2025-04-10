@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/reducer/validate";
 import { loginStatus } from "@/reducer/auth";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
@@ -29,14 +28,9 @@ const LoginForm = () => {
 
   const submitForm = (data) => {
     dispatch(setCredentials(data));
-    dispatch(loginStatus({ email: data.email, token: "mock-token" }));
+    dispatch(loginStatus({ email: data.email, token: "fake-token" }));
+    navigate("/user/auth/dashboard")
   };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-  }, [navigate, isAuthenticated]);
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-6">

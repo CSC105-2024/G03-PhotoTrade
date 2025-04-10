@@ -14,7 +14,7 @@ import { categories } from "@/constants";
 
 const Header = () => {
   return (
-    <section className="pt-6 md:pt-26">
+    <section className="md:pt-20">
       <div>
         <h1 className="text-4xl font-bold">Browse Marketplace</h1>
         <p className="mt-2 text-neutral-500">

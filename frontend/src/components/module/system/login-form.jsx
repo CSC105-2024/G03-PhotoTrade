@@ -29,7 +29,7 @@ const LoginForm = () => {
   const submitForm = (data) => {
     dispatch(setCredentials(data));
     dispatch(loginStatus({ email: data.email, token: "fake-token" }));
-    navigate("/user/auth/dashboard/1")
+    navigate("/user/auth/dashboard/1");
   };
 
   return (
@@ -43,7 +43,7 @@ const LoginForm = () => {
 
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">Email*</Label>
           <Input
             id="email"
             type="email"
@@ -60,7 +60,7 @@ const LoginForm = () => {
 
         <div className="grid gap-2">
           <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Password*</Label>
           </div>
           <Input
             id="password"
@@ -82,6 +82,9 @@ const LoginForm = () => {
           <a
             href="#"
             className="ml-auto text-sm underline-offset-4 hover:underline text-purple-700"
+            onClick={() => {
+              navigate("/user/unauth/forgetpassword");
+            }}
           >
             Forgot your password?
           </a>
@@ -91,16 +94,16 @@ const LoginForm = () => {
           type="submit"
           className={`${styles.bgCustom} w-full hover:opacity-90`}
         >
-          Login
+          Signin
         </Button>
       </div>
 
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
-        <a 
+        <a
           className="underline underline-offset-4 text-purple-700"
           onClick={() => {
-            navigate("/user/unauth/register")
+            navigate("/user/unauth/register");
           }}
         >
           Sign up

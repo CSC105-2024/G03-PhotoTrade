@@ -5,9 +5,11 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import BreadcrumbTop from "@/components/breadcrumb/breadcrumb-top";
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Detail = () => {
+  const navigate = useNavigate();
   return (
     <div className="md:pt-16">
       <BreadcrumbTop />
@@ -53,7 +55,12 @@ const Detail = () => {
         <Button variant="outline">People & Lifestyle</Button>
       </div>
 
-      <Button variant="primary" className="w-full bg-green-500">
+      <Button
+        className="w-full bg-green-500"
+        onClick={() => {
+          navigate("/market/confirm");
+        }}
+      >
         <ShoppingCart />
         Buy now
       </Button>

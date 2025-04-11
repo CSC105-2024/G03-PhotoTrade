@@ -20,7 +20,7 @@ const App = () => {
   const currentPath = location.pathname;
   let isLayout = <Layout>{useRoutes(routes)}</Layout>
   
-  if (currentPath === "/user/unauth/login" || currentPath === "/user/unauth/register") {
+  if (currentPath === "/user/unauth/login" || currentPath === "/user/unauth/register" || currentPath === "/user/unauth/forgetpassword") {
     isLayout = useRoutes(routes)
   }
 

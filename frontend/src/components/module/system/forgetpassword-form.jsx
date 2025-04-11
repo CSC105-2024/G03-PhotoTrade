@@ -8,7 +8,7 @@ import { setCredentials } from "@/reducer/validate";
 import { loginStatus } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
 
-const RegisterForm = () => {
+const Forgetpassword = () => {
   const { email, password, error } = useSelector((state) => state.validate);
   const { isAuthenticated } = useSelector((state) => state.auth);
 
@@ -37,7 +37,7 @@ const RegisterForm = () => {
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-4xl font-bold">Welcome</h1>
         <p className="text-balance text-sm text-muted-foreground">
-          Enter your information to signup to your account
+          No worries! Fill the form below to reset password.
         </p>
       </div>
       <div className="grid gap-2">
@@ -114,22 +114,22 @@ const RegisterForm = () => {
             navigate("/user/unauth/login");
           }}
         >
-          Signup
+          Reset password
         </Button>
         <div className="text-center text-sm">
-        Already have an account?{" "}
-        <a 
-          className="underline underline-offset-4 text-purple-700"
-          onClick={() => {
-            navigate("/user/unauth/login")
-          }}
-        >
-          Sign in
-        </a>
-      </div>
+          Already remember?{" "}
+          <a
+            className="underline underline-offset-4 text-purple-700"
+            onClick={() => {
+              navigate("/user/unauth/login");
+            }}
+          >
+            Sign in
+          </a>
+        </div>
       </div>
     </form>
   );
 };
 
-export default RegisterForm;
+export default Forgetpassword;

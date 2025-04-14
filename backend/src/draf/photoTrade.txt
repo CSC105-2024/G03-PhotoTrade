@@ -1,0 +1,40 @@
+table: users
+- user_id
+- username
+- bio
+- password
+- email
+- profile_url
+- banner_url
+- updated_at
+- created_at
+
+table: pictures
+- picture_id
+- user_id
+- price
+- title
+- description
+- thumbnail_url
+- create_at
+
+table: categorys
+- category_id
+- category_name
+
+table: pic_category
+- picture_id
+- category_id
+
+table: user_followers
+- follower_id
+- following_id
+
+table: user_like
+- user_id
+- picture_id
+
+table: trade
+- user_id
+- picture_id
+- trade_at

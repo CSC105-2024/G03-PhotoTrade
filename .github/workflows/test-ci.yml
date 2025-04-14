@@ -15,12 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Node.js frontend and backend build
-        uses: melvinsamuel070/nodejs-frontend-backend-build@v2
-        with:
-          frontend_directory: "./frontend"
-          backend_directory: "./backend"
-
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:

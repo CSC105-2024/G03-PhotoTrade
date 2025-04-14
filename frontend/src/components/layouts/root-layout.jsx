@@ -1,5 +1,4 @@
 import MenuLayout from "@/components/layouts/menu-layout";
-import Footer from "@/components/footer/footer";
 
 const Layout = ({ children }) => {
   return (

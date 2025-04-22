@@ -8,8 +8,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Ellipse from "@/assets/Ellipse.png";
 import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { useNavigate } from "react-router-dom";
+
 
 const ProfilEdit = () => {
+  const navigate = useNavigate();
   return (
     <div className="mb-6 md:pt-20">
       <Card>
@@ -21,7 +24,8 @@ const ProfilEdit = () => {
             </Avatar>
             <p className="ml-3 text-sm">YummyGuy</p>
           </div>
-          <Button variant={"outline"}>Change Picture</Button>
+          <Button variant={"outline"} >Change Picture</Button>
+
         </CardContent>
       </Card>
 
@@ -46,7 +50,14 @@ const ProfilEdit = () => {
           </Label>
           <Input id="bio" type="text" />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          onClick={() => {
+            navigate("/user/auth/dashboard/1");
+          }}
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );

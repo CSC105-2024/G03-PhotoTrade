@@ -20,10 +20,13 @@ import Ellipse from "@/assets/Ellipse.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const Picture = () => {
-  const [like, setLike] = useState(false);
+
+const Picture = ({ alwaysLike = false }) => {
+  const [like, setLike] = useState(alwaysLike);
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   return (
     <Card className="w-[250px] h-[400px] rounded-xl pt-0 mb-5">
@@ -67,7 +70,7 @@ const Picture = () => {
       </CardContent>
 
       <CardFooter className="flex justify-between items-center">
-        <div className="flex items-center mt-2">
+        <div className="flex items-center mt-2 cursor-pointer" onClick={() => navigate("/user/auth/dashboard/1")}>
           <Avatar>
             <AvatarImage src={Ellipse} alt="User avatar" />
             <AvatarFallback>CN</AvatarFallback>

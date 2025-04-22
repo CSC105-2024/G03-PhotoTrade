@@ -1,8 +1,9 @@
 import React from "react";
 import Protect from "@/assets/Protect.png";
 import styles from "@/style";
-
+import { useNavigate } from "react-router-dom";
 const Feature2 = () => {
+  const navigate = useNavigate();
   return (
     <section
       className={`grid grid-cols-1 md:grid-cols-2 items-center ${styles.paddingY}`}
@@ -28,7 +29,7 @@ const Feature2 = () => {
         </p>
 
         <div className="mt-7">
-          <a href="#">Join Now →</a>
+          <a onClick={() => navigate("/user/auth/dashboard/1")}>Join Now →</a>
         </div>
       </div>
     </section>

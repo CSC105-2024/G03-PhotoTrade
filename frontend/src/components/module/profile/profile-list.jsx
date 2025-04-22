@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/pagination";
 import AddPicture from "@/components/card/add-picture";
 import Picture from "@/components/card/picture";
+import Collection from "@/components/card/collection";
 
 const ProfileList = () => {
   return (
@@ -51,32 +52,47 @@ const ProfileList = () => {
 
         <TabsContent value="collections">
           <Card className="min-h-screen">
-              <CardContent>
-                <div className="flex justify-center mt-10 md:justify-between items-center">
-                  <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4"></div>
+            <CardContent>
+              <div className="flex justify-center mt-10 md:justify-between items-center">
+                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
+                  <Collection />
+                  <Collection />
+                  <Collection />
+                  <Collection />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="purchases">
           <Card className="min-h-screen">
-              <CardContent>
-                <div className="flex justify-center mt-10 md:justify-between items-center">
-                  <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4"></div>
+            <CardContent>
+              <div className="flex justify-center mt-10 md:justify-between items-center">
+                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
+                  <Picture />
+                  <Picture />
+                  <Picture />
+                  <Picture />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         <TabsContent value="favorites">
           <Card className="min-h-screen">
-              <CardContent>
-                <div className="flex justify-center mt-10 md:justify-between items-center">
-                  <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4"></div>
+            <CardContent>
+              <div className="flex justify-center mt-10 md:justify-between items-center">
+                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
+                  <Picture alwaysLike={true} />
+                  <Picture alwaysLike={true} />
+                  <Picture alwaysLike={true} />
+                  <Picture alwaysLike={true} />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
       </Tabs>
 

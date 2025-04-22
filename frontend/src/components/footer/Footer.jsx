@@ -2,10 +2,12 @@ import React from "react";
 import styles from "../../style";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+const Footer = forwardRef((props, ref) => {
   return (
     <footer
+      ref={ref}
       className={`footer relative z-0 footer-horizontal footer-center ${styles.bgCustom} text-white p-10 mt-5`}
+      {...props}
     >
       <nav className="grid grid-flow-col gap-4">
         <Link to="/" className="link link-hover">
@@ -61,6 +63,6 @@ const Footer = () => {
       </aside>
     </footer>
   );
-};
+});
 
 export default Footer;

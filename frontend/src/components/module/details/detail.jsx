@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const Categoryclick = () => {
+    navigate("/market");
+  };
   return (
     <div className="md:pt-16">
       <BreadcrumbTop />
@@ -41,7 +44,7 @@ const Detail = () => {
         </p>
       </div>
 
-      <div className="flex items-center my-5">
+      <div className="flex items-center my-5 cursor-pointer" onClick={() => navigate("/user/auth/dashboard/1")}>
         <Avatar>
           <AvatarImage src={Ellipse} alt="first" />
           <AvatarFallback>CN</AvatarFallback>
@@ -50,9 +53,9 @@ const Detail = () => {
       </div>
 
       <div className="space-x-2 mb-10">
-        <Button variant="outline">Nature & Wildlife</Button>
-        <Button variant="outline">Travel & Destinations</Button>
-        <Button variant="outline">People & Lifestyle</Button>
+        <Button variant="outline" onClick={Categoryclick}>Nature & Wildlife</Button>
+        <Button variant="outline" onClick={Categoryclick}>Travel & Destinations</Button>
+        <Button variant="outline" onClick={Categoryclick}>People & Lifestyle</Button>
       </div>
 
       <Button

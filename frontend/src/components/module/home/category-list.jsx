@@ -9,8 +9,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import MainLayout from "@/components/layouts/main-layout";
-
+import { useNavigate } from "react-router-dom";
 const CategoryList = () => {
+  const navigate = useNavigate();
   return (
     <MainLayout title={"Picture Category"}>
       <div className="flex justify-center">
@@ -25,6 +26,7 @@ const CategoryList = () => {
               <CarouselItem
                 key={category.id}
                 className="flex justify-center md:basis-1/2 lg:basis-1/3"
+                onClick={() => navigate(`/market/`)}
               >
                 <div className="p-1 mx-auto">
                   <Category title={category.name} />

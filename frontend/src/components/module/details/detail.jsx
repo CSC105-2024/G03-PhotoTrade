@@ -26,16 +26,14 @@ const Detail = () => {
 
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2">
         <div className="mt-10">
-          <h1 className="text-3xl font-bold text-white">Sunset in Thailand</h1>
-          <p className="text-gray-400">Sep 30, 2022</p>
+          <h1 className="text-3xl font-bold">Sunset in Thailand</h1>
+          <p className="">Sep 30, 2022</p>
         </div>
-        {/* <div className="hidden sm:block">
-          <Imageja />
-        </div> */}
+  
       </div>
 
       <div className="mb-26">
-        <p className="text-gray-400">
+        <p className="">
           This stunning sunset was captured in Thailand, showcasing vibrant
           orange and pink hues blending seamlessly across the sky. The calm
           water reflects the beauty of the evening, creating a serene and
@@ -53,9 +51,9 @@ const Detail = () => {
       </div>
 
       <div className="space-x-2 mb-10">
-        <Button variant="outline" onClick={Categoryclick}>Nature & Wildlife</Button>
-        <Button variant="outline" onClick={Categoryclick}>Travel & Destinations</Button>
-        <Button variant="outline" onClick={Categoryclick}>People & Lifestyle</Button>
+        <Button variant="outline" onClick={Categoryclick} className={'dark:text-white'}>Nature & Wildlife</Button>
+        <Button variant="outline" onClick={Categoryclick} className={'dark:text-white'}>Travel & Destinations</Button>
+        <Button variant="outline" onClick={Categoryclick} className={'dark:text-white'}>People & Lifestyle</Button>
       </div>
 
       <Button

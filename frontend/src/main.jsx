@@ -11,7 +11,7 @@ import {
 import Layout from "@/components/layouts/root-layout";
 import { Provider } from "react-redux";
 import store from "@/store";
-import ScrollToTop from "./hooks/use-scroll";
+import { ScrollToTop } from "./hooks/use-scrollto";
 import ProtectRoute from "./routes/protect-route";
 import { ThemeProvider } from "@/components/theme-provider";
 

@@ -18,7 +18,7 @@ const Collection = () => {
       <CardContent>
         <div className="grid grid-cols-3 md:max-h-md gap-3">
           <div className="col-span-3 max-h-96 overflow-hidden rounded-md cursor-pointer">
-            <button onClick={PhotoClick}>
+            <button onClick={PhotoClick} className="cursor-pointer">
               <img
                 src={Home_1}
                 className="w-full h-full object-cover"
@@ -28,13 +28,13 @@ const Collection = () => {
           </div>
 
           <div className="col-span-1 cursor-pointer">
-            <button onClick={PhotoClick}>
+            <button onClick={PhotoClick} className="cursor-pointer">
               <img src={Home_2} className="rounded-md" alt="2" />
             </button>
           </div>
 
           <div className="col-span-1 cursor-pointer">
-            <button onClick={PhotoClick}>
+            <button onClick={PhotoClick} className="cursor-pointer">
               <img src={Home_3} className="rounded-md" alt="3" />
             </button>
           </div>

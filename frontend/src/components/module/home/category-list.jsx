@@ -25,7 +25,7 @@ const CategoryList = () => {
             {categories.map((category) => (
               <CarouselItem
                 key={category.id}
-                className="flex justify-center md:basis-1/2 lg:basis-1/3"
+                className="flex justify-center md:basis-1/2 lg:basis-1/3 cursor-pointer"
                 onClick={() => navigate(`/market/`)}
               >
                 <div className="p-1 mx-auto">

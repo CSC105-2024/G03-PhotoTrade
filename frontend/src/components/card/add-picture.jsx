@@ -3,7 +3,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ImagePlus, ImageUp } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import Dropdowncategoryprofile from "@/components/dropdown/selectcategory";
 import { Button } from "../ui/button";
 
 const AddPicture = () => {
@@ -52,7 +51,6 @@ const AddPicture = () => {
               />
             </div>
 
-            {/* <Dropdowncategoryprofile /> */}
             <Button variant={"outline"} className="w-full">Upload</Button>
           </div>
         </div>

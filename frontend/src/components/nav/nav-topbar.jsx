@@ -16,12 +16,12 @@ import {
 import { Button } from "../ui/button";
 import { CircleUser, LogOut, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
-
+import { ScrollToBottom } from "@/hooks/use-scrollto";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
 
   const [active, setActive] = useState(location.pathname);
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -51,9 +51,15 @@ const Navbar = () => {
               <li
                 key={item.id}
                 className={`cursor-pointer ${styles.underEffect} ${active === `/${item.id}` ? "dark:text-white" : " text-neutral-500"}`}
+                onClick={(e) => {
+                  if (item.id === "footer") {
+                    e.preventDefault(); // กันไม่ให้ <Link> ทำงาน
+                    ScrollToBottom(); // เรียกเป็นฟังก์ชัน
+                  }
+                }}
               >
                 <Link
-                  to={`/${item.id}`}
+                  to={item.id === "footer" ? "#" : `/${item.id}`}
                   aria-current={active === `/${item.id}` ? "pages" : undefined}
                 >
                   {item.title}
@@ -65,7 +71,11 @@ const Navbar = () => {
           <div className="flex space-x-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" size="icon" className="rounded-full hidden md:flex">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full hidden md:flex"
+                >
                   <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                   <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-white" />
                   <span className="sr-only">Toggle theme</span>
@@ -116,12 +126,12 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-               <Button 
-               className={`${styles.bgCustom} py-2 px-3 hidden md:flex`}
-               onClick={() => navigate("/user/unauth/login")}
-             >
-               Sign In
-             </Button>
+              <Button
+                className={`${styles.bgCustom} py-2 px-3 hidden md:flex`}
+                onClick={() => navigate("/user/unauth/login")}
+              >
+                Sign In
+              </Button>
             )}
           </div>
         </div>

@@ -1,47 +1,42 @@
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
+import { Ellipsis } from "lucide-react";
 const BreadcrumbTop = () => {
   return (
     <Breadcrumb>
-      <BreadcrumbList>
+      <BreadcrumbList className="text-gray-700 dark:text-gray-200">
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbLink
+            href="/"
+            className="text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:underline"
+          >
+            Home
+          </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
+        <BreadcrumbSeparator className="text-gray-400 dark:text-gray-500" />
         <BreadcrumbItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1">
-              <BreadcrumbEllipsis className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem>Documentation</DropdownMenuItem>
-              <DropdownMenuItem>Themes</DropdownMenuItem>
-              <DropdownMenuItem>GitHub</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Ellipsis size={16} />{" "}
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
+        <BreadcrumbSeparator className="text-gray-400 dark:text-gray-500" />
         <BreadcrumbItem>
-          <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
+          <BreadcrumbLink
+            href="/docs/components"
+            className="text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:underline"
+          >
+            Components
+          </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
+        <BreadcrumbSeparator className="text-gray-400 dark:text-gray-500" />
         <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+          <BreadcrumbPage className="font-semibold text-gray-900 dark:text-white hover:text-black dark:hover:text-white hover:underline cursor-pointer">
+            Breadcrumb
+          </BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

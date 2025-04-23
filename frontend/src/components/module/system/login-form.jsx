@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/reducer/validate";
 import { loginStatus } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const LoginForm = () => {
   const { email, password, error } = useSelector((state) => state.validate);
   const { isAuthenticated } = useSelector((state) => state.auth);
 
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,14 +65,25 @@ const LoginForm = () => {
           <div className="flex items-center">
             <Label htmlFor="password">Password*</Label>
           </div>
-          <Input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: 8,
-            })}
-          />
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: "Password is required",
+                minLength: 8,
+              })}
+              className="pr-10" // เพิ่ม padding ขวาให้ input
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+            </button>
+          </div>
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
           )}
@@ -78,7 +92,6 @@ const LoginForm = () => {
               Must be 8 or more characters long
             </p>
           )}
-
           <a
             href="#"
             className="ml-auto text-sm underline-offset-4 hover:underline text-purple-700"

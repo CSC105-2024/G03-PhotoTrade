@@ -2,8 +2,10 @@ import React from "react";
 import styles from "../../../style";
 import { pic } from "@/constants";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="grid md:grid-cols-2 gap-10 items-center min-h-screen">
       <div className="text-center md:text-left w-full max-w-lg space-y-6 order-2 mt-5 md:order-1">
@@ -22,7 +24,7 @@ const Hero = () => {
           and connect with buyers who appreciate your creativity.
         </p>
 
-        <Button className={`${styles.bgCustom} py-2 px-3`}>Explore</Button>
+        <Button className={`${styles.bgCustom} py-2 px-3 text-white`} onClick={() => navigate("/market")}>Explore</Button>
       </div>
 
       <div className="flex justify-center items-center order-1 md:order-2 z-1">

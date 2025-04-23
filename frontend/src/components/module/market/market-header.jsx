@@ -1,16 +1,7 @@
 import React from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { categories } from "@/constants";
+import { Dropdowncategoryprofile } from "@/components/dropdown/selectcategory";
 
 const Header = () => {
   return (
@@ -31,22 +22,7 @@ const Header = () => {
             className="w-full rounded-lg  pl-8 md:w-[200px] lg:w-[336px]"
           />
 
-          <Select>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Select a category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Catagory</SelectLabel>
-
-                {categories.map((category) => (
-                  <SelectItem key={category.id} value={category.name}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Dropdowncategoryprofile />
         </div>
       </div>
     </section>

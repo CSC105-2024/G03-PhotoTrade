@@ -1,5 +1,4 @@
 import { User, ChevronsUpDown, LogOut } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -16,12 +15,16 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-
 import { user } from "@/constants";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutStatus } from "@/reducer/auth";
+
 const NavUser = () => {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -64,7 +67,7 @@ const NavUser = () => {
               <DropdownMenuItem
                 onClick={() => navigate("/user/auth/dashboard/1")}
               >
-                <User />
+                <User className="mr-2" />
                 Profile
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -75,7 +78,7 @@ const NavUser = () => {
                 navigate("/");
               }}
             >
-              <LogOut />
+              <LogOut className="mr-2" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

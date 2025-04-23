@@ -8,14 +8,19 @@ const ScrollToTop = () => {
   }, [pathname]);
 
   return null;
-}
+};
 
 const ScrollToBottom = () => {
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    left: 0,
-    behavior: "smooth",
-  });
-}
+  const footer = document.getElementById("footer");
+  if (footer) {
+    footer.scrollIntoView({ behavior: "smooth" });
+  } else {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+};
 
 export { ScrollToTop, ScrollToBottom };

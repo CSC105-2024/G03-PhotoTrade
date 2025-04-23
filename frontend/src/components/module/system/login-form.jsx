@@ -73,7 +73,7 @@ const LoginForm = () => {
                 required: "Password is required",
                 minLength: 8,
               })}
-              className="pr-10" // เพิ่ม padding ขวาให้ input
+              className="pr-10" 
             />
             <button
               type="button"
@@ -105,7 +105,7 @@ const LoginForm = () => {
 
         <Button
           type="submit"
-          className={`${styles.bgCustom} w-full hover:opacity-90`}
+          className={`${styles.bgCustom} w-full hover:opacity-90 text-white`}
         >
           Signin
         </Button>

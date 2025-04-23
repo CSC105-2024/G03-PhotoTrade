@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -9,6 +9,15 @@ import { useNavigate } from "react-router-dom";
 
 const ProfilEdit = () => {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log("เลือกไฟล์:", file);
+    }
+  };
+
   return (
     <div className="mb-6 md:pt-20">
       <Card className="bg-white dark:bg-[#18181b] shadow-md">
@@ -22,15 +31,28 @@ const ProfilEdit = () => {
               YummyGuy
             </p>
           </div>
-          <Button
-            variant="outline"
-            className="border-gray-300 dark:border-gray-600 dark:text-white"
-          >
-            Change Picture
-          </Button>
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+            <Button
+              variant="outline"
+              className="border-gray-300 dark:border-gray-600 dark:text-white"
+              onClick={() =>
+                fileInputRef.current && fileInputRef.current.click()
+              }
+              type="button"
+            >
+              Change Picture
+            </Button>
+          </div>
         </CardContent>
       </Card>
-      
+
       <form className="py-4">
         <div className="mb-5">
           <Label htmlFor="username" className="mb-2 text-md">

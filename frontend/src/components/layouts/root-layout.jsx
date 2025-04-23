@@ -1,5 +1,5 @@
 import MenuLayout from "@/components/layouts/menu-layout";
-
+import Footer from "@/components/footer/Footer";
 const Layout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">

@@ -53,8 +53,8 @@ const Navbar = () => {
                 className={`cursor-pointer ${styles.underEffect} ${active === `/${item.id}` ? "dark:text-white" : " text-neutral-500"}`}
                 onClick={(e) => {
                   if (item.id === "footer") {
-                    e.preventDefault(); // กันไม่ให้ <Link> ทำงาน
-                    ScrollToBottom(); // เรียกเป็นฟังก์ชัน
+                    e.preventDefault(); 
+                    ScrollToBottom(); 
                   }
                 }}
               >

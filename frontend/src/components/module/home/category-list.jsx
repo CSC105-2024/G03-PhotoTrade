@@ -35,8 +35,16 @@ const CategoryList = () => {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious className="left-[-50px]" />
-          <CarouselNext className="right-[-50px] " />
+          <CarouselPrevious
+            className="left-[-30px] lg:left-[-50px] bg-white dark:bg-white border border-gray-200 shadow
+    hover:bg-gray-100 dark:hover:bg-gray-300
+    [&>svg]:!text-black"
+          />
+          <CarouselNext
+            className="right-[-30px] lg:right-[-50px] bg-white dark:bg-white border border-gray-200 shadow
+    hover:bg-gray-100 dark:hover:bg-gray-300
+    [&>svg]:!text-black"
+          />
         </Carousel>
       </div>
     </MainLayout>

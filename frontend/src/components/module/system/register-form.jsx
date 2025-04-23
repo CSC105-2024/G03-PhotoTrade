@@ -4,8 +4,7 @@ import { Label } from "@/components/ui/label";
 import styles from "@/style";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setCredentials } from "@/reducer/validate";
-import { loginStatus } from "@/reducer/auth";
+import { createUser } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
@@ -21,15 +20,25 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: email || "",
-      password: password || "",
+      name: '',
+      email: '',
+      password: '',
     },
   });
 
-  const submitForm = (data) => {
-    dispatch(setCredentials(data));
-    dispatch(loginStatus({ email: data.email, token: "fake-token" }));
-    navigate("/user/auth/dashboard");
+  const submitForm = async (data) => {
+    // dispatch(setCredentials(data));
+    // dispatch(loginStatus({ email: data.email, token: "fake-token" }));
+    const response = await createUser(data)
+    console.log(response);
+    // await dispatch(response.data)
+
+    // const response = dispatch(createUser(data))
+    
+    // if (response.status === 201) {
+    //   navigate("/");
+    //   console.log('SignUp Successfull')
+    // }
   };
 
   return (
@@ -44,7 +53,11 @@ const RegisterForm = () => {
         <div className="flex items-center">
           <Label htmlFor="Username">Username*</Label>
         </div>
-        <Input />
+        <Input 
+          id="name"
+          type="text"
+          {...register("name", { required: "Username is required"})}
+        />
       </div>
 
       <div className="grid gap-6">
@@ -110,9 +123,6 @@ const RegisterForm = () => {
         <Button
           type="submit"
           className={`${styles.bgCustom} w-full hover:opacity-90`}
-          onClick={() => {
-            navigate("/user/unauth/login");
-          }}
         >
           Signup
         </Button>

@@ -2,6 +2,7 @@ import React from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Dropdowncategoryprofile } from "@/components/dropdown/selectcategory";
+import { Dropdownfilter } from "@/components/dropdown/selectfilter";
 
 const Header = () => {
   return (
@@ -21,7 +22,7 @@ const Header = () => {
             placeholder="Search..."
             className="w-full rounded-lg  pl-8 md:w-[200px] lg:w-[336px]"
           />
-
+          <Dropdownfilter />
           <Dropdowncategoryprofile />
         </div>
       </div>

@@ -22,10 +22,10 @@ const ProfileHeader = () => {
         </Avatar>
 
         <div className="ml-4 flex-1">
-          <h1 className="text-xl font-bold text-white dark:text-white">
+          <h1 className="text-xl font-bold  dark:text-white">
             Mrnatural
           </h1>
-          <div className="flex h-5 items-center space-x-2 text-sm text-gray-300 dark:text-gray-300">
+          <div className="flex h-5 items-center space-x-2 text-sm  dark:text-gray-300">
             <span>100 followers</span>
             <Dot />
             <span>100 following</span>
@@ -37,7 +37,7 @@ const ProfileHeader = () => {
         <div className="ml-auto space-y-2 hidden md:flex flex">
           <Button
             variant="outline"
-            className="border-gray-600 dark:border-gray-700 text-white dark:text-gray-100"
+            className="border-gray-600 dark:border-gray-700  dark:text-gray-100 mr-4"
             onClick={() => navigate("/user/auth/edit")}
           >
             <UserPen className="mr-1" />
@@ -45,7 +45,7 @@ const ProfileHeader = () => {
           </Button>
           <Button
             variant="outline"
-            className="border-gray-600 dark:border-gray-700 text-white dark:text-gray-100"
+            className="border-gray-600 dark:border-gray-700  dark:text-gray-100"
             onClick={handleButtonClick}
           >
             {isFollow ? <UserMinus className="mr-1" /> : <UserPlus className="mr-1" />}

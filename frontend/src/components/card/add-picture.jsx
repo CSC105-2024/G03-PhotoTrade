@@ -10,17 +10,16 @@ const AddPicture = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Card className="w-[250px] h-[400px] rounded-xl p-6 border-none cursor-pointer">
-            <div className="flex justify-center items-center w-full h-full rounded-xl border-2 border-purple-500 border-dashed">
-              <ImagePlus size={48} />
-            </div>
+          <div className="flex justify-center items-center w-full h-full rounded-xl border-2 border-purple-500 border-dashed">
+            <ImagePlus size={48} />
+          </div>
         </Card>
       </DialogTrigger>
 
       <DialogContent className="rounded-xl p-8">
         <div className="lg:flex lg:gap-8">
-
-          <Card className="flex justify-center items-center w-[250px] cursor-pointer">
-            <CardContent className="flex justify-center items-center">
+          <Card className="flex justify-center items-center w-[250px] cursor-pointer ">
+            <CardContent className="flex justify-center items-center ">
               <ImageUp size={100} strokeWidth={1.75} color="#787878" />
             </CardContent>
           </Card>
@@ -44,14 +43,12 @@ const AddPicture = () => {
 
             <label className="block text-sm mb-1">Price</label>
             <div className="flex items-center gap-2 mb-3">
-              <Input
-                type="text"
-                placeholder="Enter price"
-                className="w-full"
-              />
+              <Input type="text" placeholder="Enter price" className="w-full" />
             </div>
 
-            <Button variant={"outline"} className="w-full">Upload</Button>
+            <Button variant={"outline"} className="w-full dark:text-white">
+              Upload
+            </Button>
           </div>
         </div>
       </DialogContent>

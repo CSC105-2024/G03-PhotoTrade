@@ -1,5 +1,7 @@
 import MenuLayout from "@/components/layouts/menu-layout";
 import Footer from "@/components/footer/footer";
+import { Toaster } from 'sonner';
+
 const Layout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -10,6 +12,7 @@ const Layout = ({ children }) => {
         </main>
       </div>
       <Footer />
+      <Toaster richColors position="bottom-right" />
     </div>
   );
 };

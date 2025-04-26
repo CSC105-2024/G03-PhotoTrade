@@ -31,7 +31,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     loading: false,
-    userInfo: {},
+    userInfo: [],
     token,
     error: null,
     success: false,
@@ -53,12 +53,13 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(createUser.pending, (state, action) => {
+    .addCase(createUser.pending, (state) => {
       state.loading = true
     })
     .addCase(createUser.fulfilled, (state, action) => {
-      state.userInfo = action.payload
+      state.userInfo.push(action.payload)
       state.loading = false
+      state.success = true
     })
   }
 });

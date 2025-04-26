@@ -6,38 +6,47 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { signUpValidation } from "@/reducer/validate";
 
 const RegisterForm = () => {
-  const { email, password, error } = useSelector((state) => state.validate);
-  const { isAuthenticated } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm({
     defaultValues: {
       name: '',
       email: '',
       password: '',
+      passwordAgain: '',
     },
   });
 
-  const submitForm = async (data) => {
-    // dispatch(setCredentials(data));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { errorVal, userInfo, blankInput } = useSelector((state) => state.validate);
+  const { isAuthenticated, success } = useSelector((state) => state.auth);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
+
+
+  const submitForm = (data) => {
     // dispatch(loginStatus({ email: data.email, token: "fake-token" }));
-    const response = await createUser(data)
-    console.log(response);
-    // await dispatch(response.data)
+    const value = {
+      name: data.name || '',
+      email: data.email || '',
+      password: data.password || '',
+      passwordAgain: data.passwordAgain || '',
+    }
+    dispatch(signUpValidation(value))
 
     // const response = dispatch(createUser(data))
-    
-    // if (response.status === 201) {
-    //   navigate("/");
-    //   console.log('SignUp Successfull')
+    // console.log(response);
+    // if (success) {
+    //   navigate('/')
     // }
   };
 
@@ -51,73 +60,83 @@ const RegisterForm = () => {
       </div>
       <div className="grid gap-2">
         <div className="flex items-center">
-          <Label htmlFor="Username">Username*</Label>
+          <Label htmlFor="Username">Username</Label>
         </div>
         <Input 
           id="name"
           type="text"
-          {...register("name", { required: "Username is required"})}
+          {...register("name")}
         />
+        <p className="text-red-500 text-sm">{errorVal.name}</p>
       </div>
 
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <Label htmlFor="email">Email*</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
             id="email"
-            type="email"
+            type="text"
             placeholder="m@example.com"
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
-          )}
-          {error?.email && (
-            <p className="text-red-500 text-sm">Invalid email address</p>
-          )}
+          <p className="text-red-500 text-sm">{errorVal.email}</p>
         </div>
 
         <div className="grid gap-2">
           <div className="flex items-center">
-            <Label htmlFor="password">Password*</Label>
+            <Label htmlFor="password">Password</Label>
           </div>
-          <Input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: 8,
-            })}
-          />
-          {errors.password && (
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              className="pr-10"
+              {...register("password")}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
+            </button>
+          </div>
+          {/* {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )}
-          {error?.password && (
+          )} */}
+          {/* {error?.password && (
             <p className="text-red-500 text-sm">
               Must be 8 or more characters long
             </p>
-          )}
+          )} */}
+          <p className="text-red-500 text-sm">{errorVal.password}</p>
         </div>
+
         <div className="grid gap-2">
           <div className="flex items-center">
-            <Label htmlFor="password">Password Again*</Label>
+            <Label htmlFor="passwordAgain">Password again</Label>
           </div>
-          <Input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: 8,
-            })}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )}
-          {error?.password && (
-            <p className="text-red-500 text-sm">
-              Must be 8 or more characters long
-            </p>
-          )}
+          <div className="relative">
+            <Input
+              id="passwordAgain"
+              type={showPasswordAgain ? "text" : "password"}
+              className="pr-10"
+              {...register("passwordAgain")}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPasswordAgain((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+              tabIndex={-1}
+            >
+              {showPasswordAgain ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
+            </button>
+          </div>
+          {/* {errors.passwordAgain && (
+            <p className="text-red-500 text-sm">{errors.passwordAgain.message}</p>
+          )} */}
+          <p className="text-red-500 text-sm">{errorVal.password}</p>
         </div>
 
         <Button
@@ -127,17 +146,20 @@ const RegisterForm = () => {
           Signup
         </Button>
         <div className="text-center text-sm">
-        Already have an account?{" "}
-        <a 
-          className="underline underline-offset-4 text-purple-700"
-          onClick={() => {
-            navigate("/user/unauth/login")
-          }}
-        >
-          Sign in
-        </a>
+          Already have an account?{" "}
+          <a
+            className="underline underline-offset-4 text-purple-700 cursor-pointer"
+            onClick={() => {
+              navigate("/user/unauth/login");
+            }}
+          >
+            Sign in
+          </a>
+        </div>
       </div>
-      </div>
+      {console.log('errors', errorVal)}
+      {console.log('userInfo', userInfo)}
+      {console.log('blankInput', blankInput)}
     </form>
   );
 };

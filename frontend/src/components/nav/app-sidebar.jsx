@@ -29,8 +29,8 @@ import {
 import NavUser from "./nav-user";
 import { navLinks } from "@/constants";
 import { Link } from "react-router-dom";
+import { ScrollToBottom } from "@/hooks/use-scrollto";
 
-// Menu items.
 const items = [
   {
     title: "Home",
@@ -189,10 +189,23 @@ const AppSidebar = ({ ...props }) => {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link to={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
+                    {item.url === "/footer" ? (
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          ScrollToBottom();
+                        }}
+                        className="flex items-center"
+                      >
+                        <item.icon className="w-5 h-5 mr-2" />
+                        <span>{item.title}</span>
+                      </a>
+                    ) : (
+                      <Link to={item.url} className="flex items-center">
+                        <item.icon className="w-5 h-5 mr-2" />
+                        <span>{item.title}</span>
+                      </Link>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

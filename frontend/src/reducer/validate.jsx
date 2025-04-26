@@ -1,33 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { z } from "zod";
 
-const valSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(8, { message: "Must be 8 or more characters long" }),
+const isAnyKeyBlank = (object) => {
+  const find = Object.keys(object)
+    .filter((key) => object[key] === '')
+    .map((key) => key)
+
+  return find
+}
+
+const signUp = z.object({
+  name: z.string().min(3, {message: 'Name must be at least 3 Characters'}).trim(),
+  email: z.string().email({message: 'Invalid email address'}),
+  password: z
+  .string()
+  .trim()
+  .refine(value =>
+      /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/ .test(value),
+      {
+        message: "Invalid password",
+      }
+  )
 });
 
 export const valSlice = createSlice({
   name: "validate",
   initialState: {
-    email: "",
-    password: "",
-    error: null,
+    userInfo: {},
+    blankInput: [],
+    errorVal: {},
   },
   reducers: {
-    setCredentials: (state, action) => {
-      const result = valSchema.safeParse(action.payload);
+    signUpValidation: (state, action) => {
+      const result = signUp.safeParse(action.payload);
 
-      if (result.success) {
-        state.email = action.payload.email;
-        state.password = action.payload.password;
-        state.error = null;
+      state.userInfo = action.payload
+      state.blankInput = isAnyKeyBlank(state.userInfo)
+
+      if (!result.success) {
+        const fieldErrors = result.error.flatten().fieldErrors
+        state.errorVal = fieldErrors
       } else {
-        console.log(result.error.issues);
-        state.error = result.error.format();
+        state.errorVal = {}
       }
     },
   },
 });
 
-export const { setCredentials } = valSlice.actions;
+export const { signUpValidation } = valSlice.actions;
 export default valSlice.reducer;

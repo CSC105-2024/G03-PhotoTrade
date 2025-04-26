@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const Categoryclick = () => {
+    navigate("/market");
+  };
   return (
     <div className="md:pt-16">
       <BreadcrumbTop />
@@ -23,16 +26,14 @@ const Detail = () => {
 
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2">
         <div className="mt-10">
-          <h1 className="text-3xl font-bold text-white">Sunset in Thailand</h1>
-          <p className="text-gray-400">Sep 30, 2022</p>
+          <h1 className="text-3xl font-bold">Sunset in Thailand</h1>
+          <p className="">Sep 30, 2022</p>
         </div>
-        {/* <div className="hidden sm:block">
-          <Imageja />
-        </div> */}
+  
       </div>
 
       <div className="mb-26">
-        <p className="text-gray-400">
+        <p className="">
           This stunning sunset was captured in Thailand, showcasing vibrant
           orange and pink hues blending seamlessly across the sky. The calm
           water reflects the beauty of the evening, creating a serene and
@@ -41,7 +42,7 @@ const Detail = () => {
         </p>
       </div>
 
-      <div className="flex items-center my-5">
+      <div className="flex items-center my-5 cursor-pointer" onClick={() => navigate("/user/auth/dashboard/1")}>
         <Avatar>
           <AvatarImage src={Ellipse} alt="first" />
           <AvatarFallback>CN</AvatarFallback>
@@ -50,9 +51,9 @@ const Detail = () => {
       </div>
 
       <div className="space-x-2 mb-10">
-        <Button variant="outline">Nature & Wildlife</Button>
-        <Button variant="outline">Travel & Destinations</Button>
-        <Button variant="outline">People & Lifestyle</Button>
+        <Button variant="outline" onClick={Categoryclick} className={'dark:text-white'}>Nature & Wildlife</Button>
+        <Button variant="outline" onClick={Categoryclick} className={'dark:text-white'}>Travel & Destinations</Button>
+        <Button variant="outline" onClick={Categoryclick} className={'dark:text-white'}>People & Lifestyle</Button>
       </div>
 
       <Button

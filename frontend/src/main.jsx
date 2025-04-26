@@ -11,9 +11,9 @@ import {
 import Layout from "@/components/layouts/root-layout";
 import { Provider } from "react-redux";
 import store from "@/store";
-import ScrollToTop from "./hooks/use-scroll";
+import { ScrollToTop } from "./hooks/use-scrollto";
 import ProtectRoute from "./routes/protect-route";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/hooks/theme-provider";
 
 const App = () => {
   const location = useLocation();
@@ -31,7 +31,7 @@ const App = () => {
   return (
     <>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <ScrollToTop />
+        {ScrollToTop()}
         {isLayout}
       </ThemeProvider>
     </>

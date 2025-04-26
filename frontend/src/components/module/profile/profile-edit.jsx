@@ -1,27 +1,55 @@
-import React from "react";
-import Backgroundpro from "@/assets/Backgroundpro.png";
-import Ellipsebutbigger from "@/assets/Ellipsebutbigger.png";
-import { ImageUp } from "lucide-react";
+import React, { useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Ellipse from "@/assets/Ellipse.png";
 import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 const ProfilEdit = () => {
+  const fileInputRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log("เลือกไฟล์:", file);
+    }
+  };
+
   return (
     <div className="mb-6 md:pt-20">
-      <Card>
+      <Card className="bg-white dark:bg-[#18181b] shadow-md">
         <CardContent className="flex justify-between items-center">
           <div className="flex items-center mt-2">
             <Avatar className="h-10 w-10">
               <AvatarImage src={Ellipse} alt="User avatar" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <p className="ml-3 text-sm">YummyGuy</p>
+            <p className="ml-3 text-sm text-gray-900 dark:text-white">
+              YummyGuy
+            </p>
           </div>
-          <Button variant={"outline"}>Change Picture</Button>
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+            <Button
+              variant="outline"
+              className="border-gray-300 dark:border-gray-600 dark:text-white"
+              onClick={() =>
+                fileInputRef.current && fileInputRef.current.click()
+              }
+              type="button"
+            >
+              Change Picture
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
@@ -46,7 +74,14 @@ const ProfilEdit = () => {
           </Label>
           <Input id="bio" type="text" />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button
+          type="submit"
+          onClick={() => {
+            navigate("/user/auth/dashboard/1");
+          }}
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );

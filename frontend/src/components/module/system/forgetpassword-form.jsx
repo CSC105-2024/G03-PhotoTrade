@@ -7,14 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/reducer/validate";
 import { loginStatus } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const Forgetpassword = () => {
-  const { email, password, error } = useSelector((state) => state.validate);
-  const { isAuthenticated } = useSelector((state) => state.auth);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -26,6 +22,15 @@ const Forgetpassword = () => {
     },
   });
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { email, password, error } = useSelector((state) => state.validate);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordAgain, setShowPasswordAgain] = useState(false);
+
   const submitForm = (data) => {
     dispatch(setCredentials(data));
     dispatch(loginStatus({ email: data.email, token: "fake-token" }));
@@ -35,9 +40,9 @@ const Forgetpassword = () => {
   return (
     <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-4xl font-bold">Welcome</h1>
+        <h1 className="text-4xl font-bold">Dont worries!</h1>
         <p className="text-balance text-sm text-muted-foreground">
-          No worries! Fill the form below to reset password.
+          Fill the form below to reset password.
         </p>
       </div>
       <div className="grid gap-2">
@@ -68,14 +73,25 @@ const Forgetpassword = () => {
           <div className="flex items-center">
             <Label htmlFor="password">Password*</Label>
           </div>
-          <Input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: 8,
-            })}
-          />
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: "Password is required",
+                minLength: 8,
+              })}
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+            </button>
+          </div>
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
           )}
@@ -87,29 +103,35 @@ const Forgetpassword = () => {
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
-            <Label htmlFor="password">Password Again*</Label>
+            <Label htmlFor="passwordAgain">Password Again*</Label>
           </div>
-          <Input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: 8,
-            })}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )}
-          {error?.password && (
-            <p className="text-red-500 text-sm">
-              Must be 8 or more characters long
-            </p>
+          <div className="relative">
+            <Input
+              id="passwordAgain"
+              type={showPasswordAgain ? "text" : "password"}
+              {...register("passwordAgain", {
+                required: "Password Again is required",
+                minLength: 8,
+              })}
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPasswordAgain((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+              tabIndex={-1}
+            >
+              {showPasswordAgain ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+            </button>
+          </div>
+          {errors.passwordAgain && (
+            <p className="text-red-500 text-sm">{errors.passwordAgain.message}</p>
           )}
         </div>
 
         <Button
           type="submit"
-          className={`${styles.bgCustom} w-full hover:opacity-90`}
+          className={`${styles.bgCustom} w-full hover:opacity-90 text-white`}
           onClick={() => {
             navigate("/user/unauth/login");
           }}

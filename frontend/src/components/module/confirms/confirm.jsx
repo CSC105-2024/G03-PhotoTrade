@@ -20,7 +20,7 @@ const Confirms = () => {
       </AspectRatio>
 
       <div className="mt-5">
-        <p className="text-3xl font-bold text-white justify-center flex">
+        <p className="text-3xl font-bold  justify-center flex ">
           Sunset in Thailand
         </p>
       </div>
@@ -42,7 +42,7 @@ const Confirms = () => {
 
       <Button
         variant="primary"
-        className="w-full bg-green-500"
+        className="w-full bg-green-500 text-black dark:text-white"
         onClick={() => {
           navigate("/market");
         }}
@@ -50,7 +50,6 @@ const Confirms = () => {
         <CircleCheckBig />
         confirm
       </Button>
-      
     </div>
   );
 };

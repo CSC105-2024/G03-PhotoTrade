@@ -4,30 +4,32 @@ import { Label } from "@/components/ui/label";
 import styles from "@/style";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { setCredentials } from "@/reducer/validate";
 import { loginStatus } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const LoginForm = () => {
-  const { email, password, error } = useSelector((state) => state.validate);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const {
+    register,
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: email || "",
-      password: password || "",
-    },
-  });
+  const { email, password, error } = useSelector((state) => state.validate);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const submitForm = (data) => {
-    dispatch(setCredentials(data));
+    // dispatch(setCredentials(data));
     dispatch(loginStatus({ email: data.email, token: "fake-token" }));
     navigate("/user/auth/dashboard/1");
   };
@@ -48,36 +50,30 @@ const LoginForm = () => {
             id="email"
             type="email"
             placeholder="m@example.com"
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
-          )}
-          {error?.email && (
-            <p className="text-red-500 text-sm">Invalid email address</p>
-          )}
         </div>
 
         <div className="grid gap-2">
           <div className="flex items-center">
             <Label htmlFor="password">Password*</Label>
           </div>
-          <Input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: 8,
-            })}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )}
-          {error?.password && (
-            <p className="text-red-500 text-sm">
-              Must be 8 or more characters long
-            </p>
-          )}
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              className="pr-10" 
+              {...register("password")}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+              tabIndex={-1}
+            >
+              {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+            </button>
+          </div>
 
           <a
             href="#"
@@ -92,13 +88,13 @@ const LoginForm = () => {
 
         <Button
           type="submit"
-          className={`${styles.bgCustom} w-full hover:opacity-90`}
+          className={`${styles.bgCustom} w-full hover:opacity-90 text-white cursor-pointer`}
         >
-          Signin
+          SignIn
         </Button>
       </div>
 
-      <div className="text-center text-sm">
+      <div className="text-center text-sm cursor-pointer">
         Don&apos;t have an account?{" "}
         <a
           className="underline underline-offset-4 text-purple-700"

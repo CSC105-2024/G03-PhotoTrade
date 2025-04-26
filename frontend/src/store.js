@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterSlice from "@/reducer/counter";
 import valSlice from "./reducer/validate";
-import authSlice from "./reducer/auth";
+import authSlice, { createUser } from "./reducer/auth";
 
 const store = configureStore({
   reducer: {
@@ -9,6 +9,10 @@ const store = configureStore({
     validate: valSlice,
     auth: authSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: true,
+    }),
 });
 
 export default store;

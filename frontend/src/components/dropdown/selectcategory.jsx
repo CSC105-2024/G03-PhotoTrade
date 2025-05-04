@@ -33,61 +33,61 @@ export function Dropdowncategoryprofile() {
           checked={Lifestyle}
           onCheckedChange={setLifestyle}
         >
-          1. Lifestyle
+          Lifestyle
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={FoodDrink}
           onCheckedChange={setFoodDrink}
         >
-          2. Food & Drink
+          Food & Drink
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={BusinessWork}
           onCheckedChange={setBusinessWork}
         >
-          3. Business & Work
+          Business & Work
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={NatureLandscapes}
           onCheckedChange={setNatureLandscapes}
         >
-          4. Nature & Landscapes
+          Nature & Landscapes
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={PeoplePortraits}
           onCheckedChange={setPeoplePortraits}
         >
-          5. People & Portraits
+          People & Portraits
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={TravelTransportation}
           onCheckedChange={setTravelTransportation}
         >
-          6. Travel & Transportation
+          Travel & Transportation
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={AnimalsPets}
           onCheckedChange={setAnimalsPets}
         >
-          7. Animals & Pets
+          Animals & Pets
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={AbstractBackgrounds}
           onCheckedChange={setAbstractBackgrounds}
         >
-          8. Abstract & Backgrounds
+          Abstract & Backgrounds
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={SeasonalThemes}
           onCheckedChange={setSeasonalThemes}
         >
-          9. Seasonal Themes
+          Seasonal Themes
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={SportsFitness}
           onCheckedChange={setSportsFitness}
         >
-          10. Sports & Fitness
+          Sports & Fitness
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

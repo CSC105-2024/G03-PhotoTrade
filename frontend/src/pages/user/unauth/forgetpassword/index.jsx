@@ -1,6 +1,7 @@
 import { SquareArrowLeft } from "lucide-react";
 import ForgetpasswordForm from "@/components/module/system/forgetpassword-form";
 import { Link, useNavigate } from "react-router-dom";
+import BackgroundForgetpassword from "@/assets/BackgroundForgetpassword.png";
 
 const ForgetpasswordPage = () => {
   const navigate = useNavigate();
@@ -28,9 +29,9 @@ const ForgetpasswordPage = () => {
 
       <div className="relative bg-muted lg:block hidden">
         <img
-          src="/placeholder.svg"
+          src={BackgroundForgetpassword}
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="absolute inset-0 h-full w-full object-cover "
         />
       </div>
     </div>

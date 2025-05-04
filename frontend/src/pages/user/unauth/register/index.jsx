@@ -1,6 +1,7 @@
 import { SquareArrowLeft } from "lucide-react";
 import RegisterForm from "@/components/module/system/register-form";
 import { Link, useNavigate } from "react-router-dom";
+import BackgroundRegister from "@/assets/BackgroundRegister.png";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -28,9 +29,9 @@ const RegisterPage = () => {
 
       <div className="relative bg-muted lg:block hidden">
         <img
-          src="/placeholder.svg"
+          src={BackgroundRegister}
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="absolute inset-0 h-full w-full object-cover "
         />
       </div>
     </div>

@@ -2,13 +2,11 @@ import { Hono } from "hono";
 import { 
     loginController, 
     signUpController, 
-    userController 
-} from "../controllers/auth.controller.js";
-import { auth } from "../middlewares/token.js";
+} from "../controllers/user.controller.ts";
+import { auth } from "../middlewares/token.ts";
 
 const userRoutes = new Hono()
 
-userRoutes.get('', auth, ...userController)
 userRoutes.post('/register', ...signUpController)
 userRoutes.post('/login', ...loginController)
 

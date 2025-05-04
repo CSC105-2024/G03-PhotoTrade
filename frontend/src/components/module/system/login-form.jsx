@@ -90,7 +90,7 @@ const LoginForm = () => {
           type="submit"
           className={`${styles.bgCustom} w-full hover:opacity-90 text-white cursor-pointer`}
         >
-          SignIn
+          Sign In
         </Button>
       </div>
 

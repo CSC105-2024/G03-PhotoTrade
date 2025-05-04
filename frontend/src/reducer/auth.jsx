@@ -9,23 +9,13 @@ const token = localStorage.getItem("token")
 export const createUser = createAsyncThunk('users/createUser', 
   async (user) => {
     try {
-      const response = await axios.post('http://localhost:3000/api/users/register', user)
+      const response = await axios.post('http://localhost:3000/api/v1/user/register', user)
       return response.data
     } catch (error) {
       console.log('api error')
     }
   }
 )
-
-// export const createUser = 
-//   async (user) => {
-//     try {
-//       const response = await axios.post('http://localhost:3000/api/users/register', user)
-//       return response
-//     } catch (error) {
-//       console.log('api error')
-//     }
-//   }
 
 export const authSlice = createSlice({
   name: "auth",

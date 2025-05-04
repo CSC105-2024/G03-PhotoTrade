@@ -2,18 +2,20 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
-import userRoutes from './routes/user.route.js'
 import { HTTPException } from 'hono/http-exception'
-import { type ErrorResponse } from './types/index.js'
+import { type ErrorResponse } from './types/index.ts'
+import { PrismaClient } from '../generated/prisma/index.js'
+import userRoutes from './routes/user.route.ts'
 
 const app = new Hono()
+export const prisma = new PrismaClient()
 
 app.use('*', logger())
 app.use('*', cors())
 
 const routes = app
-  .basePath('/api')
-  .route('/users', userRoutes)
+  .basePath('/api/v1')
+  .route('/user', userRoutes)
 
 
 app.onError((err, c) => {

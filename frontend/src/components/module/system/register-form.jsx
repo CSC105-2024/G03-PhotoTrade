@@ -27,7 +27,7 @@ const RegisterForm = () => {
   const navigate = useNavigate();
 
   const { errorVal, userInfo, blankInput } = useSelector((state) => state.validate);
-  const { isAuthenticated, success } = useSelector((state) => state.auth);
+  const { isAuthenticated, success, } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordAgain, setShowPasswordAgain] = useState(false);
@@ -43,11 +43,11 @@ const RegisterForm = () => {
     }
     dispatch(signUpValidation(value))
 
-    // const response = dispatch(createUser(data))
-    // console.log(response);
-    // if (success) {
-    //   navigate('/')
-    // }
+    const response = dispatch(data)
+    console.log('api data', response);
+    if (success) {
+      navigate('/')
+    }
   };
 
   return (
@@ -141,9 +141,9 @@ const RegisterForm = () => {
 
         <Button
           type="submit"
-          className={`${styles.bgCustom} w-full hover:opacity-90`}
+          className={`${styles.bgCustom} w-full hover:opacity-90 dark:text-white`}
         >
-          Signup
+          Sign Up
         </Button>
         <div className="text-center text-sm">
           Already have an account?{" "}

@@ -1,6 +1,6 @@
 import MenuLayout from "@/components/layouts/menu-layout";
 import Footer from "@/components/footer/footer";
-import { Toaster } from 'sonner';
+import { Toaster } from "@/components/ui/sonner"
 
 const Layout = ({ children }) => {
   return (

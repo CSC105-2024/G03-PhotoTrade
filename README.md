@@ -31,6 +31,10 @@ At this point, you have a Prisma schema but no database yet. Run the following c
     ```bash
     npx prisma migrate reset
     ```
+3. Reset All tables in database
+    ```bash
+    npx prisma db push --force-reset && npx prisma db push
+    ```
 
 ## test 
 ```bash

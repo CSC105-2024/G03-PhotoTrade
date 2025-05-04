@@ -34,7 +34,7 @@ const ProfileHeader = () => {
           </div>
         </div>
 
-        <div className="ml-auto space-y-2 hidden md:flex flex">
+        <div className="ml-auto space-y-2 hidden md:flex">
           <Button
             variant="outline"
             className="border-gray-600 dark:border-gray-700  dark:text-gray-100 mr-4"

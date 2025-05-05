@@ -4,15 +4,16 @@ import { Label } from "@/components/ui/label";
 import styles from "@/style";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { loginStatus } from "@/reducer/auth";
+import { login } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       email: '',
@@ -22,20 +23,30 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState('')
 
-  const { email, password, error } = useSelector((state) => state.validate);
-  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
+  const { success, loading } = useSelector((state) => state.auth);
+  
+  useEffect(() => {
+    if (success) {
+      navigate('/user/auth/dashboard')
+    }
+  }, [success, navigate])
 
-  const submitForm = (data) => {
-    // dispatch(setCredentials(data));
-    dispatch(loginStatus({ email: data.email, token: "fake-token" }));
-    navigate("/user/auth/dashboard/1");
+  const submitForm = (data) => { 
+    dispatch(login(data)) 
+    if (success) {
+      setError('')
+    } else {
+      setError('Login failed.')
+    }
   };
 
+
   return (
-    <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-6">
+    <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-3">
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-4xl font-bold">Welcome Back</h1>
         <p className="text-balance text-sm text-muted-foreground">
@@ -45,25 +56,38 @@ const LoginForm = () => {
 
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <Label htmlFor="email">Email*</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
             placeholder="m@example.com"
-            {...register("email")}
+            {...register("email", { 
+              required: "Email is required", 
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email format",
+              }
+            })}
           />
+          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
         </div>
 
         <div className="grid gap-2">
           <div className="flex items-center">
-            <Label htmlFor="password">Password*</Label>
+            <Label htmlFor="password">Password</Label>
           </div>
           <div className="relative">
             <Input
               id="password"
               type={showPassword ? "text" : "password"}
-              className="pr-10" 
-              {...register("password")}
+              className="pr-10"
+              {...register("password", { 
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters",
+                }
+              })}
             />
             <button
               type="button"
@@ -74,6 +98,7 @@ const LoginForm = () => {
               {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
             </button>
           </div>
+          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <a
             href="#"
@@ -93,6 +118,8 @@ const LoginForm = () => {
           Sign In
         </Button>
       </div>
+      
+      <p className="text-red-500 text-sm">{error}</p>
 
       <div className="text-center text-sm cursor-pointer">
         Don&apos;t have an account?{" "}

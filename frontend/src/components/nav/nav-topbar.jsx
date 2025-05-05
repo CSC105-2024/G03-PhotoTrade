@@ -4,7 +4,7 @@ import styles from "@/style";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutStatus } from "@/reducer/auth";
+import { logoutStatus, logout } from "@/reducer/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -120,13 +120,13 @@ const Navbar = () => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
-                  <Link to={"user/auth/dashboard/1"}>
+                  <Link to={"user/auth/dashboard"}>
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                   </Link>
 
                   <DropdownMenuItem
                     onClick={() => {
-                      dispatch(logoutStatus({ isAuthenticated: false }));
+                      dispatch(logout());
                       navigate("/");
                     }}
                   >

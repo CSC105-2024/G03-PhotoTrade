@@ -3,10 +3,15 @@ import { registerSchema, type SuccessResponse } from '../types/index.ts'
 import { zValidator } from '@hono/zod-validator'
 import * as argon2 from "argon2"
 import { HTTPException } from 'hono/http-exception'
-import { createTokenAndSetCookie } from "../utils/index.ts"
 import { prisma } from '../index.ts'
+import { generateNewJWTAndSetCookie } from '../utils/index.ts'
+import { deleteCookie } from 'hono/cookie'
 
-const factory = createFactory()
+const factory = createFactory<{
+    Variables: {
+        userId: number
+    }
+}>()
 
 const signUpController = factory.createHandlers(
     zValidator('json', registerSchema), async (c) => {
@@ -73,14 +78,38 @@ const loginController = factory.createHandlers(async (c) => {
     if (!user) {
         throw new HTTPException(401, { message: 'Invalid credentials' })
     }
-    createTokenAndSetCookie(c, user.id)
-
     if (!await argon2.verify(user.password, data.password)) {
         throw new HTTPException(401, { message: 'Invalid credentials' })
     }
+    await generateNewJWTAndSetCookie(c, user.id)
+
     return c.json({ message: 'Logged in' })
 })
 
+const logoutController = factory.createHandlers(async (c) => {
+    deleteCookie(c, 'accessToken', { 
+        httpOnly: true,
+        secure: true,
+        sameSite: 'Strict', 
+    })
+    deleteCookie(c, 'refreshToken', { 
+        httpOnly: true,
+        secure: true,
+        sameSite: 'Strict', 
+    })
+
+    return c.json({ message: 'Logged out' })
+})
+
+
+
+const getUser = factory.createHandlers(
+    async (c) => {
+        const userId = c.get('userId')
+        const user = await prisma.user.findUnique({ where: { id: userId } })
+        return c.json({ data: user })
+    }
+)
 
 const getUserById = factory.createHandlers(
     async (c) => {
@@ -125,4 +154,26 @@ const getUserById = factory.createHandlers(
     }
 )
 
-export { signUpController, loginController, getUserById }
+// const getUserAll = factory.createHandlers(
+//     async (c) => {
+//         const users = await prisma.user.findMany({
+//             select: {
+//                 id: true,
+//                 name: true,
+//                 bio:true,
+//                 create_at: true,
+//                 update_at: true,
+//             }
+//         })
+        
+//         return c.json(
+//             {
+//                 success: true,
+//                 message: 'Fetch all users',
+//                 data: users
+//             }
+//         )
+//     }
+// )
+
+export { signUpController, loginController,logoutController, getUser, getUserById }

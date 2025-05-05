@@ -3,7 +3,8 @@ import { jwtVerify } from "jose";
 import { deleteCookie, getCookie } from 'hono/cookie'
 import { env } from "process";
 import { HTTPException } from "hono/http-exception";
-import { createTokenAndSetCookie } from "../utils/index.js";
+import { generateNewJWTAndSetCookie } from "../utils/index.ts";
+
 
 export const auth = createMiddleware(async (c, next) => {
     const accessToken = getCookie(c, 'accessToken')
@@ -21,7 +22,7 @@ export const auth = createMiddleware(async (c, next) => {
     } catch (error) {
         try {
             const { payload: { userId } } = await jwtVerify<{ userId: number }>(refreshToken, new TextEncoder().encode(env.JWT_REFRESH_SECRET))
-            createTokenAndSetCookie(c, userId)
+            generateNewJWTAndSetCookie(c, userId)
             c.set('userId', userId)
             await next()
         } catch (error) {

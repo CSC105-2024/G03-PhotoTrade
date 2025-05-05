@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -6,17 +6,23 @@ import Ellipse from "@/assets/Ellipse.png";
 import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "@/reducer/auth";
 
 const ProfilEdit = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth);
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      console.log("เลือกไฟล์:", file);
-    }
+    e.target.files[0];
   };
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   return (
     <div className="mb-6 md:pt-20">
@@ -28,7 +34,7 @@ const ProfilEdit = () => {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p className="ml-3 text-sm text-gray-900 dark:text-white">
-              YummyGuy
+              {user.userInfo.name}
             </p>
           </div>
           <div>
@@ -77,7 +83,7 @@ const ProfilEdit = () => {
         <Button
           type="submit"
           onClick={() => {
-            navigate("/user/auth/dashboard/1");
+            navigate("/user/auth/dashboard");
           }}
         >
           Submit

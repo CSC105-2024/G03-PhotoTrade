@@ -3,7 +3,7 @@ import { setCookie } from 'hono/cookie'
 import { env } from "process";
 import type { Context } from "hono";
 
-export const createTokenAndSetCookie = (async (c: Context, userId: number) => {
+export const generateNewJWTAndSetCookie = (async (c: Context, userId: number) => {
     const [accessToken, refreshToken] = await Promise.all([
         new SignJWT({ userId })
             .setProtectedHeader({ alg: 'HS256' })

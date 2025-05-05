@@ -26,17 +26,17 @@ const routes = app
 app.onError((err, c) => {
   if (err instanceof HTTPException) {
     const errResponse = err.res ??
-    c.json<ErrorResponse>(
-      {
-        success: false,
-        error: err.message,
-        isFormError:
-          err.cause && typeof err.cause === "object" && "form" in err.cause
-            ? err.cause.form === true
-            : false,
-      },
-      err.status,
-    )
+      c.json<ErrorResponse>(
+        {
+          success: false,
+          error: err.message,
+          isFormError:
+            err.cause && typeof err.cause === "object" && "form" in err.cause
+              ? err.cause.form === true
+              : false,
+        },
+        err.status,
+      )
     console.log(err);
     return errResponse
   }
@@ -52,7 +52,12 @@ app.onError((err, c) => {
     500,
   )
 })
+async const main = () => {
+  const defaultCategory = await prisma.category.upsert({
+    where: 
 
+})
+}
 serve({
   fetch: app.fetch,
   port: 3000

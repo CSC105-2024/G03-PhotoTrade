@@ -3,7 +3,6 @@ import * as CategoryModel from '../models/category.models.ts'
 
 export const getcategorybyid = async (c: Context) => {
 
-
     try {
         const categoryId = Number(c.req.param('id'))
         if (isNaN(categoryId)) {

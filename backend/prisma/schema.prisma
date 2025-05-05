@@ -12,14 +12,14 @@ datasource db {
 }
 
 model User {
-  id          Int         @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
-  email       String      @unique
+  email       String        @unique
   password    String
   bio         String?
   profile_url String?
-  create_at   DateTime    @default(now())
-  update_at   DateTime?   @updatedAt
+  create_at   DateTime      @default(now())
+  update_at   DateTime?     @updatedAt
   creates     Picture[]
   trade       Trade[]
   user_like   User_Like[]
@@ -57,6 +57,7 @@ model Category {
   pic_category Pic_Category[]
 }
 
+
 model Pic_Category {
   picture_id  Int
   category_id Int
@@ -76,10 +77,10 @@ model User_Like {
 }
 
 model User_Follow {
-  follower_id Int
+  follower_id  Int
   following_id Int
-  follower    User @relation("Follower", fields: [follower_id], references: [id])
-  following   User @relation("Following", fields: [following_id], references: [id])
+  follower     User @relation("Follower", fields: [follower_id], references: [id])
+  following    User @relation("Following", fields: [following_id], references: [id])
 
   @@id([follower_id, following_id])
 }

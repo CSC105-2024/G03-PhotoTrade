@@ -164,7 +164,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/tag/Documents/photoTrade/backend/generated/prisma",
+      "value": "C:\\Users\\pun\\Desktop\\G03-PhotoTrade\\backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -173,17 +173,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "darwin",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/tag/Documents/photoTrade/backend/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\pun\\Desktop\\G03-PhotoTrade\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.6.0",

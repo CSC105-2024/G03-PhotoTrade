@@ -32,7 +32,8 @@ const AddPicture = () => {
               type="text"
               placeholder="Enter image name"
               className="w-full mb-4"
-            />
+              
+            /> 
 
             <label className="block text-sm mb-1">Description</label>
             <Input

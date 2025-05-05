@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { 
     getUser,
+    getUserAll,
     getUserById,
     loginController, 
     logoutController, 
@@ -34,21 +35,22 @@ userRoutes.post('/register', ...signUpController)
 userRoutes.post('/login', ...loginController)
 userRoutes.post('/logout', ...logoutController)
 userRoutes.get('/me', auth, ...getUser)
+userRoutes.get('/all', ...getUserAll)
 userRoutes.get('/:id', ...getUserById)
 
-userRoutes.post('/like', likePhoto)
-userRoutes.delete('/unlike', unlikePhoto)
-userRoutes.get('/like/count', countLike)
+// userRoutes.post('/like', likePhoto)
+// userRoutes.delete('/unlike', unlikePhoto)
+// userRoutes.get('/like/count', countLike)
 
-userRoutes.post('/follow', followUser)
-userRoutes.delete('/unfollow', unfollowUser)
+// userRoutes.post('/follow', followUser)
+// userRoutes.delete('/unfollow', unfollowUser)
 
-userRoutes.post('/buy', buyPhoto)
-userRoutes.get('/photohistory', getphotohistorybyuser)
+// userRoutes.post('/buy', buyPhoto)
+// userRoutes.get('/photohistory', getphotohistorybyuser)
 
-userRoutes.get('/categories', getallcategory)
-userRoutes.get('/categories/:id', getcategorybyid)
-userRoutes.put('/photo/category', addcategory)
-userRoutes.delete('/photo/category', removecategory)
+// userRoutes.get('/categories', getallcategory)
+// userRoutes.get('/categories/:id', getcategorybyid)
+// userRoutes.put('/photo/category', addcategory)
+// userRoutes.delete('/photo/category', removecategory)
 
 export default userRoutes

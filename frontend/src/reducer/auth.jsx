@@ -39,9 +39,16 @@ export const fetchUser = createAsyncThunk('auth/fetch',
   }
 )
 
-export const getUserById = createAsyncThunk('user/getById', 
+export const getUserById = createAsyncThunk('user/getUserById', 
   async (id) => {
     const response = await axios.get(`http://localhost:3000/api/v1/user/${id}`)
+    return response.data
+  }
+)
+
+export const getUserAll = createAsyncThunk('user/getUserAll', 
+  async () => {
+    const response = await axios.get(`http://localhost:3000/api/v1/user/all`)
     return response.data
   }
 )
@@ -51,6 +58,8 @@ export const authSlice = createSlice({
   initialState: {
     loading: false,
     userInfo:  {},
+    profileUser: {},
+    userAll: [],
     error: null,
     success: false,
     isAuthenticated: false,
@@ -120,11 +129,24 @@ export const authSlice = createSlice({
       const { data } = action.payload
       state.loading = false
       state.success = true
-      state.userInfo = data 
+      state.profileUser = data 
     })
     .addCase(getUserById.rejected, (state) => {
       state.loading = false
       state.success = false
+    })
+    .addCase(getUserAll.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(getUserAll.fulfilled, (state, action) => {
+      const { data } = action.payload;
+      state.loading = false;
+      state.success = true;
+      state.userAll = data;
+    })
+    .addCase(getUserAll.rejected, (state ) => {
+      state.loading = false;
+      state.success = false;
     })
   }
 });

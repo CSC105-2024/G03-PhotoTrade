@@ -14,11 +14,21 @@ import { useNavigate } from "react-router-dom";
 import Ellipsebutbigger from "@/assets/Ellipsebutbigger.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { getUserAll } from "@/reducer/auth";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Rank = () => {
   const navigate = useNavigate();
   const top3 = userRank.filter((item) => item.id <= 3);
   const others = userRank.filter((item) => item.id > 3);
+
+  const dispatch = useDispatch();
+  const { userAll, loading } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(getUserAll());
+  }, [dispatch]);
 
   return (
     <MainLayout
@@ -66,7 +76,7 @@ const Rank = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {others.map((item) => (
+              {userAll.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell className="font-medium">{item.id}</TableCell>
                   <TableCell

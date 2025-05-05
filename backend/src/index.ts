@@ -53,6 +53,26 @@ app.onError((err, c) => {
   )
 })
 
+async function main() {
+  const name = await prisma.category.createMany({
+    data: [
+      { name: 'Lifestyle' },
+      { name: 'Food & Drink' }
+    ],
+  })
+  console.log(name)
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
+
 serve({
   fetch: app.fetch,
   port: 3000

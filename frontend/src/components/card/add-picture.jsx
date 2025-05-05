@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ImagePlus, ImageUp } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
@@ -6,6 +6,25 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 
 const AddPicture = () => {
+  const fileInputRef = useRef(null);
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "photo_trade");
+    data.append("cloud_name", "dcpgrfpaf");
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dcpgrfpaf/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const fileUrl = await res.json();
+    console.log(fileUrl.url);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -18,7 +37,19 @@ const AddPicture = () => {
 
       <DialogContent className="rounded-xl p-8">
         <div className="lg:flex lg:gap-8">
-          <Card className="flex justify-center items-center w-[250px] cursor-pointer ">
+          <input
+            type="file"
+            accept="image/png, image/jpeg, image/jpg , image/pdf"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+
+          <Card
+            className="flex justify-center items-center w-[250px] cursor-pointer border-solid border-2 border-white dark:border-gray-600 "
+            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+            type="button"
+          >
             <CardContent className="flex justify-center items-center ">
               <ImageUp size={100} strokeWidth={1.75} color="#787878" />
             </CardContent>
@@ -32,8 +63,7 @@ const AddPicture = () => {
               type="text"
               placeholder="Enter image name"
               className="w-full mb-4"
-              
-            /> 
+            />
 
             <label className="block text-sm mb-1">Description</label>
             <Input

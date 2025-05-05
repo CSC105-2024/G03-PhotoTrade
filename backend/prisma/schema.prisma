@@ -52,11 +52,11 @@ model Trade {
 }
 
 model Category {
-  id           Int            @id @default(autoincrement())
-  name         String         
-  pic_category Pic_Category[]
+  id            Int            @id @default(autoincrement())
+  name          String
+  category_url  String?
+  pic_category  Pic_Category[]
 }
-
 
 model Pic_Category {
   picture_id  Int

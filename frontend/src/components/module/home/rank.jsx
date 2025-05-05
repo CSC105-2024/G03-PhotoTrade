@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Ellipsebutbigger from "@/assets/Ellipsebutbigger.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { getUserAll } from "@/reducer/auth";
+import { getUserAll } from "@/reducer/user";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,7 +24,7 @@ const Rank = () => {
   const others = userRank.filter((item) => item.id > 3);
 
   const dispatch = useDispatch();
-  const { userAll, loading } = useSelector((state) => state.auth);
+  const { userAll, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getUserAll());

@@ -5,14 +5,15 @@ import { UserPen, UserPlus, UserMinus, Dot, XOctagon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "@/reducer/auth";
+import { getUserById } from "@/reducer/user";
 
 const ProfileHeader = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isFollow, setIsFollow] = useState(false);
   const dispatch = useDispatch();
-  const { userInfo, profileUser, isAuthenticated} = useSelector((state) => state.auth);
+  const { profileUser } = useSelector((state) => state.user);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.auth)
 
   const isOwner = isAuthenticated && userInfo.id === id;
 

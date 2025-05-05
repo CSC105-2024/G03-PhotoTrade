@@ -4,7 +4,6 @@ import styles from "@/style";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutStatus, logout } from "@/reducer/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,

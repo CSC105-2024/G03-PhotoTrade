@@ -7,8 +7,8 @@ import { type ErrorResponse } from './types/index.ts'
 import { PrismaClient } from '../generated/prisma/index.js'
 import userRoutes from './routes/user.route.ts'
 
-const app = new Hono()
 export const prisma = new PrismaClient()
+const app = new Hono()
 
 app.use('*', logger())
 app.use(
@@ -26,17 +26,17 @@ const routes = app
 app.onError((err, c) => {
   if (err instanceof HTTPException) {
     const errResponse = err.res ??
-      c.json<ErrorResponse>(
-        {
-          success: false,
-          error: err.message,
-          isFormError:
-            err.cause && typeof err.cause === "object" && "form" in err.cause
-              ? err.cause.form === true
-              : false,
-        },
-        err.status,
-      )
+    c.json<ErrorResponse>(
+      {
+        success: false,
+        error: err.message,
+        isFormError:
+          err.cause && typeof err.cause === "object" && "form" in err.cause
+            ? err.cause.form === true
+            : false,
+      },
+      err.status,
+    )
     console.log(err);
     return errResponse
   }

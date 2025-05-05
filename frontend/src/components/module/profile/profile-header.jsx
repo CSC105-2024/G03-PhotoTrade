@@ -17,14 +17,14 @@ const ProfileHeader = () => {
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth)
   
   useEffect(() => {
-    if (!userInfo) {
+    if (!isAuthenticated) {
       dispatch(fetchUser());
     }
     
     if (id) {
       dispatch(getUserById(id));
     }
-  }, [dispatch, id, userInfo]);
+  }, [dispatch, id, isAuthenticated]);
   
   const isOwner = isAuthenticated && userInfo.id === parseInt(id);
 

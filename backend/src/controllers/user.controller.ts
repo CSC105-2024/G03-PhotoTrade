@@ -154,26 +154,26 @@ const getUserById = factory.createHandlers(
     }
 )
 
-// const getUserAll = factory.createHandlers(
-//     async (c) => {
-//         const users = await prisma.user.findMany({
-//             select: {
-//                 id: true,
-//                 name: true,
-//                 bio:true,
-//                 create_at: true,
-//                 update_at: true,
-//             }
-//         })
+const getUserAll = factory.createHandlers(
+    async (c) => {
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                bio:true,
+                create_at: true,
+                update_at: true,
+            }
+        })
         
-//         return c.json(
-//             {
-//                 success: true,
-//                 message: 'Fetch all users',
-//                 data: users
-//             }
-//         )
-//     }
-// )
+        return c.json(
+            {
+                success: true,
+                message: 'Fetch all users',
+                data: users
+            }
+        )
+    }
+)
 
-export { signUpController, loginController,logoutController, getUser, getUserById }
+export { signUpController, loginController,logoutController, getUser, getUserById, getUserAll }

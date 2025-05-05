@@ -6,7 +6,12 @@ import { HTTPException } from 'hono/http-exception'
 import { type ErrorResponse } from './types/index.ts'
 import { PrismaClient } from '../generated/prisma/index.js'
 import userRoutes from './routes/user.route.ts'
-
+import rankRoutes from './routes/rank.route.ts'
+import userLikeRoutes from './routes/user_Like.route.ts'
+import userFollowRoutes from './routes/user_Follow.route.ts'
+import tradeRoutes from './routes/trade.route.ts'
+import photoRoutes from './routes/photo.route.ts'
+import categoryRoutes from './routes/category.route.ts'
 const app = new Hono()
 export const prisma = new PrismaClient()
 
@@ -21,6 +26,12 @@ app.use(
 const routes = app
   .basePath('/api/v1')
   .route('/user', userRoutes)
+  .route('/rank', rankRoutes)
+  .route('/userLike', userLikeRoutes)
+  .route('/userFollow', userFollowRoutes)
+  .route('/trade', tradeRoutes)
+  .route('/photo', photoRoutes)
+  .route('/category', categoryRoutes)
 
 
 app.onError((err, c) => {
@@ -53,25 +64,25 @@ app.onError((err, c) => {
   )
 })
 
-async function main() {
-  const name = await prisma.category.createMany({
-    data: [
-      { name: 'Lifestyle' },
-      { name: 'Food & Drink' }
-    ],
-  })
-  console.log(name)
-}
+// async function main() {
+//   const name = await prisma.category.createMany({
+//     data: [
+//       { name: 'Lifestyle' },
+//       { name: 'Food & Drink' }
+//     ],
+//   })
+//   console.log(name)
+// }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+// main()
+//   .then(async () => {
+//     await prisma.$disconnect()
+//   })
+//   .catch(async (e) => {
+//     console.error(e)
+//     await prisma.$disconnect()
+//     process.exit(1)
+//   })
 
 serve({
   fetch: app.fetch,

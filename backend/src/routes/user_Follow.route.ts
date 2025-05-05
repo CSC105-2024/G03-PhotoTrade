@@ -5,9 +5,9 @@ import {
     unfollowUser,
 } from "../controllers/user_Follow.controller.ts";
 
-const User_Follow_Routes = new Hono()
+const userfollowRoutes = new Hono()
 
-User_Follow_Routes.post("/follow", followUser);
-User_Follow_Routes.delete("/unfollow", unfollowUser);
+userfollowRoutes.post("/follow", ...followUser);
+userfollowRoutes.delete("/unfollow", ...unfollowUser);
 
-export default User_Follow_Routes;
+export default userfollowRoutes;

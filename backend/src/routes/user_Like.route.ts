@@ -6,9 +6,9 @@ import {
     unlikePhoto,
 } from "../controllers/user_Like.controller.ts";
 
-const User_Like_Routes = new Hono()
+const userlikeRoutes = new Hono()
 
-User_Like_Routes.post("/like", likePhoto)
-User_Like_Routes.get("/count", countLike)
-User_Like_Routes.delete("/unlike", unlikePhoto);
-export default User_Like_Routes;
+userlikeRoutes.post("/like", ...likePhoto)
+userlikeRoutes.get("/count", ...countLike)
+userlikeRoutes.delete("/unlike", ...unlikePhoto);
+export default userlikeRoutes;

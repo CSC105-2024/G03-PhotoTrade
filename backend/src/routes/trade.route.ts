@@ -5,10 +5,10 @@ import {
     getphotohistorybyuser
 } from "../controllers/trade.controller.ts";
 
-const Trade_Routes = new Hono()
+const tradeRoutes = new Hono()
 
-Trade_Routes.post("/buy", buyPhoto);
-Trade_Routes.get("/history", getphotohistorybyuser)
+tradeRoutes.post("/buy", ...buyPhoto);
+tradeRoutes.get("/history", ...getphotohistorybyuser)
 
 
-export default Trade_Routes;
+export default tradeRoutes;

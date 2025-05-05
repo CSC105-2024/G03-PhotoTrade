@@ -1,5 +1,5 @@
 import MenuLayout from "@/components/layouts/menu-layout";
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/footer/footer.jsx";
 import { Toaster } from "@/components/ui/sonner"
 
 const Layout = ({ children }) => {

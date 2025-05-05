@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { UserPen, UserPlus, UserMinus, Dot } from "lucide-react";
+import { UserPen, UserPlus, UserMinus, Dot, XOctagon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "@/reducer/auth";
 
 const ProfileHeader = () => {
   const navigate = useNavigate();
   const [isFollow, setIsFollow] = useState(false);
+  const dispatch = useDispatch()
+  const { userInfo } = useSelector((state) => state.auth)
 
   const handleButtonClick = () => {
     setIsFollow(!isFollow);
   };
+
+  useEffect(() => {
+    dispatch(fetchUser())
+  }, [dispatch])
 
   return (
     <div className="mb-6 md:pt-20">
@@ -23,7 +31,7 @@ const ProfileHeader = () => {
 
         <div className="ml-4 flex-1">
           <h1 className="text-xl font-bold  dark:text-white">
-            Mrnatural
+            {userInfo.name}
           </h1>
           <div className="flex h-5 items-center space-x-2 text-sm  dark:text-gray-300">
             <span>100 followers</span>

@@ -16,16 +16,17 @@ import ProtectRoute from "./routes/protect-route";
 import { ThemeProvider } from "@/hooks/theme-provider";
 
 const App = () => {
+  const route = useRoutes(routes)
   const location = useLocation();
   const currentPath = location.pathname;
-  let isLayout = <Layout>{useRoutes(routes)}</Layout>
+  let isLayout = <Layout>{route}</Layout>
   
   if (currentPath === "/user/unauth/login" || currentPath === "/user/unauth/register" || currentPath === "/user/unauth/forgetpassword") {
-    isLayout = useRoutes(routes)
+    isLayout = route
   }
 
-  if (matchPath("/user/auth/dashboard/:id", currentPath) || currentPath === "/user/auth/edit") {
-    isLayout = <ProtectRoute><Layout>{useRoutes(routes)}</Layout></ProtectRoute>
+  if ((currentPath === "/user/auth/dashboard" || currentPath === "/user/auth/edit")) {
+    isLayout = <ProtectRoute><Layout>{route}</Layout></ProtectRoute>
   }
 
   return (

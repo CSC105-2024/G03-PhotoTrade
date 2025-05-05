@@ -11,7 +11,12 @@ const app = new Hono()
 export const prisma = new PrismaClient()
 
 app.use('*', logger())
-app.use('*', cors())
+app.use(
+  cors({
+    origin: ['http://localhost:5173'],
+    credentials: true
+  })
+)
 
 const routes = app
   .basePath('/api/v1')

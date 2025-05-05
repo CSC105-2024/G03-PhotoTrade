@@ -8,12 +8,13 @@ import { createUser } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { signUpValidation } from "@/reducer/validate";
 
 const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    formState: { errors }, 
+    watch
   } = useForm({
     defaultValues: {
       name: '',
@@ -21,32 +22,27 @@ const RegisterForm = () => {
       password: '',
       passwordAgain: '',
     },
+    mode: "onBlur",
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { errorVal, userInfo, blankInput } = useSelector((state) => state.validate);
-  const { isAuthenticated, success, } = useSelector((state) => state.auth);
+  const { success, loading } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordAgain, setShowPasswordAgain] = useState(false);
 
-
   const submitForm = (data) => {
-    // dispatch(loginStatus({ email: data.email, token: "fake-token" }));
-    const value = {
-      name: data.name || '',
-      email: data.email || '',
-      password: data.password || '',
-      passwordAgain: data.passwordAgain || '',
+    const newData = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
     }
-    dispatch(signUpValidation(value))
 
-    const response = dispatch(data)
-    console.log('api data', response);
+    dispatch(createUser(newData));
     if (success) {
-      navigate('/')
+      navigate('/');
     }
   };
 
@@ -62,13 +58,13 @@ const RegisterForm = () => {
         <div className="flex items-center">
           <Label htmlFor="Username">Username</Label>
         </div>
-        <Input 
+        <Input
           id="name"
           type="text"
-          {...register("name")}
+          {...register("name", { required: "Username is required" })}
         />
-        <p className="text-red-500 text-sm">{errorVal.name}</p>
       </div>
+      <p className="text-red-500 text-sm">{errors.name?.message}</p>
 
       <div className="grid gap-6">
         <div className="grid gap-2">
@@ -77,10 +73,16 @@ const RegisterForm = () => {
             id="email"
             type="text"
             placeholder="m@example.com"
-            {...register("email")}
+            {...register("email", { 
+              required: "Email is required", 
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email format"
+              }
+            })}
           />
-          <p className="text-red-500 text-sm">{errorVal.email}</p>
         </div>
+        <p className="text-red-500 text-sm">{errors.email?.message}</p>
 
         <div className="grid gap-2">
           <div className="flex items-center">
@@ -91,7 +93,13 @@ const RegisterForm = () => {
               id="password"
               type={showPassword ? "text" : "password"}
               className="pr-10"
-              {...register("password")}
+              {...register("password", { 
+                required: "Password is required", 
+                minLength: {
+                  value: 8,
+                  message: "Password must be at least 8 characters"
+                }
+              })}
             />
             <button
               type="button"
@@ -102,27 +110,21 @@ const RegisterForm = () => {
               {showPassword ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
             </button>
           </div>
-          {/* {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
-          )} */}
-          {/* {error?.password && (
-            <p className="text-red-500 text-sm">
-              Must be 8 or more characters long
-            </p>
-          )} */}
-          <p className="text-red-500 text-sm">{errorVal.password}</p>
         </div>
-
+        <p className="text-red-500 text-sm">{errors.password?.message}</p>
         <div className="grid gap-2">
           <div className="flex items-center">
-            <Label htmlFor="passwordAgain">Password again</Label>
+            <Label htmlFor="passwordAgain">Confirm Password</Label>
           </div>
           <div className="relative">
             <Input
               id="passwordAgain"
               type={showPasswordAgain ? "text" : "password"}
               className="pr-10"
-              {...register("passwordAgain")}
+              {...register("passwordAgain", {
+                required: "Please confirm your password",
+                validate: (value) => value === watch('password') || "Passwords do not match"
+              })}
             />
             <button
               type="button"
@@ -133,18 +135,18 @@ const RegisterForm = () => {
               {showPasswordAgain ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
             </button>
           </div>
-          {/* {errors.passwordAgain && (
-            <p className="text-red-500 text-sm">{errors.passwordAgain.message}</p>
-          )} */}
-          <p className="text-red-500 text-sm">{errorVal.password}</p>
+          <p className="text-red-500 text-sm">{errors.passwordAgain?.message}</p>
         </div>
 
-        <Button
-          type="submit"
-          className={`${styles.bgCustom} w-full hover:opacity-90 dark:text-white`}
-        >
-          Sign Up
-        </Button>
+        {loading ? <div><span>Loading...</span></div> 
+          :   <Button
+                type="submit"
+                className={`${styles.bgCustom} w-full hover:opacity-90 dark:text-white`}
+              >
+                Sign Up
+              </Button>
+        }
+
         <div className="text-center text-sm">
           Already have an account?{" "}
           <a
@@ -157,9 +159,6 @@ const RegisterForm = () => {
           </a>
         </div>
       </div>
-      {console.log('errors', errorVal)}
-      {console.log('userInfo', userInfo)}
-      {console.log('blankInput', blankInput)}
     </form>
   );
 };

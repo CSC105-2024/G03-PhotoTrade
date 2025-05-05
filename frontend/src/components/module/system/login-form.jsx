@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import styles from "@/style";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/reducer/auth";
+import { fetchUser, login } from "@/reducer/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
@@ -27,23 +27,16 @@ const LoginForm = () => {
 
 
   const [showPassword, setShowPassword] = useState(false);
-  const { success, loading } = useSelector((state) => state.auth);
+  const { success, userInfo } = useSelector((state) => state.auth);
   
-  useEffect(() => {
-    if (success) {
-      navigate('/user/auth/dashboard')
-    }
-  }, [success, navigate])
-
+  
   const submitForm = (data) => { 
-    dispatch(login(data)) 
+    dispatch(fetchUser())
+    dispatch(login(data))
     if (success) {
-      setError('')
-    } else {
-      setError('Login failed.')
+      navigate(`/user/auth/dashboard/${userInfo.id}`)
     }
   };
-
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-3">

@@ -16,6 +16,7 @@ import { Button } from "../ui/button";
 import { CircleUser, LogOut, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/theme-provider";
 import { ScrollToBottom } from "@/hooks/use-scrollto";
+import { logout } from "@/reducer/auth";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Navbar = () => {
   const { setTheme } = useTheme();
 
   const [active, setActive] = useState(location.pathname);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     setActive(location.pathname);
@@ -119,7 +120,7 @@ const Navbar = () => {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
-                  <Link to={"user/auth/dashboard"}>
+                  <Link to={`user/auth/dashboard/${userInfo.id}`}>
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                   </Link>
 

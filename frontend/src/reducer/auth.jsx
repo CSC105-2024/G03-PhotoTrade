@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { data } from "react-router-dom";
 
 export const createUser = createAsyncThunk(
   "auth/createUser",
@@ -33,9 +34,9 @@ export const fetchUser = createAsyncThunk("auth/fetch", async () => {
   const response = await axios.get("http://localhost:3000/api/v1/user/me", {
     withCredentials: true,
   });
+  console.log(response.data.data)
   return response.data;
 });
-
 
 const authSlice = createSlice({
   name: "auth",
@@ -87,7 +88,7 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.userInfo = {};
         state.isAuthenticated = false;
-        state.success = false;
+        state.success = true;
         state.loading = false;
       });
   },

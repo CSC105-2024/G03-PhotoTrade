@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "@/reducer/user";
+import { fetchUser } from "@/reducer/auth";
 
 const ProfileHeader = () => {
   const { id } = useParams();
@@ -14,19 +15,25 @@ const ProfileHeader = () => {
   const dispatch = useDispatch();
   const { profileUser } = useSelector((state) => state.user);
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth)
-
-  const isOwner = isAuthenticated && userInfo.id === id;
+  
+  useEffect(() => {
+    if (!userInfo) {
+      dispatch(fetchUser());
+    }
+    
+    if (id) {
+      dispatch(getUserById(id));
+    }
+  }, [dispatch, id, userInfo]);
+  
+  const isOwner = isAuthenticated && userInfo.id === parseInt(id);
 
   const handleButtonClick = () => {
     setIsFollow(!isFollow);
   };
+  
 
-  useEffect(() => {
-    if (id) {
-      dispatch(getUserById(id));
-    }
-  }, [dispatch, id]);
-
+  {console.log(isAuthenticated)}
   return (
     <div className="mb-6 md:pt-20">
       <div className="flex items-center">

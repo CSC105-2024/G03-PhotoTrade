@@ -97,20 +97,7 @@ export const getphotobynewest = async () => {
     })
 }
 export const gethotobybestseller = async () => {
-    const bestSellers = await prisma.trade.findMany({
-        
-    })
-
-    return prisma.picture.findMany({
-        orderBy: {
-            trade: 'desc',
-        },
-        include: {
-            user: {
-                select: { name: true },
-            },
-        },
-    })
+    
 }
 
 export const updatephoto = async (

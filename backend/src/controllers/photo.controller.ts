@@ -50,6 +50,7 @@ export const getphotobyid = factory.createHandlers(
         });
     }
 )
+
 export const getallphotobyuserid = factory.createHandlers(
     async (c) => {
         const userId = Number(c.req.param('userId'))
@@ -61,6 +62,8 @@ export const getallphotobyuserid = factory.createHandlers(
         });
     }
 )
+
+
 export const photocategory = factory.createHandlers(
     async (c) => {
         const categoryIdsParam = c.req.query('categoryIds'); 

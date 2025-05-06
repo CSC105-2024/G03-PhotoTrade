@@ -16,9 +16,6 @@ npm run dev --workspace backend
 
 ```bash
 npm run dev --workspaces
-<<<<<<< HEAD
-```
-=======
 ```
 
 # Command run Backend
@@ -171,4 +168,3 @@ npx prisma studio
 - delete
     - http://localhost:3000/api/v1/user/unlike
     - make user can unlike other user
->>>>>>> develop

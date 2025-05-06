@@ -32,10 +32,9 @@ const Navbar = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    // if (isAuthenticated) {
-    //   dispatch(fetchUser());
-    // }
-    dispatch(fetchUser());
+    if (isAuthenticated) {
+      dispatch(fetchUser());
+    }
   }, [dispatch]);
 
   const handleLogout = () => {
@@ -105,7 +104,7 @@ const Navbar = () => {
                     <span className="sr-only">Toggle user menu</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" className="hidden md:block">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <Link to={`user/auth/dashboard/${userInfo.id}`}>

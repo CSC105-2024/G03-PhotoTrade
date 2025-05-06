@@ -34,7 +34,7 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated && userInfo) {
+    if (isAuthenticated && userInfo.id != undefined) {
       navigate(`/user/auth/dashboard/${userInfo.id}`);
     }
   }, [isAuthenticated, userInfo, navigate]);

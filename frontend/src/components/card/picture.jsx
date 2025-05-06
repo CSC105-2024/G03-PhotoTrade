@@ -10,7 +10,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
@@ -29,10 +28,7 @@ const Picture = ({ alwaysLike = false, name, price, username }) => {
   const showMenu = location.pathname === "/user/auth/dashboard/1";
 
   return (
-    <Card
-      className="w-[250px] h-[400px] rounded-xl pt-0 mb-5 
-      bg-white dark:bg-[#18181b] shadow-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300"
-    >
+    <Card className="w-[250px] h-[400px] rounded-xl pt-0 mb-5 shadow-lg border bg-background text-foreground">
       <Link to="/market/1">
         <CardHeader className="px-0 hover:opacity-90 cursor-pointer">
           <img
@@ -43,14 +39,14 @@ const Picture = ({ alwaysLike = false, name, price, username }) => {
         </CardHeader>
       </Link>
 
-      <CardContent> 
-        <CardTitle className="text-xl flex text-black dark:text-white">
+      <CardContent>
+        <CardTitle className="text-xl flex items-start">
           {name}
           {isAuthenticated && showMenu && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="none" size="icon" className="ml-auto">
-                  <Ellipsis size={16} className="dark:text-white text-black" />
+                <Button variant="ghost" size="icon" className="ml-auto">
+                  <Ellipsis size={16} />
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -62,11 +58,10 @@ const Picture = ({ alwaysLike = false, name, price, username }) => {
             </DropdownMenu>
           )}
         </CardTitle>
+
         <div className="mt-2">
-          <h2 className="text-sm font-semibold text-black dark:text-white">
-            Price
-          </h2>
-          <p className="text-sm text-gray-700 dark:text-gray-300">{price}</p>
+          <h2 className="text-sm font-semibold">Price</h2>
+          <p className="text-sm text-muted-foreground">{price}</p>
         </div>
       </CardContent>
 
@@ -79,12 +74,12 @@ const Picture = ({ alwaysLike = false, name, price, username }) => {
             <AvatarImage src={Ellipse} alt="User avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <p className="ml-3 text-sm text-black dark:text-white">{username}</p>
+          <p className="ml-3 text-sm">{username}</p>
         </div>
         <Heart
           onClick={() => setLike(!like)}
           className={`cursor-pointer transition-all ${
-            like ? "text-red-500 fill-red-500" : "text-red-500"
+            like ? "text-destructive fill-destructive" : "text-muted-foreground"
           }`}
         />
       </CardFooter>

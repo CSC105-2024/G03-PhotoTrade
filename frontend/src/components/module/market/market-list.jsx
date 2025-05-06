@@ -50,7 +50,7 @@ const MarketList = () => {
         <TabsContent value="photo">
           <Card>
             <CardContent>
-              <div className="flex justify-center md:justify-between items-center">
+              <div className="flex justify-center md:justify-between items-center min-h-screen">
                 <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
                   {photoList.map((item) => (
                     <Picture

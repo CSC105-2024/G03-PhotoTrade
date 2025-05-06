@@ -57,8 +57,9 @@ const ProfileHeader = () => {
           {isOwner && isAuthenticated && (
               <Button
               variant="outline"
-              className="border-gray-600 dark:border-gray-700 text-white dark:text-gray-100"
+              className="border-gray-300 dark:border-gray-600 dark:text-white"
               onClick={() => navigate("/user/auth/edit")}
+
             >
               <UserPen className="mr-1" />
               Edit
@@ -86,7 +87,7 @@ const ProfileHeader = () => {
         {isOwner && isAuthenticated &&(
             <Button
             variant="outline"
-            className="border-gray-600 dark:border-gray-700 text-white dark:text-gray-100"
+            className="border-gray-300 dark:border-gray-600 dark:text-white"
             onClick={() => navigate("/user/auth/edit")}
           >
             <UserPen className="mr-1" />

@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 
 const AddPicture = () => {
   const fileInputRef = useRef(null);
+
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -15,6 +16,7 @@ const AddPicture = () => {
     data.append("file", file);
     data.append("upload_preset", "photo_trade");
     data.append("cloud_name", "dcpgrfpaf");
+
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/dcpgrfpaf/image/upload",
       {
@@ -22,16 +24,16 @@ const AddPicture = () => {
         body: data,
       }
     );
+
     const fileUrl = await res.json();
     console.log(fileUrl.url);
   };
+
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Card className="w-[250px] h-[400px] rounded-xl p-6 border-none cursor-pointer">
-          <div className="flex justify-center items-center w-full h-full rounded-xl border-2 border-purple-500 border-dashed">
-            <ImagePlus size={48} />
-          </div>
+      <DialogTrigger asChild className="cursor-pointer">
+        <Card className="w-[250px] h-[400px] flex justify-center items-center bg-accent text-accent-foreground border shadow-xs dark:bg-input/50 dark:border-input">
+          <ImagePlus size={48} />
         </Card>
       </DialogTrigger>
 
@@ -39,18 +41,20 @@ const AddPicture = () => {
         <div className="lg:flex lg:gap-8">
           <input
             type="file"
-            accept="image/png, image/jpeg, image/jpg , image/pdf"
+            accept="image/png, image/jpeg, image/jpg, image/pdf"
             ref={fileInputRef}
             style={{ display: "none" }}
             onChange={handleFileChange}
           />
 
           <Card
-            className="flex justify-center items-center w-[250px] cursor-pointer border-solid border-2 border-white dark:border-gray-600 "
-            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+            className="flex justify-center items-center w-[250px] cursor-pointer border-solid border-2 border-white dark:border-gray-600"
+            onClick={() =>
+              fileInputRef.current && fileInputRef.current.click()
+            }
             type="button"
           >
-            <CardContent className="flex justify-center items-center ">
+            <CardContent className="flex justify-center items-center">
               <ImageUp size={100} strokeWidth={1.75} color="#787878" />
             </CardContent>
           </Card>
@@ -77,7 +81,7 @@ const AddPicture = () => {
               <Input type="text" placeholder="Enter price" className="w-full" />
             </div>
 
-            <Button variant={"outline"} className="w-full dark:text-white">
+            <Button variant="outline" className="w-full dark:text-white">
               Upload
             </Button>
           </div>

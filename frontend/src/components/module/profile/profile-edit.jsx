@@ -38,7 +38,7 @@ const ProfilEdit = () => {
   }, [dispatch]);
 
   return (
-    <div className="mb-6 md:pt-20">
+    <div className="mb-6 md:pt-20 min-h-screen">
       <Card className="bg-white dark:bg-[#18181b] shadow-md">
         <CardContent className="flex justify-between items-center">
           <div className="flex items-center mt-2">
@@ -72,7 +72,7 @@ const ProfilEdit = () => {
         </CardContent>
       </Card>
 
-      <form className="py-4">
+      <form className="pt-4">
         <div className="mb-5">
           <Label htmlFor="username" className="mb-2 text-md">
             Username

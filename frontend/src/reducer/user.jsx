@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const getUserById = createAsyncThunk("user/getById", async (id) => {
   const response = await axios.get(`http://localhost:3000/api/v1/user/${id}`);
-  return response.data;
+  return response.data.data;
 });
 
 export const getUserAll = createAsyncThunk("user/getAll", async () => {
@@ -26,7 +26,7 @@ const userSlice = createSlice({
     builder
       .addCase(getUserById.pending, (state) => { state.loading = true; })
       .addCase(getUserById.fulfilled, (state, action) => {
-        state.profileUser = action.payload.data;
+        state.profileUser = action.payload;
         state.success = true;
         state.loading = false;
       })

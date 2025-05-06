@@ -48,3 +48,26 @@ Prisma ORM comes with a built-in GUI to view and edit the data in your database.
 npx prisma studio
 ```
 
+## Endpoints
+# Collection
+- get
+    - http://localhost:3000/api/v1/collection 
+- get
+    - http://localhost:3000/api/v1/collection/:userid
+- get
+    - http://localhost:3000/api/v1/collection/top3
+- post
+    - http://localhost:3000/api/v1/collection/
+- patch
+    - http://localhost:3000/api/v1/collection/:id
+- delete
+    - http://localhost:3000/api/v1/collection/:id
+# photo
+-
+    -
+- put
+    - http://localhost:3000/api/v1/picture/updateprice
+- get
+    - http://localhost:3000/api/v1/picture/:searchword
+- 
+

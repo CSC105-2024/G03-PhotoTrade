@@ -75,7 +75,7 @@ export const getphotobypricehightolow = async () => {
 export const getphotobypricelowtohigh = async () => {
     return prisma.picture.findMany({
         orderBy: {
-            price: 'asc',
+            price: 'desc',
         },
         include: {
             user: {
@@ -97,8 +97,22 @@ export const getphotobynewest = async () => {
     })
 }
 export const gethotobybestseller = async () => {
-    
-}
+    return prisma.picture.findMany({
+        orderBy: {
+            trade: {
+                _count: 'desc',
+            },
+        },
+        include: {
+            user: {
+                select: { name: true },
+            },
+            _count: {
+                select: { trade: true },
+            },
+        },
+    });
+};
 
 export const updatephoto = async (
     id: number,

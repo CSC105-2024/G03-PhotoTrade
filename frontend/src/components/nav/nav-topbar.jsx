@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 import { CircleUser, LogOut, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/theme-provider";
 import { ScrollToBottom } from "@/hooks/use-scrollto";
-import { logout, fetchUser }  from "@/reducer/auth";
+import { logout, fetchUser } from "@/reducer/auth";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,54 +28,48 @@ const Navbar = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchUser())
-    }
-  }, [dispatch, isAuthenticated]);
+    setActive(location.pathname);
+  }, [location.pathname]);
 
-  {console.log(isAuthenticated)}
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
+  const handleLinkClick = (item) => {
+    if (item.id === "footer") {
+      setActive("/footer");
+      ScrollToBottom();
+    } else {
+      setActive(location.pathname);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <nav>
-      <div className="container md:text-sm mx-auto">
-        <div className="flex justify-between items-center">
+      <div className="container mx-auto md:text-sm">
+        <div className="flex items-center justify-between">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link
-              to="/"
-              className="text-xl font-bold"
-              onClick={() => {
-                setActive("/");
-              }}
-            >
+            <Link to="/" className="text-xl font-bold" onClick={() => setActive("/")}>
               PhotoTrade
             </Link>
           </motion.div>
 
-          <ul className="space-x-6 md:flex hidden">
+          <ul className="hidden space-x-6 md:flex">
             {navLinks.map((item) => (
               <li
                 key={item.id}
-                className={`cursor-pointer ${styles.underEffect} 
-                  ${active === `/${item.id}` ? "dark:text-white" : " text-neutral-500"}`
-                }
-
-                onClick={() => {
-                  if (item.id === "footer") {
-                    setActive('/footer');
-                    ScrollToBottom();
-                  } else {
-                    setActive(location.pathname)
-                    window.scrollTo({
-                      top: 0,
-                      left: 0,
-                      behavior: "smooth",
-                    })
-                  }
-                }}
+                className={`cursor-pointer ${styles.underEffect} ${
+                  active === `/${item.id}` ? "dark:text-white" : "text-neutral-500"
+                }`}
+                onClick={() => handleLinkClick(item)}
               >
-                <Link
-                  to={item.id === "footer" ? "#" : `/${item.id}`}
-                >
+                <Link to={item.id === "footer" ? "#" : `/${item.id}`}>
                   {item.title}
                 </Link>
               </li>
@@ -83,39 +77,27 @@ const Navbar = () => {
           </ul>
 
           <div className="flex space-x-2">
+            {/* Theme Toggle */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full hidden md:flex"
-                >
-                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-white" />
+                <Button variant="secondary" size="icon" className="hidden rounded-full md:flex">
+                  <Sun className="h-[1.2rem] w-[1.2rem] transition-all rotate-0 scale-100 dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] text-white transition-all rotate-90 scale-0 dark:rotate-0 dark:scale-100" />
                   <span className="sr-only">Toggle theme</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
-                  Light
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
-                  Dark
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
-                  System
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Authenticated */}
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="secondary"
-                    size="icon"
-                    className="rounded-full hidden md:flex"
-                  >
+                  <Button variant="secondary" size="icon" className="hidden rounded-full md:flex">
                     <CircleUser className="h-5 w-5" />
                     <span className="sr-only">Toggle user menu</span>
                   </Button>
@@ -123,25 +105,18 @@ const Navbar = () => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-
                   <Link to={`user/auth/dashboard/${userInfo.id}`}>
                     <DropdownMenuItem>Profile</DropdownMenuItem>
                   </Link>
-
-                  <DropdownMenuItem
-                    onClick={() => {
-                      dispatch(logout());
-                      navigate("/");
-                    }}
-                  >
-                    <LogOut />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <Button
-                className={`${styles.bgCustom} py-2 px-3 hidden md:flex dark:text-white`}
+                className={`${styles.bgCustom} hidden py-2 px-3 md:flex dark:text-white`}
                 onClick={() => navigate("/user/unauth/login")}
               >
                 Sign In

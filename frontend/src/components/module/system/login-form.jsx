@@ -31,12 +31,15 @@ const LoginForm = () => {
   
   
   const submitForm = (data) => { 
-    dispatch(fetchUser())
     dispatch(login(data))
-    if (success) {
-      navigate(`/user/auth/dashboard/${userInfo.id}`)
+    if (success && userInfo) {
+      navigate(`/user/auth/dashboard/${userInfo.id}}`);
     }
   };
+
+  useEffect(() => {
+     dispatch(fetchUser())
+  }, [dispatch])
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-3">

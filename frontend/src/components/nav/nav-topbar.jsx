@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 import { CircleUser, LogOut, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/theme-provider";
 import { ScrollToBottom } from "@/hooks/use-scrollto";
-import { logout } from "@/reducer/auth";
+import { logout, fetchUser }  from "@/reducer/auth";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,8 +28,12 @@ const Navbar = () => {
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    setActive(location.pathname);
-  }, [location.pathname]);
+    if (isAuthenticated) {
+      dispatch(fetchUser())
+    }
+  }, [dispatch, isAuthenticated]);
+
+  {console.log(isAuthenticated)}
 
   return (
     <nav>

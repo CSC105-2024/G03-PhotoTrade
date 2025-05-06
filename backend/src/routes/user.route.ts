@@ -14,7 +14,7 @@ const userRoutes = new Hono()
 
 userRoutes.post('/register', ...signUpController)
 userRoutes.post('/login', ...loginController)
-userRoutes.post('/logout', ...logoutController)
+userRoutes.post('/logout', auth, ...logoutController)
 userRoutes.get('/me', auth, ...getUser)
 userRoutes.get('/all', ...getUserAll)
 userRoutes.get('/:id', ...getUserById)

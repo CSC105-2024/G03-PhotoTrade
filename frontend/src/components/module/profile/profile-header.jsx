@@ -17,7 +17,7 @@ const ProfileHeader = () => {
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth)
   
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (isAuthenticated) {
       dispatch(fetchUser());
     }
     
@@ -32,8 +32,6 @@ const ProfileHeader = () => {
     setIsFollow(!isFollow);
   };
   
-
-  {console.log(isAuthenticated)}
   return (
     <div className="mb-6 md:pt-20">
       <div className="flex items-center">

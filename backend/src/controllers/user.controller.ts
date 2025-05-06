@@ -4,7 +4,7 @@ import { zValidator } from '@hono/zod-validator'
 import * as argon2 from "argon2"
 import { HTTPException } from 'hono/http-exception'
 import { prisma } from '../index.ts'
-import { generateNewJWTAndSetCookie } from '../utils/index.ts'
+import { generateNewJWTAndSetCookie } from '../utils/jwt.util.ts'
 import { deleteCookie } from 'hono/cookie'
 
 const factory = createFactory<{

@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Async Thunks
+
 export const createUser = createAsyncThunk(
   "auth/createUser",
   async (payload, { rejectWithValue }) => {
@@ -16,26 +18,41 @@ export const createUser = createAsyncThunk(
   }
 );
 
-export const login = createAsyncThunk("auth/login", async (payload) => {
-  const response = await axios.post(
-    "http://localhost:3000/api/v1/user/login",
-    payload,
-    { withCredentials: true }
-  );
-  return response.data;
-});
+export const login = createAsyncThunk(
+  "auth/login",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/user/login",
+        payload,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Login failed");
+    }
+  }
+);
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   await axios.post("http://localhost:3000/api/v1/user/logout", {}, { withCredentials: true });
 });
 
-export const fetchUser = createAsyncThunk("auth/fetch", async () => {
-  const response = await axios.get("http://localhost:3000/api/v1/user/me", {
-    withCredentials: true,
-  });
-  console.log(response.data.data)
-  return response.data;
-});
+export const fetchUser = createAsyncThunk(
+  "auth/fetchUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/v1/user/me", {
+        withCredentials: true,
+      });
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Fetch user failed");
+    }
+  }
+);
+
+// Slice
 
 const authSlice = createSlice({
   name: "auth",
@@ -49,45 +66,62 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createUser.pending, (state) => { state.loading = true; })
+      // Create User
+      .addCase(createUser.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(createUser.fulfilled, (state, action) => {
         state.userInfo = action.payload;
         state.loading = false;
         state.success = true;
       })
-      .addCase(createUser.rejected, (state) => {
+      .addCase(createUser.rejected, (state, action) => {
         state.userInfo = {};
         state.loading = false;
         state.success = false;
+        state.error = action.payload;
       })
-      .addCase(login.pending, (state) => { state.loading = true; })
+
+      // Login
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.isAuthenticated = false;
+      })
       .addCase(login.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
         state.isAuthenticated = true;
       })
-      .addCase(login.rejected, (state) => {
+      .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
+        state.isAuthenticated = false;
+        state.error = action.payload;
       })
-      .addCase(fetchUser.pending, (state) => { state.loading = true; })
+
+      // Fetch User
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        const { data } = action.payload;
-        state.userInfo = data;
+        state.userInfo = action.payload;
         state.isAuthenticated = true;
         state.success = true;
         state.loading = false;
       })
-      .addCase(fetchUser.rejected, (state) => {
+      .addCase(fetchUser.rejected, (state, action) => {
         state.userInfo = {};
         state.isAuthenticated = false;
         state.success = false;
         state.loading = false;
+        state.error = action.payload;
       })
+
+      // Logout
       .addCase(logout.fulfilled, (state) => {
         state.userInfo = {};
         state.isAuthenticated = false;
-        state.success = true;
+        state.success = false;
         state.loading = false;
       });
   },

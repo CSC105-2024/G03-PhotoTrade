@@ -301,8 +301,13 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
+<<<<<<< HEAD
    * Prisma Client JS version: 6.6.0
    * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+=======
+   * Prisma Client JS version: 6.7.0
+   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
    */
   export type PrismaVersion = {
     client: string
@@ -5123,16 +5128,28 @@ export namespace Prisma {
   export type CategoryMinAggregateOutputType = {
     id: number | null
     name: string | null
+<<<<<<< HEAD
+=======
+    category_url: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryMaxAggregateOutputType = {
     id: number | null
     name: string | null
+<<<<<<< HEAD
+=======
+    category_url: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryCountAggregateOutputType = {
     id: number
     name: number
+<<<<<<< HEAD
+=======
+    category_url: number
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     _all: number
   }
 
@@ -5148,16 +5165,28 @@ export namespace Prisma {
   export type CategoryMinAggregateInputType = {
     id?: true
     name?: true
+<<<<<<< HEAD
+=======
+    category_url?: true
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryMaxAggregateInputType = {
     id?: true
     name?: true
+<<<<<<< HEAD
+=======
+    category_url?: true
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryCountAggregateInputType = {
     id?: true
     name?: true
+<<<<<<< HEAD
+=======
+    category_url?: true
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     _all?: true
   }
 
@@ -5250,6 +5279,10 @@ export namespace Prisma {
   export type CategoryGroupByOutputType = {
     id: number
     name: string
+<<<<<<< HEAD
+=======
+    category_url: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     _count: CategoryCountAggregateOutputType | null
     _avg: CategoryAvgAggregateOutputType | null
     _sum: CategorySumAggregateOutputType | null
@@ -5274,6 +5307,10 @@ export namespace Prisma {
   export type CategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+<<<<<<< HEAD
+=======
+    category_url?: boolean
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: boolean | Category$pic_categoryArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
@@ -5281,19 +5318,34 @@ export namespace Prisma {
   export type CategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+<<<<<<< HEAD
+=======
+    category_url?: boolean
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+<<<<<<< HEAD
+=======
+    category_url?: boolean
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }, ExtArgs["result"]["category"]>
 
   export type CategorySelectScalar = {
     id?: boolean
     name?: boolean
+<<<<<<< HEAD
   }
 
   export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name", ExtArgs["result"]["category"]>
+=======
+    category_url?: boolean
+  }
+
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "category_url", ExtArgs["result"]["category"]>
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pic_category?: boolean | Category$pic_categoryArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -5309,6 +5361,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+<<<<<<< HEAD
+=======
+      category_url: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     }, ExtArgs["result"]["category"]>
     composites: {}
   }
@@ -5735,6 +5791,10 @@ export namespace Prisma {
   interface CategoryFieldRefs {
     readonly id: FieldRef<"Category", 'Int'>
     readonly name: FieldRef<"Category", 'String'>
+<<<<<<< HEAD
+=======
+    readonly category_url: FieldRef<"Category", 'String'>
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
     
 
@@ -9401,7 +9461,12 @@ export namespace Prisma {
 
   export const CategoryScalarFieldEnum: {
     id: 'id',
+<<<<<<< HEAD
     name: 'name'
+=======
+    name: 'name',
+    category_url: 'category_url'
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -9700,12 +9765,20 @@ export namespace Prisma {
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     id?: IntFilter<"Category"> | number
     name?: StringFilter<"Category"> | string
+<<<<<<< HEAD
+=======
+    category_url?: StringNullableFilter<"Category"> | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: Pic_CategoryListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+<<<<<<< HEAD
+=======
+    category_url?: SortOrderInput | SortOrder
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: Pic_CategoryOrderByRelationAggregateInput
   }
 
@@ -9715,12 +9788,20 @@ export namespace Prisma {
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     name?: StringFilter<"Category"> | string
+<<<<<<< HEAD
+=======
+    category_url?: StringNullableFilter<"Category"> | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: Pic_CategoryListRelationFilter
   }, "id">
 
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+<<<<<<< HEAD
+=======
+    category_url?: SortOrderInput | SortOrder
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     _count?: CategoryCountOrderByAggregateInput
     _avg?: CategoryAvgOrderByAggregateInput
     _max?: CategoryMaxOrderByAggregateInput
@@ -9734,6 +9815,10 @@ export namespace Prisma {
     NOT?: CategoryScalarWhereWithAggregatesInput | CategoryScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Category"> | number
     name?: StringWithAggregatesFilter<"Category"> | string
+<<<<<<< HEAD
+=======
+    category_url?: StringNullableWithAggregatesFilter<"Category"> | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type Pic_CategoryWhereInput = {
@@ -10088,38 +10173,66 @@ export namespace Prisma {
 
   export type CategoryCreateInput = {
     name: string
+<<<<<<< HEAD
+=======
+    category_url?: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: Pic_CategoryCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
     id?: number
     name: string
+<<<<<<< HEAD
+=======
+    category_url?: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: Pic_CategoryUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+<<<<<<< HEAD
+=======
+    category_url?: NullableStringFieldUpdateOperationsInput | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: Pic_CategoryUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+<<<<<<< HEAD
+=======
+    category_url?: NullableStringFieldUpdateOperationsInput | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
     pic_category?: Pic_CategoryUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
     id?: number
     name: string
+<<<<<<< HEAD
+=======
+    category_url?: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+<<<<<<< HEAD
+=======
+    category_url?: NullableStringFieldUpdateOperationsInput | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+<<<<<<< HEAD
+=======
+    category_url?: NullableStringFieldUpdateOperationsInput | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type Pic_CategoryCreateInput = {
@@ -10547,6 +10660,10 @@ export namespace Prisma {
   export type CategoryCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+<<<<<<< HEAD
+=======
+    category_url?: SortOrder
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryAvgOrderByAggregateInput = {
@@ -10556,11 +10673,19 @@ export namespace Prisma {
   export type CategoryMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+<<<<<<< HEAD
+=======
+    category_url?: SortOrder
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+<<<<<<< HEAD
+=======
+    category_url?: SortOrder
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategorySumOrderByAggregateInput = {
@@ -11953,11 +12078,19 @@ export namespace Prisma {
 
   export type CategoryCreateWithoutPic_categoryInput = {
     name: string
+<<<<<<< HEAD
+=======
+    category_url?: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryUncheckedCreateWithoutPic_categoryInput = {
     id?: number
     name: string
+<<<<<<< HEAD
+=======
+    category_url?: string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryCreateOrConnectWithoutPic_categoryInput = {
@@ -12012,11 +12145,19 @@ export namespace Prisma {
 
   export type CategoryUpdateWithoutPic_categoryInput = {
     name?: StringFieldUpdateOperationsInput | string
+<<<<<<< HEAD
+=======
+    category_url?: NullableStringFieldUpdateOperationsInput | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type CategoryUncheckedUpdateWithoutPic_categoryInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+<<<<<<< HEAD
+=======
+    category_url?: NullableStringFieldUpdateOperationsInput | string | null
+>>>>>>> 828285261dec52cdf8ab6b217a4eeff657a2c462
   }
 
   export type UserCreateWithoutUser_likeInput = {

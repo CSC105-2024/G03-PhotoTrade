@@ -9,7 +9,6 @@ export const createUser = createAsyncThunk(
         "http://localhost:3000/api/v1/user/register",
         payload
       );
-      console.log(payload);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -21,22 +20,13 @@ export const login = createAsyncThunk("auth/login", async (payload) => {
   const response = await axios.post(
     "http://localhost:3000/api/v1/user/login",
     payload,
-    {
-      withCredentials: true,
-    }
+    { withCredentials: true }
   );
-  console.log(response.data);
   return response.data;
 });
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  await axios.post(
-    "http://localhost:3000/api/v1/user/logout",
-    {},
-    {
-      withCredentials: true,
-    }
-  );
+  await axios.post("http://localhost:3000/api/v1/user/logout", {}, { withCredentials: true });
 });
 
 export const fetchUser = createAsyncThunk("auth/fetch", async () => {
@@ -46,13 +36,12 @@ export const fetchUser = createAsyncThunk("auth/fetch", async () => {
   return response.data;
 });
 
-export const authSlice = createSlice({
+
+const authSlice = createSlice({
   name: "auth",
   initialState: {
     loading: false,
     userInfo: {},
-    profileUser: {},
-    userAll: [],
     error: null,
     success: false,
     isAuthenticated: false,
@@ -60,9 +49,7 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(createUser.pending, (state) => { state.loading = true; })
       .addCase(createUser.fulfilled, (state, action) => {
         state.userInfo = action.payload;
         state.loading = false;
@@ -73,9 +60,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.success = false;
       })
-      .addCase(login.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(login.pending, (state) => { state.loading = true; })
       .addCase(login.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
@@ -85,64 +70,27 @@ export const authSlice = createSlice({
         state.loading = false;
         state.success = false;
       })
-      .addCase(fetchUser.pending, (state) => {
-        state.loading = true;
-      })
+      .addCase(fetchUser.pending, (state) => { state.loading = true; })
       .addCase(fetchUser.fulfilled, (state, action) => {
         const { data } = action.payload;
-        state.loading = false;
-        state.success = true;
         state.userInfo = data;
         state.isAuthenticated = true;
+        state.success = true;
+        state.loading = false;
       })
       .addCase(fetchUser.rejected, (state) => {
-        state.loading = false;
-        state.success = false;
-        state.userInfo = {};
-      })
-      .addCase(logout.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.loading = false;
-        state.success = false;
         state.userInfo = {};
         state.isAuthenticated = false;
-      })
-      .addCase(logout.rejected, (state) => {
-        state.loading = false;
         state.success = false;
-        state.error = "Logout failed";
-      })
-
-      .addCase(getUserById.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getUserById.fulfilled, (state, action) => {
-        const { data } = action.payload;
         state.loading = false;
-        state.success = true;
-        state.profileUser = data;
       })
-      .addCase(getUserById.rejected, (state) => {
-        state.loading = false;
+      .addCase(logout.fulfilled, (state) => {
+        state.userInfo = {};
+        state.isAuthenticated = false;
         state.success = false;
-      })
-      .addCase(getUserAll.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(getUserAll.fulfilled, (state, action) => {
-        const { data } = action.payload;
         state.loading = false;
-        state.success = true;
-        state.userAll = data;
-      })
-      .addCase(getUserAll.rejected, (state) => {
-        state.loading = false;
-        state.success = false;
       });
   },
 });
 
-export const { loginStatus, logoutStatus } = authSlice.actions;
 export default authSlice.reducer;

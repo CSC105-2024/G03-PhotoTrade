@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { 
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -21,7 +21,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Picture = ({ alwaysLike = false }) => {
+const Picture = ({ alwaysLike = false, name, price, username }) => {
   const [like, setLike] = useState(alwaysLike);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -29,8 +29,10 @@ const Picture = ({ alwaysLike = false }) => {
   const showMenu = location.pathname === "/user/auth/dashboard/1";
 
   return (
-    <Card className="w-[250px] h-[400px] rounded-xl pt-0 mb-5 
-      bg-white dark:bg-[#18181b] shadow-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+    <Card
+      className="w-[250px] h-[400px] rounded-xl pt-0 mb-5 
+      bg-white dark:bg-[#18181b] shadow-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300"
+    >
       <Link to="/market/1">
         <CardHeader className="px-0 hover:opacity-90 cursor-pointer">
           <img
@@ -43,16 +45,12 @@ const Picture = ({ alwaysLike = false }) => {
 
       <CardContent>
         <CardTitle className="text-xl flex text-black dark:text-white">
-          Sun
+          {name}
           {isAuthenticated && showMenu && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="none"
-                  size="icon"
-                  className="ml-auto"
-                >
-                  <Ellipsis size={16} className="dark:text-white text-black"/>
+                <Button variant="none" size="icon" className="ml-auto">
+                  <Ellipsis size={16} className="dark:text-white text-black" />
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -65,8 +63,10 @@ const Picture = ({ alwaysLike = false }) => {
           )}
         </CardTitle>
         <div className="mt-2">
-          <h2 className="text-sm font-semibold text-black dark:text-white">Price</h2>
-          <p className="text-sm text-gray-700 dark:text-gray-300">500 Baht</p>
+          <h2 className="text-sm font-semibold text-black dark:text-white">
+            Price
+          </h2>
+          <p className="text-sm text-gray-700 dark:text-gray-300">{price}</p>
         </div>
       </CardContent>
 
@@ -79,7 +79,7 @@ const Picture = ({ alwaysLike = false }) => {
             <AvatarImage src={Ellipse} alt="User avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <p className="ml-3 text-sm text-black dark:text-white">YummyGuy</p>
+          <p className="ml-3 text-sm text-black dark:text-white">{username}</p>
         </div>
         <Heart
           onClick={() => setLike(!like)}

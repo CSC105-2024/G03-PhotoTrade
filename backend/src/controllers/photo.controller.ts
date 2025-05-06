@@ -63,15 +63,29 @@ export const getallphotobyuserid = factory.createHandlers(
 )
 export const photocategory = factory.createHandlers(
     async (c) => {
-        const categoryId = Number(c.req.param('categoryId'))
-        const picture = await photoModel.photocategory(categoryId)
+        const categoryIdsParam = c.req.query('categoryIds'); 
+
+        if (!categoryIdsParam) {
+            return c.json({
+                success: false,
+                msg: "Missing categoryIds query parameter",
+            }, 400);
+        }
+
+        const categoryIds = categoryIdsParam
+            .split(',')
+            .map((id) => Number(id.trim()))
+            .filter((id) => !isNaN(id));
+
+        const picture = await photoModel.photocategory(categoryIds);
         return c.json({
             success: true,
             data: picture,
             msg: "get photocategory successfully",
         });
     }
-)
+);
+
 export const updatephoto = factory.createHandlers(
     async (c) => {
         const id = Number(c.req.param('id'))

@@ -54,6 +54,7 @@ model Trade {
 model Category {
   id           Int            @id @default(autoincrement())
   name         String
+  category_url String?
   pic_category Pic_Category[]
 }
 

@@ -25,8 +25,15 @@ export const uplodephoto = async (data: {
 }
 
 export const getallphoto = async () => {
-    return prisma.picture.findMany()
+    return prisma.picture.findMany({
+        include: {
+            user: {
+                select: { name: true },
+            },
+        },
+    })
 }
+
 export const getphotobyid = async (id: number) => {
     return prisma.picture.findUnique({
         where: { id },
@@ -39,13 +46,20 @@ export const getallphotobyuserid = async (userId: number) => {
     })
 }
 
-export const photocategory = async (categoryId: number) => {
+export const photocategory = async (categoryIds: number[]) => {
     return prisma.picture.findMany({
         where: {
-            pic_category: { some: { category_id: categoryId } },
-        }
-    })
-}
+            pic_category: {
+                some: {
+                    category_id: {
+                        in: categoryIds,
+                    },
+                },
+            },
+        },
+    });
+};
+
 
 export const updatephoto = async (
     id: number,

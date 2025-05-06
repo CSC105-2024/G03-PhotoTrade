@@ -12,8 +12,8 @@ import userFollowRoutes from './routes/user_Follow.route.ts'
 import tradeRoutes from './routes/trade.route.ts'
 import photoRoutes from './routes/photo.route.ts'
 import categoryRoutes from './routes/category.route.ts'
-const app = new Hono()
 export const prisma = new PrismaClient()
+const app = new Hono()
 
 app.use('*', logger())
 app.use(
@@ -37,17 +37,17 @@ const routes = app
 app.onError((err, c) => {
   if (err instanceof HTTPException) {
     const errResponse = err.res ??
-      c.json<ErrorResponse>(
-        {
-          success: false,
-          error: err.message,
-          isFormError:
-            err.cause && typeof err.cause === "object" && "form" in err.cause
-              ? err.cause.form === true
-              : false,
-        },
-        err.status,
-      )
+    c.json<ErrorResponse>(
+      {
+        success: false,
+        error: err.message,
+        isFormError:
+          err.cause && typeof err.cause === "object" && "form" in err.cause
+            ? err.cause.form === true
+            : false,
+      },
+      err.status,
+    )
     console.log(err);
     return errResponse
   }

@@ -18,7 +18,6 @@ import {
 import { user } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logoutStatus } from "@/reducer/auth";
 
 const NavUser = () => {
   const { isMobile } = useSidebar();
@@ -74,7 +73,6 @@ const NavUser = () => {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => {
-                dispatch(logoutStatus({ isAuthenticated: false }));
                 navigate("/");
               }}
             >

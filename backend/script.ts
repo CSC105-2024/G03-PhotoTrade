@@ -28,20 +28,6 @@ async function main() {
   //   }
   // })
 
-  const category = await prisma.pic_Category.create({
-    data: {
-      picture_id: 1,
-      category_id: 1,
-    }
-  })
-
-  // const trade = await prisma.trade.create({
-  //   data: {
-  //     user_id: 1,
-  //     picture_id: 1
-  //   }
-  // })
-  console.log(category)
 }
 
 main()

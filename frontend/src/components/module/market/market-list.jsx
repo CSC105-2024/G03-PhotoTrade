@@ -12,8 +12,29 @@ import {
 } from "@/components/ui/pagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CardContent, Card } from "@/components/ui/card";
+import { getAllPhoto , getPhotoByCategory } from "@/reducer/photo";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 const MarketList = () => {
+  const dispatch = useDispatch();
+  const { photoList, loading } = useSelector((state) => state.photo);
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  useEffect(() => {
+    if (selectedCategories.length === 0) {
+      dispatch(getAllPhoto());
+    } else {
+      dispatch(getPhotoByCategory(selectedCategories));
+    }
+  }, [dispatch, selectedCategories]);
+  
+  useEffect(() => {
+    dispatch(getAllPhoto());
+  }, [dispatch]);
+
   return (
     <section>
       <Tabs defaultValue="photo">
@@ -31,12 +52,14 @@ const MarketList = () => {
             <CardContent>
               <div className="flex justify-center md:justify-between items-center">
                 <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <Picture />
+                  {photoList.map((item) => (
+                    <Picture
+                      key={item.id}
+                      name={item.title}
+                      price={item.price}
+                      username={item.user.name}
+                    />
+                  ))}
                 </div>
               </div>
             </CardContent>

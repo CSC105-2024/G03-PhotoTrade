@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/prisma"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -29,18 +29,18 @@ model User {
 }
 
 model Picture {
-  id                  Int                  @id @default(autoincrement())
-  title               String
-  description         String
-  thumbnail_url       String
-  price               Int
-  create_at           DateTime             @default(now())
-  user_id             Int
-  user                User                 @relation(fields: [user_id], references: [id])
-  trade               Trade[]
-  pic_category        Pic_Category[]
-  user_like           User_Like[]
-  collection_pictures Collection_Picture[]
+  id                 Int                  @id @default(autoincrement())
+  title              String
+  description        String
+  thumbnail_url      String
+  price              Int
+  create_at          DateTime             @default(now())
+  user_id            Int
+  user               User                 @relation(fields: [user_id], references: [id])
+  trade              Trade[]
+  pic_category       Pic_Category[]
+  collection_picture Collection_Picture[]
+  user_like          User_Like[]
 }
 
 model Trade {
@@ -88,12 +88,12 @@ model User_Follow {
 }
 
 model Collection {
-  id          Int       @id @default(autoincrement())
-  name        String
-  user_id     Int
-  user        User      @relation(fields: [user_id], references: [id])
-  pictures    Collection_Picture[] 
-  create_at   DateTime  @default(now())
+  id        Int                  @id @default(autoincrement())
+  name      String
+  user_id   Int
+  user      User                 @relation(fields: [user_id], references: [id])
+  pictures  Collection_Picture[]
+  create_at DateTime             @default(now())
 }
 
 model Collection_Picture {
@@ -104,4 +104,3 @@ model Collection_Picture {
 
   @@id([collection_id, picture_id])
 }
-

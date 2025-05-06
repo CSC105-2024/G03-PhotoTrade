@@ -26,29 +26,6 @@ export const likePhoto = factory.createHandlers(
     }
 )
 
-export const countLike = factory.createHandlers(
-    async (c) => {
-        try {
-            const photoId = Number(c.req.query('photoId'))
-            const count = await UserLikeModel.countLike(photoId)
-            return c.json({
-                success: true,
-                data: count,
-                msg: "count successfully",
-            });
-        } catch (e) {
-            return c.json(
-                {
-                    success: false,
-                    data: null,
-                    msg: `Internal Server Error: ${e}`,
-                },
-                500
-            );
-        }
-    }
-)
-
 
 export const unlikePhoto = factory.createHandlers(
     async (c) => {

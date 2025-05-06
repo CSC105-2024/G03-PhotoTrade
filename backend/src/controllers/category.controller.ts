@@ -1,5 +1,6 @@
 import { createFactory } from 'hono/factory'
-import * as CategoryModel from '../models/category.models.ts'
+import * as CategoryModel from '../models/category.model.ts'
+
 const factory = createFactory()
 
 export const getcategorybyid = factory.createHandlers(

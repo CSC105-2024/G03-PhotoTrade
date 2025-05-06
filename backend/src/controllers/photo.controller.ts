@@ -1,120 +1,129 @@
-import { createFactory } from 'hono/factory'
-import * as photoModel from '../models/photo.models.ts'
-const factory = createFactory()
+import { createFactory } from 'hono/factory';
+import * as photoModel from '../models/photo.model.ts';
 
-export const uplodephoto = factory.createHandlers(
-    async (c) => {
-        const body = await c.req.json()
-        const { title, description, thumbnail_url, price, user_id, categoryIds } = body
-        const picture = await photoModel.uplodephoto({
-            title,
-            description,
-            thumbnail_url,
-            price,
-            user_id,
-            categoryIds,
-        })
-        return c.json({
-            success: true,
-            data: picture,
-            msg: "uplodephoto successfully",
-        });
-    }
-)
+const factory = createFactory();
 
-export const getallphoto = factory.createHandlers(
-    async (c) => {
-        const picture = await photoModel.getallphoto()
-        return c.json({
-            success: true,
-            data: picture,
-            msg: "get all photo successfully",
-        });
-    }
-)
-export const getphotobyid = factory.createHandlers(
-    async (c) => {
-        const id = Number(c.req.param('id'))
-        const picture = await photoModel.getphotobyid(id)
-        if (!picture) return c.json(
-            {
-                success: false,
-                msg: `photo not found`,
-            },
-            500
-        );
-        return c.json({
-            success: true,
-            data: picture,
-            msg: "get photobyid successfully",
-        });
-    }
-)
+const uploadPhoto = factory.createHandlers(async (c) => {
+  const body = await c.req.json();
+  const { title, description, thumbnail_url, price, user_id, categoryIds } = body;
 
-export const getallphotobyuserid = factory.createHandlers(
-    async (c) => {
-        const userId = Number(c.req.param('userId'))
-        const picture = await photoModel.getallphotobyuserid(userId)
-        return c.json({
-            success: true,
-            data: picture,
-            msg: "get allphotobyuserid successfully",
-        });
-    }
-)
+  const photo = await photoModel.uploadPhoto({
+    title,
+    description,
+    thumbnail_url,
+    price,
+    user_id,
+    categoryIds,
+  });
 
+  return c.json({
+    success: true,
+    data: photo,
+    msg: 'Upload photo successfully',
+  });
+});
 
-export const photocategory = factory.createHandlers(
-    async (c) => {
-        const categoryIdsParam = c.req.query('categoryIds'); 
+const getAllPhotos = factory.createHandlers(async (c) => {
+  const photos = await photoModel.getAllPhotos();
+  return c.json({
+    success: true,
+    data: photos,
+    msg: 'Get all photos successfully',
+  });
+});
 
-        if (!categoryIdsParam) {
-            return c.json({
-                success: false,
-                msg: "Missing categoryIds query parameter",
-            }, 400);
-        }
+const getPhotoById = factory.createHandlers(async (c) => {
+  const id = Number(c.req.param('id'));
+  const photo = await photoModel.getPhotoById(id);
 
-        const categoryIds = categoryIdsParam
-            .split(',')
-            .map((id) => Number(id.trim()))
-            .filter((id) => !isNaN(id));
+  if (!photo) {
+    return c.json(
+      {
+        success: false,
+        msg: 'Photo not found',
+      },
+      404
+    );
+  }
 
-        const picture = await photoModel.photocategory(categoryIds);
-        return c.json({
-            success: true,
-            data: picture,
-            msg: "get photocategory successfully",
-        });
-    }
-);
+  return c.json({
+    success: true,
+    data: photo,
+    msg: 'Get photo by ID successfully',
+  });
+});
 
-export const updatephoto = factory.createHandlers(
-    async (c) => {
-        const id = Number(c.req.param('id'))
-        const body = await c.req.json()
-        const { title, description, thumbnail_url, price } = body
-        const picture = await photoModel.updatephoto(id, {
-            title,
-            description,
-            thumbnail_url,
-            price,
-        })
-        return c.json({
-            success: true,
-            data: picture,
-            msg: "updatephoto successfully",
-        });
-    }
-)
+const getPhotosByUserId = factory.createHandlers(async (c) => {
+  const userId = Number(c.req.param('userId'));
+  const photos = await photoModel.getPhotosByUserId(userId);
+  return c.json({
+    success: true,
+    data: photos,
+    msg: 'Get photos by user ID successfully',
+  });
+});
 
-export const deletephoto = factory.createHandlers(
-    async (c) => {
-        const id = Number(c.req.param('id'))
-        await photoModel.deletephoto(id)
-        return c.json({
-            success: true,
-            msg: "delete successfully",
-        });
-    }
-)
+const getPhotosByCategory = factory.createHandlers(async (c) => {
+  const categoryIdsParam = c.req.query('categoryIds');
+
+  if (!categoryIdsParam) {
+    return c.json(
+      {
+        success: false,
+        msg: 'Missing categoryIds query parameter',
+      },
+      400
+    );
+  }
+
+  const categoryIds = categoryIdsParam
+    .split(',')
+    .map((id) => Number(id.trim()))
+    .filter((id) => !isNaN(id));
+
+  const photos = await photoModel.getPhotosByCategory(categoryIds);
+
+  return c.json({
+    success: true,
+    data: photos,
+    msg: 'Get photos by category successfully',
+  });
+});
+
+// const updatePhoto = factory.createHandlers(async (c) => {
+//   const id = Number(c.req.param('id'));
+//   const body = await c.req.json();
+//   const { title, description, thumbnail_url, price } = body;
+
+//   const updatedPhoto = await photoModel.updatePhoto(id, {
+//     title,
+//     description,
+//     thumbnail_url,
+//     price,
+//   });
+
+//   return c.json({
+//     success: true,
+//     data: updatedPhoto,
+//     msg: 'Update photo successfully',
+//   });
+// });
+
+const deletePhoto = factory.createHandlers(async (c) => {
+  const id = Number(c.req.param('id'));
+  await photoModel.deletePhoto(id);
+
+  return c.json({
+    success: true,
+    msg: 'Delete photo successfully',
+  });
+});
+
+export {
+  uploadPhoto,
+  getAllPhotos,
+  getPhotoById,
+  getPhotosByUserId,
+  getPhotosByCategory,
+  deletePhoto,
+};

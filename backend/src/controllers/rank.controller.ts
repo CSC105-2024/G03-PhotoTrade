@@ -1,5 +1,6 @@
 import { createFactory } from 'hono/factory'
-import * as RankModel from '../models/rank.models.ts'
+import * as RankModel from '../models/rank.model.ts'
+import { prisma } from '../index.ts'
 
 const factory = createFactory()
 

@@ -25,8 +25,4 @@ export const unlikePhoto = async (userId: number, pictureId: number) => {
   });
 };
 
-export const countLike = async (pictureId: number) => {
-  return await prisma.user_Like.count({
-    where: { picture_id: pictureId },
-  });
-};
+

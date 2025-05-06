@@ -7,18 +7,17 @@ import { type ErrorResponse } from './types/index.ts'
 import { PrismaClient } from '../generated/prisma/index.js'
 import userRoutes from './routes/user.route.ts'
 import rankRoutes from './routes/rank.route.ts'
-import userLikeRoutes from './routes/user_Like.route.ts'
-import userFollowRoutes from './routes/user_Follow.route.ts'
 import tradeRoutes from './routes/trade.route.ts'
 import photoRoutes from './routes/photo.route.ts'
 import categoryRoutes from './routes/category.route.ts'
+
 export const prisma = new PrismaClient()
 const app = new Hono()
 
 app.use('*', logger())
 app.use(
   cors({
-    origin: ['http://localhost:5174'],
+    origin: ['http://localhost:5173'],
     credentials: true
   })
 )
@@ -27,8 +26,6 @@ const routes = app
   .basePath('/api/v1')
   .route('/user', userRoutes)
   .route('/rank', rankRoutes)
-  .route('/userLike', userLikeRoutes)
-  .route('/userFollow', userFollowRoutes)
   .route('/trade', tradeRoutes)
   .route('/photo', photoRoutes)
   .route('/category', categoryRoutes)

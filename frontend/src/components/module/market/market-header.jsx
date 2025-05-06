@@ -1,20 +1,12 @@
 import React from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { categories } from "@/constants";
+import { Dropdowncategoryprofile } from "@/components/dropdown/selectcategory";
+import { Dropdownfilter } from "@/components/dropdown/selectfilter";
 
 const Header = () => {
   return (
-    <section className="pt-6 md:pt-26">
+    <section className="md:pt-20">
       <div>
         <h1 className="text-4xl font-bold">Browse Marketplace</h1>
         <p className="mt-2 text-neutral-500">
@@ -30,23 +22,8 @@ const Header = () => {
             placeholder="Search..."
             className="w-full rounded-lg  pl-8 md:w-[200px] lg:w-[336px]"
           />
-
-          <Select>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Select a category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Catagory</SelectLabel>
-
-                {categories.map((category) => (
-                  <SelectItem key={category.id} value={category.name}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Dropdownfilter />
+          <Dropdowncategoryprofile />
         </div>
       </div>
     </section>

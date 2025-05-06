@@ -6,6 +6,7 @@ on:
       - main
       - develop
       - feature/*
+      - backend
 
 jobs:
   build:
@@ -15,12 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Node.js frontend and backend build
-        uses: melvinsamuel070/nodejs-frontend-backend-build@v2
-        with:
-          frontend_directory: "./frontend"
-          backend_directory: "./backend"
-
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,16 +24,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: backend
-
-      - name: Build Project
-        run: npm run build
-        working-directory: backend
-
-      - name: Install dependencies
-        run: npm install
         working-directory: frontend
 
       - name: Build Project
-        run: npm run build
+        run: npm run build 
         working-directory: frontend

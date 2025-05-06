@@ -1,14 +1,18 @@
 import MenuLayout from "@/components/layouts/menu-layout";
-import Footer from "@/components/footer/footer";
+import Footer from "@/components/footer/footer.jsx";
+import { Toaster } from "@/components/ui/sonner"
 
 const Layout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <MenuLayout />
-      <main className="flex-grow max-w-7xl mx-auto md:pt-0 px-10 pt-16">
-        {children}
-      </main>
+      <div className="relative md:py-6 py-26">
+        <main className="flex-grow max-w-7xl px-10 z-0 mx-auto">
+          {children}
+        </main>
+      </div>
       <Footer />
+      <Toaster richColors position="bottom-right" />
     </div>
   );
 };

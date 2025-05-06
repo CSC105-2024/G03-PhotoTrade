@@ -123,6 +123,7 @@
   }
   body {
     font-family: "Roboto", sans-serif;
-    @apply bg-black text-white;
+    @apply dark:bg-black dark:text-white;
+    @apply bg-background text-foreground;
   }
 }

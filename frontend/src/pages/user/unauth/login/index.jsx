@@ -1,7 +1,7 @@
 import { SquareArrowLeft } from "lucide-react";
-import LoginForm from "@/components/module/login/login-form";
+import LoginForm from "@/components/module/system/login-form";
 import { Link, useNavigate } from "react-router-dom";
-
+import BackgroundLogin from "@/assets/BackgroundLogin.png";
 const LoginPage = () => {
   const navigate = useNavigate();
 
@@ -26,11 +26,11 @@ const LoginPage = () => {
         />
       </div>
 
-      <div className="flex relative hidden bg-muted lg:block">
+      <div className="relative bg-muted lg:block hidden">
         <img
-          src="/placeholder.svg"
+          src={BackgroundLogin}
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="absolute inset-0 h-full w-full object-cover"
         />
       </div>
     </div>

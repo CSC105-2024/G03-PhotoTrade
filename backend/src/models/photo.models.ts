@@ -60,6 +60,58 @@ export const photocategory = async (categoryIds: number[]) => {
     });
 };
 
+export const getphotobypricehightolow = async () => {
+    return prisma.picture.findMany({
+        orderBy: {
+            price: 'desc',
+        },
+        include: {
+            user: {
+                select: { name: true },
+            },
+        },
+    })
+}
+export const getphotobypricelowtohigh = async () => {
+    return prisma.picture.findMany({
+        orderBy: {
+            price: 'asc',
+        },
+        include: {
+            user: {
+                select: { name: true },
+            },
+        },
+    })
+}
+export const getphotobynewest = async () => {
+    return prisma.picture.findMany({
+        orderBy: {
+            create_at: 'asc',
+        },
+        include: {
+            user: {
+                select: { name: true },
+            },
+        },
+    })
+}
+export const gethotobybestseller = async () => {
+    const bestSellers = await prisma.trade.findMany({
+        
+    })
+
+    return prisma.picture.findMany({
+        orderBy: {
+            trade: 'desc',
+        },
+        include: {
+            user: {
+                select: { name: true },
+            },
+        },
+    })
+}
 
 export const updatephoto = async (
     id: number,

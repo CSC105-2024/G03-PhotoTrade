@@ -4,7 +4,6 @@ import axios from "axios";
 
 export const getRank = createAsyncThunk("rank/getrank", async () => {
   const response = await axios.get(`http://localhost:3000/api/v1/rank/getrank`);
-  
   return response.data.data;
 });
 const rankSlice = createSlice({

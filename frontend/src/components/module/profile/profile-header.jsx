@@ -5,27 +5,33 @@ import { UserPen, UserPlus, UserMinus, Dot, XOctagon } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserById } from "@/reducer/auth";
+import { getUserById } from "@/reducer/user";
+import { fetchUser } from "@/reducer/auth";
 
 const ProfileHeader = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isFollow, setIsFollow] = useState(false);
   const dispatch = useDispatch();
-  const { userInfo, profileUser, isAuthenticated} = useSelector((state) => state.auth);
-
-  const isOwner = isAuthenticated && userInfo.id === id;
+  const { profileUser } = useSelector((state) => state.user);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.auth)
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchUser());
+    }
+    
+    if (id) {
+      dispatch(getUserById(id));
+    }
+  }, [dispatch, id, isAuthenticated]);
+  
+  const isOwner = isAuthenticated && userInfo.id === parseInt(id);
 
   const handleButtonClick = () => {
     setIsFollow(!isFollow);
   };
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getUserById(id));
-    }
-  }, [dispatch, id]);
-
+  
   return (
     <div className="mb-6 md:pt-20">
       <div className="flex items-center">

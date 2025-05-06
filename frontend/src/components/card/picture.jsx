@@ -43,7 +43,7 @@ const Picture = ({ alwaysLike = false, name, price, username }) => {
         </CardHeader>
       </Link>
 
-      <CardContent>
+      <CardContent> 
         <CardTitle className="text-xl flex text-black dark:text-white">
           {name}
           {isAuthenticated && showMenu && (

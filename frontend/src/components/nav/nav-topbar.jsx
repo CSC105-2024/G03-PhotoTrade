@@ -32,6 +32,9 @@ const Navbar = () => {
   }, [location.pathname]);
 
   useEffect(() => {
+    // if (isAuthenticated) {
+    //   dispatch(fetchUser());
+    // }
     dispatch(fetchUser());
   }, [dispatch]);
 

@@ -1,5 +1,6 @@
 import { createFactory } from 'hono/factory'
-import * as TradeModel from '../models/trade.models.ts'
+import * as TradeModel from '../models/trade.model.ts'
+import { prisma } from '../index.ts'
 const factory = createFactory()
 
 export const buyPhoto = factory.createHandlers(
@@ -62,5 +63,6 @@ export const getphotohistorybyuser = factory.createHandlers(
                 500
             );
         }
+
     }
 )

@@ -12,13 +12,14 @@ import userFollowRoutes from './routes/user_Follow.route.ts'
 import tradeRoutes from './routes/trade.route.ts'
 import photoRoutes from './routes/photo.route.ts'
 import categoryRoutes from './routes/category.route.ts'
+
 export const prisma = new PrismaClient()
 const app = new Hono()
 
 app.use('*', logger())
 app.use(
   cors({
-    origin: ['http://localhost:5174'],
+    origin: ['http://localhost:5173'],
     credentials: true
   })
 )

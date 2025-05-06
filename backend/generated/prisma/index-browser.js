@@ -146,7 +146,8 @@ exports.Prisma.TradeScalarFieldEnum = {
 
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  category_url: 'category_url'
 };
 
 exports.Prisma.Pic_CategoryScalarFieldEnum = {
@@ -162,6 +163,18 @@ exports.Prisma.User_LikeScalarFieldEnum = {
 exports.Prisma.User_FollowScalarFieldEnum = {
   follower_id: 'follower_id',
   following_id: 'following_id'
+};
+
+exports.Prisma.CollectionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  user_id: 'user_id',
+  create_at: 'create_at'
+};
+
+exports.Prisma.Collection_PictureScalarFieldEnum = {
+  collection_id: 'collection_id',
+  picture_id: 'picture_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -182,7 +195,9 @@ exports.Prisma.ModelName = {
   Category: 'Category',
   Pic_Category: 'Pic_Category',
   User_Like: 'User_Like',
-  User_Follow: 'User_Follow'
+  User_Follow: 'User_Follow',
+  Collection: 'Collection',
+  Collection_Picture: 'Collection_Picture'
 };
 
 /**

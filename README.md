@@ -48,8 +48,8 @@ Prisma ORM comes with a built-in GUI to view and edit the data in your database.
 npx prisma studio
 ```
 
-## Endpoints
-# Category
+# Endpoints
+## Category
 - post
     - http://localhost:3000/api/v1/category/add
     - add photo to category
@@ -63,7 +63,7 @@ npx prisma studio
     - http://localhost:3000/api/v1/category/:id
     - delete photo form category
     
-# Collection
+## Collection
 - get
     - http://localhost:3000/api/v1/collection 
     - get all collection
@@ -83,7 +83,7 @@ npx prisma studio
     - http://localhost:3000/api/v1/collection/:id
     - delete photo to category
 
-# Photo
+## Photo
 - post
     - http://localhost:3000/api/v1/photo/upload
     - create photo
@@ -115,12 +115,12 @@ npx prisma studio
     - http://localhost:3000/api/v1/photo/:id
     - delete photo by id
 
-# Rank
+## Rank
 - get
     - http://localhost:3000/api/v1/rank/getrank
     - get top 10 rank
 
-# Trade
+## Trade
 - post
     - http://localhost:3000/api/v1/trade/buy
     - trade photo form user 1 to user 2
@@ -128,7 +128,7 @@ npx prisma studio
     - http://localhost:3000/api/v1/trade/history
     - get history of that user
 
-# User
+## User
 - post
     - http://localhost:3000/api/v1/user/register
     - create account user

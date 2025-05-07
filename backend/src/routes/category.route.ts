@@ -12,6 +12,6 @@ const categoryRoutes = new Hono()
 categoryRoutes.post("/add", ...addcategory);
 categoryRoutes.get("/all", ...getallcategory);
 categoryRoutes.get("/:id", ...getcategorybyid);
-categoryRoutes.delete("/:id", ...removecategory);
+categoryRoutes.delete("/", ...removecategory);
 
 export default categoryRoutes;

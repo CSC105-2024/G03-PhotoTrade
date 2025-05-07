@@ -49,7 +49,7 @@ npx prisma studio
 ```
 
 ## Endpoints
-# Category
+# Category 
 - post
     - http://localhost:3000/api/v1/category/add
     - add photo to category
@@ -97,7 +97,7 @@ npx prisma studio
     - http://localhost:3000/api/v1/photo/user/:id
     - get all photo by userid
 - get
-    - http://localhost:3000/api/v1/photo/category/:id
+    - http://localhost:3000/api/v1/photo/category
     - get all photo by category
 - get
     - http://localhost:3000/api/v1/picture/:searchword

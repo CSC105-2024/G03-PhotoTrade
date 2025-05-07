@@ -6,6 +6,9 @@ import {
     loginController, 
     logoutController, 
     signUpController, 
+    updateUserProfile,
+    getFollowerCount,
+    getFollowingCount,
 } from "../controllers/user.controller.ts";
 
 import {
@@ -22,16 +25,19 @@ import { auth } from "../middlewares/token.ts";
 
 const userRoutes = new Hono()
 
-userRoutes.post('/register', ...signUpController)
+userRoutes.post('/register', ...signUpController)   
 userRoutes.post('/login', ...loginController)
 userRoutes.post('/logout', auth, ...logoutController)
-userRoutes.post("/like", ...likePhoto)
-userRoutes.post("/follow", ...followUser)
+userRoutes.post("/like", ...likePhoto) //d
+userRoutes.post("/follow", ...followUser) //d
 userRoutes.get('/me', auth, ...getUser)
 userRoutes.get('/all', ...getUserAll)
 userRoutes.get('/:id', ...getUserById)
-userRoutes.delete("/unfollow", ...unfollowUser)
-userRoutes.delete("/unlike", ...unlikePhoto)
+userRoutes.get('/follower/:id', ...getFollowerCount) 
+userRoutes.get('/following/:id', ...getFollowingCount) 
+userRoutes.patch('/updateprofile/:id', ...updateUserProfile) //d
+userRoutes.delete("/unfollow", ...unfollowUser) //d
+userRoutes.delete("/unlike", ...unlikePhoto) //d
 
 
 export default userRoutes

@@ -12,6 +12,11 @@ export const getPhotoByCategory = createAsyncThunk("photo/category/:category", a
   return response.data;
 });
 
+export const createPhoto = createAsyncThunk("photo/upload", async (payload) => {
+  const response = await axios.post('http://localhost:3000/api/v1/photo/upload', payload)
+  return response.data
+})
+
 const photoSlice = createSlice({
   name: "photo",
   initialState: {

@@ -8,10 +8,11 @@ import {
     getPhotosByCategory,
     deletePhoto,
 } from "../controllers/photo.controller.ts";
+import { auth } from "../middlewares/token.ts";
 
 const photoRoutes = new Hono()
 
-photoRoutes.post("/upload", ...uploadPhoto);
+photoRoutes.post("/upload", auth, ...uploadPhoto);
 photoRoutes.get("/all", ...getAllPhotos);
 photoRoutes.get("/:id", ...getPhotoById);
 photoRoutes.get("/user/:id", ...getPhotosByUserId);

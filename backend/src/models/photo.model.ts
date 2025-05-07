@@ -14,9 +14,19 @@ const uploadPhoto = async (data: {
       description: data.description,
       thumbnail_url: data.thumbnail_url,
       price: data.price,
-      user_id: data.user_id,
+      user: {
+        connect: {
+          id: data.user_id
+        }
+      },
       pic_category: {
-        create: data.categoryIds.map((category_id) => ({ category_id })),
+        create: data.categoryIds.map((category_id) => ({
+          category: {
+            connect: {
+              id: category_id
+            }
+          }
+        })),
       },
     },
   });
@@ -28,6 +38,15 @@ const getAllPhotos = async () => {
       user: {
         select: { name: true },
       },
+      pic_category: {
+        include: {
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        }
+      }
     },
   });
 };

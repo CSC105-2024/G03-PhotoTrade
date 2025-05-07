@@ -1,13 +1,20 @@
 import { createFactory } from 'hono/factory';
 import * as photoModel from '../models/photo.model.ts';
 
-const factory = createFactory();
+const factory = createFactory<{
+  Variables: {
+    userId: number;
+  };
+}>();
 
 const uploadPhoto = factory.createHandlers(async (c) => {
-  const body = await c.req.json();
-  const { title, description, thumbnail_url, price, user_id, categoryIds } = body;
+  //call from middleware auth
+  const user_id = c.get('userId')
 
-  const photo = await photoModel.uploadPhoto({
+  const body = await c.req.json();
+  const { title, description, thumbnail_url, price, categoryIds } = body;
+
+  await photoModel.uploadPhoto({
     title,
     description,
     thumbnail_url,
@@ -18,10 +25,11 @@ const uploadPhoto = factory.createHandlers(async (c) => {
 
   return c.json({
     success: true,
-    data: photo,
     msg: 'Upload photo successfully',
   });
 });
+
+
 
 const getAllPhotos = factory.createHandlers(async (c) => {
   const photos = await photoModel.getAllPhotos();

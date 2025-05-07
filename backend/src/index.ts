@@ -65,10 +65,8 @@ app.onError((err, c) => {
 async function main() {
   const existingCount = await prisma.category.count();
   if (existingCount > 0) {
-    console.log("Categories already exist. Skipping seeding.");
     return;
   }
-
   await prisma.category.createMany({
     data: [
       {id: 1,  name: 'Lifestyle' , category_url: 'https://i.pinimg.com/736x/7a/00/64/7a00640d4278ad40d5ea6baa162d0e9f.jpg'},
@@ -83,8 +81,6 @@ async function main() {
       {id: 10, name: 'Sports & Fitness' , category_url: 'https://i.pinimg.com/736x/12/c7/4a/12c74a73f3511e41d0c63695bfe056d5.jpg'},
     ],
   });
-
-  console.log("🌱 Seeded categories successfully.");
 }
 
 

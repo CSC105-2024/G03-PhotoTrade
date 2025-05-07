@@ -28,16 +28,16 @@ const userRoutes = new Hono()
 userRoutes.post('/register', ...signUpController)   
 userRoutes.post('/login', ...loginController)
 userRoutes.post('/logout', auth, ...logoutController)
-userRoutes.post("/like", ...likePhoto) //d
-userRoutes.post("/follow", ...followUser) //d
+userRoutes.post("/like", ...likePhoto) 
+userRoutes.post("/follow", ...followUser) 
 userRoutes.get('/me', auth, ...getUser)
 userRoutes.get('/all', ...getUserAll)
 userRoutes.get('/:id', ...getUserById)
 userRoutes.get('/follower/:id', ...getFollowerCount) 
 userRoutes.get('/following/:id', ...getFollowingCount) 
-userRoutes.patch('/updateprofile/:id', ...updateUserProfile) //d
-userRoutes.delete("/unfollow", ...unfollowUser) //d
-userRoutes.delete("/unlike", ...unlikePhoto) //d
+userRoutes.patch('/updateprofile/:id', ...updateUserProfile) 
+userRoutes.delete("/unfollow", ...unfollowUser) 
+userRoutes.delete("/unlike", ...unlikePhoto) 
 
 
 export default userRoutes

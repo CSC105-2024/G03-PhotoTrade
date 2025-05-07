@@ -186,10 +186,8 @@ const updatePhotoPriceByLikes = async (id: number) => {
     where: { picture_id: id },
   });
 
-  // ทุก 100 ไลก์ เพิ่ม 20 บาท
   const priceIncrease = Math.floor(likeCount / 100) * 20;
 
-  // ดึงราคาปัจจุบัน
   const currentPhoto = await prisma.picture.findUnique({
     where: { id },
     select: { price: true },
@@ -199,7 +197,6 @@ const updatePhotoPriceByLikes = async (id: number) => {
     throw new Error('Photo not found');
   }
 
-  // คำนวณราคาที่เพิ่มแล้ว
   const newPrice = currentPhoto.price + priceIncrease;
 
   const updatedPhoto = await prisma.picture.update({
@@ -211,9 +208,6 @@ const updatePhotoPriceByLikes = async (id: number) => {
 
   return updatedPhoto;
 };
-
-
-
 
 const deletePhoto = async (id: number) => {
   await prisma.pic_Category.deleteMany({ where: { picture_id: id } });

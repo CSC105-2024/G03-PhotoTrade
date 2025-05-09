@@ -1,8 +1,12 @@
-import React from 'react'
-import { ProfilEdit } from '@/components/module/profile'
+import React from "react";
+import { ProfilEdit } from "@/components/module/profile";
 
 const Index = () => {
-  return <><ProfilEdit /></>
-}
+  return (
+    <>
+      <ProfilEdit />
+    </>
+  );
+};
 
-export default Index
+export default Index;

@@ -9,22 +9,23 @@ export const getUserById = createAsyncThunk("user/getById", async (id) => {
 
 export const getUserAll = createAsyncThunk("user/getAll", async () => {
   const response = await axios.get("http://localhost:3000/api/v1/user/all");
-  return response.data;
+  return response.data.data;
 });
-
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: false,
-    profileUser: {},
-    userAll: [],
     success: false,
+    profileUser: {},
+    userAll: {},
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUserById.pending, (state) => { state.loading = true; })
+      .addCase(getUserById.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(getUserById.fulfilled, (state, action) => {
         state.profileUser = action.payload;
         state.success = true;
@@ -34,9 +35,11 @@ const userSlice = createSlice({
         state.success = false;
         state.loading = false;
       })
-      .addCase(getUserAll.pending, (state) => { state.loading = true; })
+      .addCase(getUserAll.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(getUserAll.fulfilled, (state, action) => {
-        state.userAll = action.payload.data;
+        state.userAll = action.payload;
         state.success = true;
         state.loading = false;
       })

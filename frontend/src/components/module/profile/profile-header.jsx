@@ -6,7 +6,6 @@ import { Separator } from "@/components/ui/separator";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "@/reducer/user";
-import { fetchUser } from "@/reducer/auth";
 
 const ProfileHeader = () => {
   const { id } = useParams();
@@ -14,24 +13,20 @@ const ProfileHeader = () => {
   const [isFollow, setIsFollow] = useState(false);
   const dispatch = useDispatch();
   const { profileUser } = useSelector((state) => state.user);
-  const { userInfo, isAuthenticated } = useSelector((state) => state.auth)
-  
+  const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
+
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchUser());
-    }
-    
     if (id) {
       dispatch(getUserById(id));
     }
-  }, [dispatch, id, isAuthenticated]);
-  
+  }, [dispatch, id]);
+
   const isOwner = isAuthenticated && userInfo.id === parseInt(id);
 
   const handleButtonClick = () => {
     setIsFollow(!isFollow);
   };
-  
+
   return (
     <div className="mb-6 md:pt-20">
       <div className="flex items-center">
@@ -55,11 +50,10 @@ const ProfileHeader = () => {
 
         <div className="ml-auto space-y-2 hidden md:flex">
           {isOwner && isAuthenticated && (
-              <Button
+            <Button
               variant="outline"
               className="border-gray-300 dark:border-gray-600 dark:text-white"
               onClick={() => navigate("/user/auth/edit")}
-
             >
               <UserPen className="mr-1" />
               Edit
@@ -80,12 +74,12 @@ const ProfileHeader = () => {
               {isFollow ? "UnFollow" : "Follow"}
             </Button>
           )}
-          </div>
+        </div>
       </div>
-    
+
       <div className="flex flex-col gap-2 mt-4 md:hidden">
-        {isOwner && isAuthenticated &&(
-            <Button
+        {isOwner && isAuthenticated && (
+          <Button
             variant="outline"
             className="border-gray-300 dark:border-gray-600 dark:text-white"
             onClick={() => navigate("/user/auth/edit")}

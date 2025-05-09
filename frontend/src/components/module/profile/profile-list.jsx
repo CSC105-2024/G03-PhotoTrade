@@ -1,15 +1,5 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React, { useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Pagination,
@@ -23,8 +13,37 @@ import {
 import AddPicture from "@/components/card/add-picture";
 import Picture from "@/components/card/picture";
 import Collection from "@/components/card/collection";
+import { getPhotoUser } from "@/reducer/photo";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUserById } from "@/reducer/user";
 
 const ProfileList = () => {
+  const param = useParams();
+  const dispatch = useDispatch();
+
+  const { photoListUser } = useSelector((state) => state.photo);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { profileUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getPhotoUser());
+    }
+
+    if (param.id) {
+      dispatch(getUserById(param.id));
+    }
+  }, [dispatch, isAuthenticated, param.id]);
+
+  const newPhotolist = isAuthenticated
+    ? photoListUser
+    : (profileUser.creates ?? []);
+
+  const handdleName = (item) => {
+    return isAuthenticated ? item : profileUser.name;
+  };
+
   return (
     <>
       <Tabs defaultValue="listings">
@@ -40,10 +59,17 @@ const ProfileList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <AddPicture />
+                  {newPhotolist.map((item) => (
+                    <Picture
+                      key={item.id}
+                      name={item.title}
+                      price={item.price}
+                      username={handdleName(item.user?.name)}
+                      url={item.thumbnail_url}
+                      id={item.id}
+                    />
+                  ))}
+                  {isAuthenticated === "true" && <AddPicture />}
                 </div>
               </div>
             </CardContent>
@@ -69,7 +95,7 @@ const ProfileList = () => {
           <Card className="min-h-screen">
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
+                <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
                   <Picture />
                   <Picture />
                   <Picture />

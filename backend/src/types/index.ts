@@ -9,11 +9,13 @@ export const registerSchema = z.object({
     .trim()
     .refine(
       (value) =>
-        /^(?=(?:.*[A-Z]){1,})(?=(?:.*[!@#$&*]){1,})(?=(?:.*[0-9]){2,})(?=(?:.*[a-z]){2,}).*$/.test(value),
+        /^(?=(?:.*[A-Z]){1,})(?=(?:.*[!@#$&*]){1,})(?=(?:.*[0-9]){2,})(?=(?:.*[a-z]){2,}).*$/.test(
+          value,
+        ),
       {
         message:
           "Password must include at least 1 uppercase letter, 2 lowercase letters, 2 digits, and 1 special character",
-      }
+      },
     ),
 });
 

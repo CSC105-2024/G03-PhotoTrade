@@ -1,5 +1,6 @@
-import { createFactory } from 'hono/factory';
-import * as photoModel from '../models/photo.model.ts';
+import { createFactory } from "hono/factory";
+import * as photoModel from "../models/photo.model.ts";
+import { HTTPException } from "hono/http-exception";
 
 const factory = createFactory<{
   Variables: {
@@ -9,12 +10,12 @@ const factory = createFactory<{
 
 const uploadPhoto = factory.createHandlers(async (c) => {
   //call from middleware auth
-  const user_id = c.get('userId')
+  const user_id = c.get("userId");
 
   const body = await c.req.json();
   const { title, description, thumbnail_url, price, categoryIds } = body;
 
-  await photoModel.uploadPhoto({
+  const photo = await photoModel.uploadPhoto({
     title,
     description,
     thumbnail_url,
@@ -25,67 +26,82 @@ const uploadPhoto = factory.createHandlers(async (c) => {
 
   return c.json({
     success: true,
-    msg: 'Upload photo successfully',
+    data: photo,
+    msg: "Upload photo successfully",
   });
 });
 
-
-
 const getAllPhotos = factory.createHandlers(async (c) => {
-  const photos = await photoModel.getAllPhotos();
+  const { _start, _limit } = c.req.query();
+  const start = parseInt(_start) || 1;
+  const limit = parseInt(_limit) || 5;
+
+  const { photos, total } = await photoModel.getAllPhotos(start, limit);
+  c.header("X-Total-Count", total.toString());
+
   return c.json({
     success: true,
     data: photos,
-    msg: 'Get all photos successfully',
+    msg: "Get all photos successfully",
   });
 });
 
 const getPhotoById = factory.createHandlers(async (c) => {
-  const id = Number(c.req.param('id'));
-  const photo = await photoModel.getPhotoById(id);
+  const id = c.req.param("id");
+
+  if (!id) {
+    throw new HTTPException(400, {
+      message: 'Missing "id" parameter in the URL. Example: /users/123',
+      cause: { form: true },
+    });
+  }
+
+  const newId = parseInt(id);
+  const photo = await photoModel.getPhotoById(newId);
 
   if (!photo) {
     return c.json(
       {
         success: false,
-        msg: 'Photo not found',
+        msg: "Photo not found",
       },
-      404
+      404,
     );
   }
 
   return c.json({
     success: true,
     data: photo,
-    msg: 'Get photo by ID successfully',
+    msg: "Get photo by ID successfully",
   });
 });
 
-const getPhotosByUserId = factory.createHandlers(async (c) => {
-  const userId = Number(c.req.param('userId'));
-  const photos = await photoModel.getPhotosByUserId(userId);
+const getPhotosByUser = factory.createHandlers(async (c) => {
+  const userId = c.get("userId");
+
+  const photos = await photoModel.getPhotosByUser(userId);
   return c.json({
     success: true,
     data: photos,
-    msg: 'Get photos by user ID successfully',
+    msg: "Get photos by user successfully",
   });
 });
 
 const getPhotosByCategory = factory.createHandlers(async (c) => {
-  const categoryIdsParam = c.req.query('categoryIds');
+  const categoryIdsParam = c.req.query("categoryIds");
 
   if (!categoryIdsParam) {
     return c.json(
       {
         success: false,
-        msg: 'Missing categoryIds query parameter',
+        msg: "Missing categoryIds query parameter",
       },
-      400
+      400,
     );
   }
 
   const categoryIds = categoryIdsParam
-    .split(',')
+    .split(",")
     .map((id) => Number(id.trim()))
     .filter((id) => !isNaN(id));
 
@@ -94,7 +110,7 @@ const getPhotosByCategory = factory.createHandlers(async (c) => {
   return c.json({
     success: true,
     data: photos,
-    msg: 'Get photos by category successfully',
+    msg: "Get photos by category successfully",
   });
 });
 
@@ -118,12 +134,19 @@ const getPhotosByCategory = factory.createHandlers(async (c) => {
 // });
 
 const deletePhoto = factory.createHandlers(async (c) => {
-  const id = Number(c.req.param('id'));
-  await photoModel.deletePhoto(id);
+  const id = c.req.param("id");
+  if (!id) {
+    throw new HTTPException(400, {
+      message: 'Missing "id" parameter in the URL. Example: /users/123',
+      cause: { form: true },
+    });
+  }
+  const newId = parseInt(id);
+  await photoModel.deletePhoto(newId);
 
   return c.json({
     success: true,
-    msg: 'Delete photo successfully',
+    msg: "Delete photo successfully",
   });
 });
 
@@ -131,7 +154,7 @@ export {
   uploadPhoto,
   getAllPhotos,
   getPhotoById,
-  getPhotosByUserId,
+  getPhotosByUser,
   getPhotosByCategory,
   deletePhoto,
 };

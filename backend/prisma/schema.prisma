@@ -32,7 +32,7 @@ model Picture {
   id                 Int                  @id @default(autoincrement())
   title              String
   description        String
-  thumbnail_url      String
+  thumbnail_url      String?
   price              Int
   create_at          DateTime             @default(now())
   user_id            Int

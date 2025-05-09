@@ -1,21 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Async Thunks
-
 export const createUser = createAsyncThunk(
   "auth/createUser",
   async (payload, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/v1/user/register",
-        payload
+        payload,
       );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 export const login = createAsyncThunk(
@@ -25,17 +23,22 @@ export const login = createAsyncThunk(
       const response = await axios.post(
         "http://localhost:3000/api/v1/user/login",
         payload,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Login failed");
     }
-  }
+  },
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  await axios.post("http://localhost:3000/api/v1/user/logout", {}, { withCredentials: true });
+  await axios.post(
+    "http://localhost:3000/api/v1/user/logout",
+    {},
+    { withCredentials: true },
+  );
+  localStorage.setItem("isAuth", "false");
 });
 
 export const fetchUser = createAsyncThunk(
@@ -45,45 +48,39 @@ export const fetchUser = createAsyncThunk(
       const response = await axios.get("http://localhost:3000/api/v1/user/me", {
         withCredentials: true,
       });
+      localStorage.setItem("isAuth", "true");
       console.log(response.data.data);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Fetch user failed");
     }
-  }
+  },
 );
-
-// Slice
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     loading: false,
-    userInfo: {},
-    error: null,
     success: false,
-    isAuthenticated: false,
+    isAuthenticated: localStorage.getItem("isAuth") === "true",
+    userInfo: {},
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Create User
+
       .addCase(createUser.pending, (state) => {
         state.loading = true;
       })
-      .addCase(createUser.fulfilled, (state, action) => {
-        state.userInfo = action.payload;
+      .addCase(createUser.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
       })
       .addCase(createUser.rejected, (state, action) => {
-        state.userInfo = {};
         state.loading = false;
         state.success = false;
-        state.error = action.payload;
       })
 
-      // Login
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.isAuthenticated = false;
@@ -97,28 +94,23 @@ const authSlice = createSlice({
         state.loading = false;
         state.success = false;
         state.isAuthenticated = false;
-        state.error = action.payload;
+        state.userInfo = {};
       })
 
-      // Fetch User
       .addCase(fetchUser.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.userInfo = action.payload;
-        state.isAuthenticated = true;
         state.success = true;
         state.loading = false;
       })
-      .addCase(fetchUser.rejected, (state, action) => {
+      .addCase(fetchUser.rejected, (state) => {
         state.userInfo = {};
-        state.isAuthenticated = false;
         state.success = false;
         state.loading = false;
-        state.error = action.payload;
       })
 
-      // Logout
       .addCase(logout.fulfilled, (state) => {
         state.userInfo = {};
         state.isAuthenticated = false;

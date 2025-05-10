@@ -10,17 +10,17 @@ import rankRoutes from './routes/rank.route.ts'
 import tradeRoutes from './routes/trade.route.ts'
 import photoRoutes from './routes/photo.route.ts'
 import categoryRoutes from './routes/category.route.ts'
-import collectionRoute from './routes/collection.route.ts'
+
 export const prisma = new PrismaClient()
 const app = new Hono()
 
-app.use('*', logger())
+app.use("*", logger());
 app.use(
   cors({
-    origin: ['http://localhost:5173'],
-    credentials: true
-  })
-)
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  }),
+);
 
 const routes = app
   .basePath('/api/v1')
@@ -29,25 +29,24 @@ const routes = app
   .route('/trade', tradeRoutes)
   .route('/photo', photoRoutes)
   .route('/category', categoryRoutes)
-  .route('/collection', collectionRoute)
 
 
 app.onError((err, c) => {
   if (err instanceof HTTPException) {
     const errResponse = err.res ??
-      c.json<ErrorResponse>(
-        {
-          success: false,
-          error: err.message,
-          isFormError:
-            err.cause && typeof err.cause === "object" && "form" in err.cause
-              ? err.cause.form === true
-              : false,
-        },
-        err.status,
-      )
+    c.json<ErrorResponse>(
+      {
+        success: false,
+        error: err.message,
+        isFormError:
+          err.cause && typeof err.cause === "object" && "form" in err.cause
+            ? err.cause.form === true
+            : false,
+      },
+      err.status,
+    )
     console.log(err);
-    return errResponse
+    return errResponse;
   }
 
   return c.json<ErrorResponse>(
@@ -94,11 +93,14 @@ main()
     process.exit(1)
   })
 
-serve({
-  fetch: app.fetch,
-  port: 3000
-}, (info) => {
-  console.log(`Server is running on http://localhost:${info.port}`)
-})
+serve(
+  {
+    fetch: app.fetch,
+    port: 3000,
+  },
+  (info) => {
+    console.log(`Server is running on http://localhost:${info.port}`);
+  },
+);
 
-export default routes
+export default routes;

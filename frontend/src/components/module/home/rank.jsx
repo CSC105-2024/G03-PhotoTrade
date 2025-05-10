@@ -30,8 +30,11 @@ const Rank = () => {
 
   const top3name = rankUser?.slice(0, 3).map((item) => item.name);
   const top3count = rankUser?.slice(0, 3).map((item) => item._count.trade);
-  const others = rankUser?.slice(3 , 10).map((item) => item);
-  console.log(top3count);
+  const top3Id = rankUser?.slice(0, 3).map((item) => item.id);
+
+  const others = rankUser?.slice(3, 10).map((item) => item);
+  console.log(top3name[0]);
+
   return (
     <MainLayout
       title={"Top 10 Image Creators"}
@@ -54,8 +57,12 @@ const Rank = () => {
               className="w-20 h-20 lg:w-34 lg:h-34 rounded-full border-4 border-gray-300 cursor-pointer"
               alt={top3name[1]}
             />
-            <span className="text-lg font-bold mt-2 max-w-20">{top3name[1]}</span>
-            <span className="text-lg font-bold mt-2 max-w-20">{top3count[1]}</span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {top3name[1]}
+            </span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {top3count[1]}
+            </span>
             <span className="text-sm text-gray-500">2nd</span>
           </div>
           <div className="flex flex-col items-center ">
@@ -63,9 +70,14 @@ const Rank = () => {
               src={Ellipsebutbigger}
               className="w-24 h-24 lg:w-38 lg:h-38 rounded-full border-4 border-yellow-400 cursor-pointer"
               alt={top3name[0]}
+              onClick={() => navigate(`/user/auth/dashboard/${top3Id}`)}
             />
-            <span className="text-xl font-bold mt-2 max-w-20">{top3name[0]}</span>
-            <span className="text-lg font-bold mt-2 max-w-20">{top3count[0]}</span>
+            <span className="text-xl font-bold mt-2 max-w-20">
+              {top3name[0]}
+            </span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {top3count[0]}
+            </span>
             <span className="text-base text-yellow-500">1st</span>
           </div>
           <div className="flex flex-col items-center ">
@@ -74,8 +86,12 @@ const Rank = () => {
               className="w-20 h-20 lg:w-30 lg:h-30 rounded-full border-4 border-orange-700 cursor-pointer"
               alt={top3name[2]}
             />
-            <span className="text-lg font-bold mt-2 max-w-20">{top3name[2]}</span>
-            <span className="text-lg font-bold mt-2 max-w-20">{top3count[2]}</span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {top3name[2]}
+            </span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {top3count[2]}
+            </span>
             <span className="text-sm text-orange-700">3rd</span>
           </div>
         </div>
@@ -102,7 +118,9 @@ const Rank = () => {
                   >
                     {item.name}
                   </TableCell>
-                  <TableCell className="text-right">{item._count.trade}</TableCell>
+                  <TableCell className="text-right">
+                    {item._count.trade}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

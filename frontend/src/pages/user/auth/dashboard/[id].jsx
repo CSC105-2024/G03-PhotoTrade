@@ -7,7 +7,7 @@ const Mainprofile = () => {
       <ProfileHeader />
       <ProfileList />
     </>
-  )
-}
+  );
+};
 
 export default Mainprofile;

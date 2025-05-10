@@ -1,6 +1,6 @@
-import { PrismaClient } from './generated/prisma/index.js'
+import { PrismaClient } from "./generated/prisma/index.js";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
   // // ... you will write your Prisma Client queries here
@@ -17,7 +17,6 @@ async function main() {
   //     }
   //   },
   // })
-
   // const user = await prisma.user.create({
   //   data: {
   //     name: "jhon Doe",
@@ -27,15 +26,14 @@ async function main() {
   //     profile_url: "first-url",
   //   }
   // })
-
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

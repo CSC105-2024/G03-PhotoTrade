@@ -331,8 +331,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.6.0
-   * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+   * Prisma Client JS version: 6.7.0
+   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
    */
   export type PrismaVersion = {
     client: string
@@ -3262,7 +3262,7 @@ export namespace Prisma {
     id: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url: string | null
     price: number
     create_at: Date
     user_id: number
@@ -3364,7 +3364,7 @@ export namespace Prisma {
       id: number
       title: string
       description: string
-      thumbnail_url: string
+      thumbnail_url: string | null
       price: number
       create_at: Date
       user_id: number
@@ -12070,7 +12070,7 @@ export namespace Prisma {
     id?: IntFilter<"Picture"> | number
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
-    thumbnail_url?: StringFilter<"Picture"> | string
+    thumbnail_url?: StringNullableFilter<"Picture"> | string | null
     price?: IntFilter<"Picture"> | number
     create_at?: DateTimeFilter<"Picture"> | Date | string
     user_id?: IntFilter<"Picture"> | number
@@ -12085,7 +12085,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    thumbnail_url?: SortOrder
+    thumbnail_url?: SortOrderInput | SortOrder
     price?: SortOrder
     create_at?: SortOrder
     user_id?: SortOrder
@@ -12103,7 +12103,7 @@ export namespace Prisma {
     NOT?: PictureWhereInput | PictureWhereInput[]
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
-    thumbnail_url?: StringFilter<"Picture"> | string
+    thumbnail_url?: StringNullableFilter<"Picture"> | string | null
     price?: IntFilter<"Picture"> | number
     create_at?: DateTimeFilter<"Picture"> | Date | string
     user_id?: IntFilter<"Picture"> | number
@@ -12118,7 +12118,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
-    thumbnail_url?: SortOrder
+    thumbnail_url?: SortOrderInput | SortOrder
     price?: SortOrder
     create_at?: SortOrder
     user_id?: SortOrder
@@ -12136,7 +12136,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Picture"> | number
     title?: StringWithAggregatesFilter<"Picture"> | string
     description?: StringWithAggregatesFilter<"Picture"> | string
-    thumbnail_url?: StringWithAggregatesFilter<"Picture"> | string
+    thumbnail_url?: StringNullableWithAggregatesFilter<"Picture"> | string | null
     price?: IntWithAggregatesFilter<"Picture"> | number
     create_at?: DateTimeWithAggregatesFilter<"Picture"> | Date | string
     user_id?: IntWithAggregatesFilter<"Picture"> | number
@@ -12580,7 +12580,7 @@ export namespace Prisma {
   export type PictureCreateInput = {
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user: UserCreateNestedOneWithoutCreatesInput
@@ -12594,7 +12594,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user_id: number
@@ -12607,7 +12607,7 @@ export namespace Prisma {
   export type PictureUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCreatesNestedInput
@@ -12621,7 +12621,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -12635,7 +12635,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user_id: number
@@ -12644,7 +12644,7 @@ export namespace Prisma {
   export type PictureUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12653,7 +12653,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -14314,7 +14314,7 @@ export namespace Prisma {
   export type PictureCreateWithoutUserInput = {
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     trade?: TradeCreateNestedManyWithoutPictureInput
@@ -14327,7 +14327,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     trade?: TradeUncheckedCreateNestedManyWithoutPictureInput
@@ -14460,7 +14460,7 @@ export namespace Prisma {
     id?: IntFilter<"Picture"> | number
     title?: StringFilter<"Picture"> | string
     description?: StringFilter<"Picture"> | string
-    thumbnail_url?: StringFilter<"Picture"> | string
+    thumbnail_url?: StringNullableFilter<"Picture"> | string | null
     price?: IntFilter<"Picture"> | number
     create_at?: DateTimeFilter<"Picture"> | Date | string
     user_id?: IntFilter<"Picture"> | number
@@ -14848,7 +14848,7 @@ export namespace Prisma {
   export type PictureCreateWithoutTradeInput = {
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user: UserCreateNestedOneWithoutCreatesInput
@@ -14861,7 +14861,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user_id: number
@@ -14931,7 +14931,7 @@ export namespace Prisma {
   export type PictureUpdateWithoutTradeInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCreatesNestedInput
@@ -14944,7 +14944,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -14989,7 +14989,7 @@ export namespace Prisma {
   export type PictureCreateWithoutPic_categoryInput = {
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user: UserCreateNestedOneWithoutCreatesInput
@@ -15002,7 +15002,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user_id: number
@@ -15046,7 +15046,7 @@ export namespace Prisma {
   export type PictureUpdateWithoutPic_categoryInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCreatesNestedInput
@@ -15059,7 +15059,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -15129,7 +15129,7 @@ export namespace Prisma {
   export type PictureCreateWithoutUser_likeInput = {
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user: UserCreateNestedOneWithoutCreatesInput
@@ -15142,7 +15142,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user_id: number
@@ -15212,7 +15212,7 @@ export namespace Prisma {
   export type PictureUpdateWithoutUser_likeInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCreatesNestedInput
@@ -15225,7 +15225,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -15522,7 +15522,7 @@ export namespace Prisma {
   export type PictureCreateWithoutCollection_pictureInput = {
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user: UserCreateNestedOneWithoutCreatesInput
@@ -15535,7 +15535,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
     user_id: number
@@ -15587,7 +15587,7 @@ export namespace Prisma {
   export type PictureUpdateWithoutCollection_pictureInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCreatesNestedInput
@@ -15600,7 +15600,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_id?: IntFieldUpdateOperationsInput | number
@@ -15613,7 +15613,7 @@ export namespace Prisma {
     id?: number
     title: string
     description: string
-    thumbnail_url: string
+    thumbnail_url?: string | null
     price: number
     create_at?: Date | string
   }
@@ -15644,7 +15644,7 @@ export namespace Prisma {
   export type PictureUpdateWithoutUserInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     trade?: TradeUpdateManyWithoutPictureNestedInput
@@ -15657,7 +15657,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
     trade?: TradeUncheckedUpdateManyWithoutPictureNestedInput
@@ -15670,7 +15670,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    thumbnail_url?: StringFieldUpdateOperationsInput | string
+    thumbnail_url?: NullableStringFieldUpdateOperationsInput | string | null
     price?: IntFieldUpdateOperationsInput | number
     create_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }

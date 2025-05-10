@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,21 +18,35 @@ import { Heart, Ellipsis } from "lucide-react";
 import Ellipse from "@/assets/Ellipse.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePhotoById } from "@/reducer/photo";
 
-const Picture = ({ alwaysLike = false, name, price, username }) => {
+const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
+  const dispatch = useDispatch()
   const [like, setLike] = useState(alwaysLike);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
   const showMenu = location.pathname === "/user/auth/dashboard/1";
 
+  const formatNumber = (number) => {
+    const unitList = ["", "K", "M", "G"];
+    let sign = Math.sign(number);
+    let unit = 0;
+
+    while (Math.abs(number) >= 1000) {
+      unit = unit + 1;
+      number = Math.floor(Math.abs(number) / 100) / 10;
+    }
+    return sign * Math.abs(number) + unitList[unit];
+  };
+
   return (
     <Card className="w-[250px] h-[400px] rounded-xl pt-0 mb-5 shadow-lg border bg-background text-foreground">
-      <Link to="/market/1">
+      <Link to={`/market/${id}`}>
         <CardHeader className="px-0 hover:opacity-90 cursor-pointer">
           <img
-            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
+            src={url}
             alt="Sun"
             className="w-full h-[200px] rounded-t-xl aspect-square object-cover"
           />
@@ -53,7 +67,13 @@ const Picture = ({ alwaysLike = false, name, price, username }) => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>Add collection</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Delete</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    dispatch(deletePhotoById(id))
+                  }}
+                >
+                  Delete
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}
@@ -61,7 +81,9 @@ const Picture = ({ alwaysLike = false, name, price, username }) => {
 
         <div className="mt-2">
           <h2 className="text-sm font-semibold">Price</h2>
-          <p className="text-sm text-muted-foreground">{price}</p>
+          <p className="text-sm text-muted-foreground">
+            ฿ {formatNumber(price)}
+          </p>
         </div>
       </CardContent>
 

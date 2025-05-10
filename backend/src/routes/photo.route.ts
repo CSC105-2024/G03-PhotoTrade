@@ -4,36 +4,20 @@ import {
   uploadPhoto,
   getAllPhotos,
   getPhotoById,
-  getPhotosByUserId,
+  getPhotosByUser,
   getPhotosByCategory,
   deletePhoto,
-  updatePhoto,
-  getPhotosByPriceHighToLow,
-  getPhotosByPriceLowToHigh,
-  getNewestPhotos,
-  getBestSellerPhotos,
-  getPhotosBySearchword,
-  getPhotosByUserTradeHistory,
-  getPhotosLikedByUser,
-  updatePhotoPriceByLikes,
 } from "../controllers/photo.controller.ts";
+import { auth } from "../middlewares/token.ts";
 
 const photoRoutes = new Hono();
 
-photoRoutes.post("/upload", ...uploadPhoto);
+photoRoutes.get("/own", auth, ...getPhotosByUser);
 photoRoutes.get("/all", ...getAllPhotos);
-photoRoutes.get("/price/high", ...getPhotosByPriceHighToLow);
-photoRoutes.get("/price/low", ...getPhotosByPriceLowToHigh);
-photoRoutes.get("/newest", ...getNewestPhotos);
-photoRoutes.get("/bestseller", ...getBestSellerPhotos);
-photoRoutes.get("/user/:userId", ...getPhotosByUserId);
-photoRoutes.get("/category", ...getPhotosByCategory);
-photoRoutes.get("/search", ...getPhotosBySearchword);
-photoRoutes.get("/trade/user/:userId", ...getPhotosByUserTradeHistory);
-photoRoutes.get("/liked/user/:userId", ...getPhotosLikedByUser);
-photoRoutes.get("/:id", ...getPhotoById);
-photoRoutes.put("/:id", ...updatePhoto);
-photoRoutes.put("/update-price/:id", ...updatePhotoPriceByLikes);
+photoRoutes.post("/upload", auth, ...uploadPhoto);
+// photoRoutes.get("/category/:id", ...getPhotosByCategory);
+// photoRoutes.put("/:id",...updatePhoto);
 photoRoutes.delete("/:id", ...deletePhoto);
+photoRoutes.get("/:id", ...getPhotoById);
 
 export default photoRoutes;

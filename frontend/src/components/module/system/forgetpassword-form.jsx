@@ -121,11 +121,17 @@ const Forgetpassword = () => {
               className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
               tabIndex={-1}
             >
-              {showPasswordAgain ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+              {showPasswordAgain ? (
+                <EyeOffIcon size={20} />
+              ) : (
+                <EyeIcon size={20} />
+              )}
             </button>
           </div>
           {errors.passwordAgain && (
-            <p className="text-red-500 text-sm">{errors.passwordAgain.message}</p>
+            <p className="text-red-500 text-sm">
+              {errors.passwordAgain.message}
+            </p>
           )}
         </div>
 

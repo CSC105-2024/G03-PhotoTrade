@@ -26,18 +26,22 @@ const LoginForm = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const submitForm = (data) => {
     dispatch(login(data));
-    dispatch(fetchUser());
+
+    setTimeout(() => {
+      dispatch(fetchUser());
+    }, 500);
   };
 
   useEffect(() => {
-    if (isAuthenticated && userInfo.id != undefined) {
+    console.log(userInfo);
+    if (localStorage.getItem("isAuth") === "true" && userInfo?.id) {
       navigate(`/user/auth/dashboard/${userInfo.id}`);
     }
-  }, [isAuthenticated, userInfo, navigate]);
+  }, [userInfo, navigate]);
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="flex flex-col gap-6">
@@ -64,7 +68,9 @@ const LoginForm = () => {
               },
             })}
           />
-          {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
         </div>
 
         {/* Password */}
@@ -92,7 +98,9 @@ const LoginForm = () => {
               {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
             </button>
           </div>
-          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
+          )}
 
           <span
             className="ml-auto text-sm underline underline-offset-4 text-purple-700 hover:underline cursor-pointer"

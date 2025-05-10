@@ -1,10 +1,8 @@
 import { Hono } from "hono";
 
-import {
-    getrank
-} from "../controllers/rank.controller.ts";
+import { getrank } from "../controllers/rank.controller.ts";
 
-const rankRoutes = new Hono()
+const rankRoutes = new Hono();
 
 rankRoutes.get("/getrank", ...getrank);
 

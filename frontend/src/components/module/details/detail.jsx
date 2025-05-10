@@ -1,12 +1,10 @@
-import React from "react";
-import detail from "@/assets/detail.png";
 import Ellipse from "@/assets/Ellipse.png";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import BreadcrumbTop from "@/components/breadcrumb/breadcrumb-top";
 import { ShoppingCart } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,16 +17,36 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { getPhotoId } from "@/reducer/photo";
+import { useEffect } from "react";
+import { number } from "zod";
 
 const Detail = () => {
+  const param = useParams("id");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { photoListId } = useSelector((state) => state.photo);
+
   const Categoryclick = () => {
     navigate("/market");
   };
+  console.log("dd", photoListId);
 
   const handleConfirmPurchase = () => {
     toast.success("Purchase successful!");
     navigate("/market");
+  };
+
+  useEffect(() => {
+    dispatch(getPhotoId(param.id));
+  }, [dispatch]);
+
+  const formatDate = (date) => {
+    const dateSubmitted = new Date(date);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+
+    return dateSubmitted.toLocaleDateString("en-US", options);
   };
 
   return (
@@ -36,7 +54,7 @@ const Detail = () => {
       <BreadcrumbTop />
       <AspectRatio ratio={3 / 2} className="border border-gray-500 rounded-md">
         <img
-          src={detail}
+          src={photoListId.thumbnail_url}
           alt="Image"
           className="w-full h-full rounded-md object-contain"
         />
@@ -44,19 +62,13 @@ const Detail = () => {
 
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2">
         <div className="mt-10">
-          <h1 className="text-3xl font-bold">Sunset in Thailand</h1>
-          <p className="">Sep 30, 2022</p>
+          <h1 className="text-3xl font-bold">{photoListId?.title}</h1>
+          <p className="">{formatDate(photoListId.create_at)}</p>
         </div>
       </div>
 
       <div className="mb-26">
-        <p className="">
-          This stunning sunset was captured in Thailand, showcasing vibrant
-          orange and pink hues blending seamlessly across the sky. The calm
-          water reflects the beauty of the evening, creating a serene and
-          peaceful atmosphere. Perfect for nature enthusiasts and landscape
-          lovers.
-        </p>
+        <p className="text-md">{photoListId.description}</p>
       </div>
 
       <div
@@ -67,7 +79,7 @@ const Detail = () => {
           <AvatarImage src={Ellipse} alt="first" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <span className="ml-3">YummyGuy</span>
+        <span className="ml-3">{photoListId.user?.name}</span>
       </div>
 
       <div className="space-x-2 mb-10">

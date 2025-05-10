@@ -1,7 +1,7 @@
-import { createFactory } from 'hono/factory'
-import * as UserLikeModel from '../models/user_Like.models.ts'
+import { createFactory } from "hono/factory";
+import * as UserLikeModel from "../models/user_Like.models.ts";
 
-const factory = createFactory()
+const factory = createFactory();
 
 export const likePhoto = factory.createHandlers(
     async (c) => {

@@ -1,15 +1,5 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React, { useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Pagination,
@@ -24,8 +14,32 @@ import AddPicture from "@/components/card/add-picture";
 import AddCollection from "@/components/card/add-collection";
 import Picture from "@/components/card/picture";
 import Collection from "@/components/card/collection";
+import { getPhotoUser } from "@/reducer/photo";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getUserById } from "@/reducer/user";
 
 const ProfileList = () => {
+  const param = useParams();
+  const dispatch = useDispatch();
+
+  const { photoListUser } = useSelector((state) => state.photo);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { profileUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getPhotoUser());
+    dispatch(getUserById(param.id));
+  }, [dispatch]);
+
+  const newPhotolist = isAuthenticated
+    ? photoListUser
+    : (profileUser.creates ?? []);
+
+  const handleName = (item) => {
+    return isAuthenticated ? item : profileUser.name;
+  };
+
   return (
     <>
       <Tabs defaultValue="listings">
@@ -41,10 +55,17 @@ const ProfileList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <AddPicture />
+                  {newPhotolist.map((item) => (
+                    <Picture
+                      key={item.id}
+                      name={item.title}
+                      price={item.price}
+                      username={handleName(item.user?.name)}
+                      url={item.thumbnail_url}
+                      id={item.id}
+                    />
+                  ))}
+                  {isAuthenticated && <AddPicture />}
                 </div>
               </div>
             </CardContent>
@@ -71,7 +92,7 @@ const ProfileList = () => {
           <Card className="min-h-screen">
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
+                <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
                   <Picture />
                   <Picture />
                   <Picture />

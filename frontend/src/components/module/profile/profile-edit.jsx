@@ -19,23 +19,21 @@ const ProfilEdit = () => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     const data = new FormData();
     data.append("file", file);
     data.append("upload_preset", "photo_trade");
-    data.append("cloud_name", "dcpgrfpaf"); 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dcpgrfpaf/image/upload", {
-      method: "POST",
-      body: data,
-    })
+    data.append("cloud_name", "dcpgrfpaf");
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dcpgrfpaf/image/upload",
+      {
+        method: "POST",
+        body: data,
+      },
+    );
     const fileUrl = await res.json();
     console.log(fileUrl.url);
-    
   };
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
 
   return (
     <div className="mb-6 md:pt-20 min-h-screen">

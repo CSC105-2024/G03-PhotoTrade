@@ -1,4 +1,4 @@
-import { prisma } from '../index.ts'
+import { prisma } from "../index.ts";
 
 export const likePhoto = async (userId: number, pictureId: number) => {
   const alreadyLiked = await prisma.user_Like.findFirst({
@@ -19,10 +19,8 @@ export const unlikePhoto = async (userId: number, pictureId: number) => {
     where: {
       user_id_picture_id: {
         user_id: userId,
-        picture_id: pictureId
-      }
+        picture_id: pictureId,
+      },
     },
   });
 };
-
-

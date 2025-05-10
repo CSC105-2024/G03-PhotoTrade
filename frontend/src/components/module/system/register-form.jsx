@@ -133,7 +133,11 @@ const RegisterForm = () => {
             className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             tabIndex={-1}
           >
-            {showPasswordAgain ? <EyeOffIcon size={15} /> : <EyeIcon size={15} />}
+            {showPasswordAgain ? (
+              <EyeOffIcon size={15} />
+            ) : (
+              <EyeIcon size={15} />
+            )}
           </button>
         </div>
         <p className="text-sm text-red-500">{errors.passwordAgain?.message}</p>
@@ -141,7 +145,9 @@ const RegisterForm = () => {
 
       {/* Submit Button */}
       {loading ? (
-        <div><span>Loading...</span></div>
+        <div>
+          <span>Loading...</span>
+        </div>
       ) : (
         <Button
           type="submit"

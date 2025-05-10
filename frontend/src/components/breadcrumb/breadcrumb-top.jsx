@@ -25,9 +25,7 @@ const BreadcrumbTop = () => {
         </BreadcrumbItem>
         <BreadcrumbSeparator className="text-gray-400 dark:text-gray-500" />
         <BreadcrumbItem>
-          <BreadcrumbLink
-            className="text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:underline"
-          >
+          <BreadcrumbLink className="text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:underline">
             Components
           </BreadcrumbLink>
         </BreadcrumbItem>

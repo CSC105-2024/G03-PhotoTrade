@@ -24,7 +24,12 @@ const Hero = () => {
           and connect with buyers who appreciate your creativity.
         </p>
 
-        <Button className={`${styles.bgCustom} py-2 px-3 text-white`} onClick={() => navigate("/market")}>Explore</Button>
+        <Button
+          className={`${styles.bgCustom} py-2 px-3 text-white`}
+          onClick={() => navigate("/market")}
+        >
+          Explore
+        </Button>
       </div>
 
       <div className="flex justify-center items-center order-1 md:order-2 z-1">

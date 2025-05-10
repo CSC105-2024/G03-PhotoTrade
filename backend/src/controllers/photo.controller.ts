@@ -1,11 +1,19 @@
-import { createFactory } from 'hono/factory';
-import * as photoModel from '../models/photo.model.ts';
+import { createFactory } from "hono/factory";
+import * as photoModel from "../models/photo.model.ts";
+import { HTTPException } from "hono/http-exception";
 
-const factory = createFactory();
+const factory = createFactory<{
+  Variables: {
+    userId: number;
+  };
+}>();
 
 const uploadPhoto = factory.createHandlers(async (c) => {
+  //call from middleware auth
+  const user_id = c.get("userId");
+
   const body = await c.req.json();
-  const { title, description, thumbnail_url, price, user_id, categoryIds } = body;
+  const { title, description, thumbnail_url, price, categoryIds } = body;
 
 
   const photo = await photoModel.uploadPhoto({
@@ -20,65 +28,81 @@ const uploadPhoto = factory.createHandlers(async (c) => {
   return c.json({
     success: true,
     data: photo,
-    msg: 'Upload photo successfully',
+    msg: "Upload photo successfully",
   });
 });
 
 const getAllPhotos = factory.createHandlers(async (c) => {
-  const photos = await photoModel.getAllPhotos();
+  const { _start, _limit } = c.req.query();
+  const start = parseInt(_start) || 1;
+  const limit = parseInt(_limit) || 5;
+
+  const { photos, total } = await photoModel.getAllPhotos(start, limit);
+  c.header("X-Total-Count", total.toString());
+
   return c.json({
     success: true,
     data: photos,
-    msg: 'Get all photos successfully',
+    msg: "Get all photos successfully",
   });
 });
 
 const getPhotoById = factory.createHandlers(async (c) => {
-  const id = Number(c.req.param('id'));
-  const photo = await photoModel.getPhotoById(id);
+  const id = c.req.param("id");
+
+  if (!id) {
+    throw new HTTPException(400, {
+      message: 'Missing "id" parameter in the URL. Example: /users/123',
+      cause: { form: true },
+    });
+  }
+
+  const newId = parseInt(id);
+  const photo = await photoModel.getPhotoById(newId);
 
   if (!photo) {
     return c.json(
       {
         success: false,
-        msg: 'Photo not found',
+        msg: "Photo not found",
       },
-      404
+      404,
     );
   }
 
   return c.json({
     success: true,
     data: photo,
-    msg: 'Get photo by ID successfully',
+    msg: "Get photo by ID successfully",
   });
 });
 
-const getPhotosByUserId = factory.createHandlers(async (c) => {
-  const userId = Number(c.req.param('userId'));
-  const photos = await photoModel.getPhotosByUserId(userId);
+const getPhotosByUser = factory.createHandlers(async (c) => {
+  const userId = c.get("userId");
+
+  const photos = await photoModel.getPhotosByUser(userId);
   return c.json({
     success: true,
     data: photos,
-    msg: 'Get photos by user ID successfully',
+    msg: "Get photos by user successfully",
   });
 });
 
 const getPhotosByCategory = factory.createHandlers(async (c) => {
-  const categoryIdsParam = c.req.query('categoryIds');
+  const categoryIdsParam = c.req.query("categoryIds");
 
   if (!categoryIdsParam) {
     return c.json(
       {
         success: false,
-        msg: 'Missing categoryIds query parameter',
+        msg: "Missing categoryIds query parameter",
       },
-      400
+      400,
     );
   }
 
   const categoryIds = categoryIdsParam
-    .split(',')
+    .split(",")
     .map((id) => Number(id.trim()))
     .filter((id) => !isNaN(id));
 
@@ -87,7 +111,7 @@ const getPhotosByCategory = factory.createHandlers(async (c) => {
   return c.json({
     success: true,
     data: photos,
-    msg: 'Get photos by category successfully',
+    msg: "Get photos by category successfully",
   });
 });
 
@@ -111,12 +135,19 @@ const updatePhoto = factory.createHandlers(async (c) => {
 });
 
 const deletePhoto = factory.createHandlers(async (c) => {
-  const id = Number(c.req.param('id'));
-  await photoModel.deletePhoto(id);
+  const id = c.req.param("id");
+  if (!id) {
+    throw new HTTPException(400, {
+      message: 'Missing "id" parameter in the URL. Example: /users/123',
+      cause: { form: true },
+    });
+  }
+  const newId = parseInt(id);
+  await photoModel.deletePhoto(newId);
 
   return c.json({
     success: true,
-    msg: 'Delete photo successfully',
+    msg: "Delete photo successfully",
   });
 });
 
@@ -138,79 +169,79 @@ const getPhotosByPriceLowToHigh = factory.createHandlers(async (c) => {
   });
 });
 
-const getNewestPhotos = factory.createHandlers(async (c) => {
-  const photos = await photoModel.getNewestPhotos();
-  return c.json({
-    success: true,
-    data: photos,
-    msg: 'Get newest photos successfully',
-  });
-});
+// const getNewestPhotos = factory.createHandlers(async (c) => {
+//   const photos = await photoModel.getNewestPhotos();
+//   return c.json({
+//     success: true,
+//     data: photos,
+//     msg: 'Get newest photos successfully',
+//   });
+// });
 
-const getBestSellerPhotos = factory.createHandlers(async (c) => {
-  const photos = await photoModel.getBestSellerPhotos();
-  return c.json({
-    success: true,
-    data: photos,
-    msg: 'Get best seller photos successfully',
-  });
-});
+// const getBestSellerPhotos = factory.createHandlers(async (c) => {
+//   const photos = await photoModel.getBestSellerPhotos();
+//   return c.json({
+//     success: true,
+//     data: photos,
+//     msg: 'Get best seller photos successfully',
+//   });
+// });
 
-const getPhotosBySearchword = factory.createHandlers(async (c) => {
-  const search = c.req.query('search');
-  if (!search) {
-    return c.json({ success: false, msg: 'Missing search query' }, 400);
-  }
+// const getPhotosBySearchword = factory.createHandlers(async (c) => {
+//   const search = c.req.query('search');
+//   if (!search) {
+//     return c.json({ success: false, msg: 'Missing search query' }, 400);
+//   }
 
-  const photos = await photoModel.getPhotosBySearchword(search);
-  return c.json({ success: true, data: photos, msg: 'Search successful' });
-});
+//   const photos = await photoModel.getPhotosBySearchword(search);
+//   return c.json({ success: true, data: photos, msg: 'Search successful' });
+// });
 
-const getPhotosByUserTradeHistory = factory.createHandlers(async (c) => {
-  const userId = Number(c.req.param('userId'));
-  const trades = await photoModel.getPhotosByUserTradeHistory(userId);
+// const getPhotosByUserTradeHistory = factory.createHandlers(async (c) => {
+//   const userId = Number(c.req.param('userId'));
+//   const trades = await photoModel.getPhotosByUserTradeHistory(userId);
 
-  const photos = trades.map((trade) => trade.picture);
-  return c.json({ success: true, data: photos, msg: 'User trade history fetched' });
-});
+//   const photos = trades.map((trade) => trade.picture);
+//   return c.json({ success: true, data: photos, msg: 'User trade history fetched' });
+// });
 
-const getPhotosLikedByUser = factory.createHandlers(async (c) => {
-  const userId = Number(c.req.param('userId'));
-  const likes = await photoModel.getPhotosLikedByUser(userId);
+// const getPhotosLikedByUser = factory.createHandlers(async (c) => {
+//   const userId = Number(c.req.param('userId'));
+//   const likes = await photoModel.getPhotosLikedByUser(userId);
 
-  const photos = likes.map((like) => like.picture);
-  return c.json({ success: true, data: photos, msg: 'Liked photos fetched' });
-});
+//   const photos = likes.map((like) => like.picture);
+//   return c.json({ success: true, data: photos, msg: 'Liked photos fetched' });
+// });
 
-const updatePhotoPriceByLikes = factory.createHandlers(async (c) => {
-  const id = Number(c.req.param('id'));
-  if (isNaN(id)) {
-    return c.json({ success: false, msg: 'Invalid photo ID' }, 400);
-  }
+// const updatePhotoPriceByLikes = factory.createHandlers(async (c) => {
+//   const id = Number(c.req.param('id'));
+//   if (isNaN(id)) {
+//     return c.json({ success: false, msg: 'Invalid photo ID' }, 400);
+//   }
 
-  const photo = await photoModel.updatePhotoPriceByLikes(id);
-  return c.json({
-    success: true,
-    data: photo,
-    msg: 'Price updated based on likes successfully',
-  });
-});
+//   const photo = await photoModel.updatePhotoPriceByLikes(id);
+//   return c.json({
+//     success: true,
+//     data: photo,
+//     msg: 'Price updated based on likes successfully',
+//   });
+// });
 
 
 export {
   uploadPhoto,
   getAllPhotos,
   getPhotoById,
-  getPhotosByUserId,
+  getPhotosByUser,
   getPhotosByCategory,
   updatePhoto,
   deletePhoto,
   getPhotosByPriceHighToLow,
   getPhotosByPriceLowToHigh,
-  getNewestPhotos,
-  getBestSellerPhotos,
-  getPhotosBySearchword,
-  getPhotosByUserTradeHistory,
-  getPhotosLikedByUser,
-  updatePhotoPriceByLikes,
+  // getNewestPhotos,
+  // getBestSellerPhotos,
+  // getPhotosBySearchword,
+  // getPhotosByUserTradeHistory,
+  // getPhotosLikedByUser,
+  // updatePhotoPriceByLikes,
 };

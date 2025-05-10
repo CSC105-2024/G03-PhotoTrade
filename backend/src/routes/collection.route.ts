@@ -1,4 +1,4 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono';
 import {
   getAllCollections,
   getCollectionsByUserId,
@@ -6,15 +6,15 @@ import {
   createCollection,
   addPhotoToCollection,
   deletePhotoFromCollection,
-} from '../controllers/collection.controller.ts'
+} from '../controllers/collection.controller.ts';
 
-const collectionRoute = new Hono()
+const collectionRoute = new Hono();
 
-collectionRoute.post('/', ...createCollection)
-collectionRoute.get('/', ...getAllCollections)
-collectionRoute.get('/top3', ...getTop3Collections)
-collectionRoute.get('/:userid', ...getCollectionsByUserId)
-collectionRoute.patch('/:id', ...addPhotoToCollection) 
-collectionRoute.delete('/:id', ...deletePhotoFromCollection)
+collectionRoute.post('/', ...createCollection);
+collectionRoute.get('/', ...getAllCollections);
+collectionRoute.get('/top3', ...getTop3Collections);
+collectionRoute.get('/:userid', ...getCollectionsByUserId);
+collectionRoute.patch('/:id', ...addPhotoToCollection);
+collectionRoute.delete('/:id', ...deletePhotoFromCollection);
 
-export default collectionRoute
+export default collectionRoute;

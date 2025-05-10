@@ -1,85 +1,63 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const getAllPhoto = createAsyncThunk(
-  "photo/all",
-  async ({ page, perPage }) => {
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/photo/all?_start=${page}&_limit=${perPage}`,
-    );
-    const totalPic = parseInt(response.headers["X-Total-Count"] || "0");
-    console.log(response.data.data);
-    return {
-      data: response.data.data,
-      total: totalPic,
-    };
-  },
-);
+export const getAllPhoto = createAsyncThunk('photo/all', async ({ page, perPage }) => {
+  const response = await axios.get(`http://localhost:3000/api/v1/photo/all?_start=${page}&_limit=${perPage}`);
+  const totalPic = parseInt(response.headers['X-Total-Count'] || '0');
+  console.log(response.data.data);
+  return {
+    data: response.data.data,
+    total: totalPic,
+  };
+});
 
-export const getPhotoByCategory = createAsyncThunk(
-  "photo/category/:id",
-  async (categoryId) => {
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/photo/category/${categoryId}`,
-    );
-    return response.data;
-  },
-);
+export const getPhotoByCategory = createAsyncThunk('photo/category/:id', async (categoryId) => {
+  const response = await axios.get(`http://localhost:3000/api/v1/photo/category/${categoryId}`);
+  return response.data;
+});
 
-export const deletePhotoById = createAsyncThunk(
-  "photo/delete/:id",
-  async (id) => {
-    const response = await axios.delete(
-      `http://localhost:3000/api/v1/photo/${id}`,
-    );
-    return response.data;
-  },
-);
+export const deletePhotoById = createAsyncThunk('photo/delete/:id', async (id) => {
+  const response = await axios.delete(`http://localhost:3000/api/v1/photo/${id}`);
+  return response.data;
+});
 
-
-export const createPhoto = createAsyncThunk("photo/upload", async (payload) => {
+export const createPhoto = createAsyncThunk('photo/upload', async (payload) => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/photo/upload",
-      payload,
-      { withCredentials: true },
-    );
+    const response = await axios.post('http://localhost:3000/api/v1/photo/upload', payload, { withCredentials: true });
     console.log(response.data);
     return response.data.data;
   } catch (error) {
-    console.error("Error uploading photo:", error);
+    console.error('Error uploading photo:', error);
     throw error;
   }
 });
 
-export const getPhotoUser = createAsyncThunk("photo/user", async () => {
+export const getPhotoUser = createAsyncThunk('photo/user', async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api/v1/photo/own", {
+    const response = await axios.get('http://localhost:3000/api/v1/photo/own', {
       withCredentials: true,
     });
     console.log(response.data);
     return response.data.data;
   } catch (error) {
-    console.error("Error get photo by user photo:", error);
+    console.error('Error get photo by user photo:', error);
     throw error;
   }
 });
 
-export const getPhotoId = createAsyncThunk("photo/id", async (id) => {
+export const getPhotoId = createAsyncThunk('photo/id', async (id) => {
   try {
-    const response = await axios.get(
-      `http://localhost:3000/api/v1/photo/${id}`,
-    );
+    const response = await axios.get(`http://localhost:3000/api/v1/photo/${id}`);
     console.log(response.data.data);
     return response.data.data;
   } catch (error) {
-    console.error("Error get photo by user photo:", error);
+    console.error('Error get photo by user photo:', error);
     throw error;
   }
 });
 
 const photoSlice = createSlice({
-  name: "photo",
+  name: 'photo',
   initialState: {
     loading: false,
     success: false,

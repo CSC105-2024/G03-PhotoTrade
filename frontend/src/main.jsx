@@ -14,7 +14,7 @@ import store from "@/store";
 import { ScrollToTop } from "./hooks/use-scrollto";
 import ProtectRoute from "./routes/protect-route";
 import { ThemeProvider } from "@/hooks/theme-provider";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "./reducer/auth";
 
 const App = () => {
@@ -22,10 +22,13 @@ const App = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchUser());
+    }
+  }, [dispatch, isAuthenticated]);
 
   let isLayout = <Layout>{route}</Layout>;
 

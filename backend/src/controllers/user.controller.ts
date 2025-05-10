@@ -147,6 +147,43 @@ const getUserAll = factory.createHandlers(async (c) => {
   });
 });
 
+ const updateUserProfile = factory.createHandlers(
+  async (c) => {
+    const id = Number(c.req.param('id'));
+    const { name, bio } = await c.req.json();
+
+    const user = await prisma.user.update({
+      where: { id },
+      data: { name, bio },
+    });
+
+    return c.json({
+      success: true,
+      message: 'Profile updated',
+      data: user,
+    });
+  }
+);
+
+ const getFollowerCount = factory.createHandlers(async (c) => {
+  const id = Number(c.req.param('id'));
+  const count = await prisma.user_Follow.count({
+    where: { following_id: id },
+  });
+  return c.json({ success: true, followerCount: count });
+});
+
+ const getFollowingCount = factory.createHandlers(async (c) => {
+  const id = Number(c.req.param('id'));
+  const count = await prisma.user_Follow.count({
+    where: { follower_id: id },
+  });
+  return c.json({ success: true, followingCount: count });
+});
+
+
+
+
 export {
   signUpController,
   loginController,
@@ -154,4 +191,7 @@ export {
   getUser,
   getUserById,
   getUserAll,
+  updateUserProfile,
+  getFollowerCount,
+  getFollowingCount,
 };

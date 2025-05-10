@@ -38,7 +38,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
     {},
     { withCredentials: true },
   );
-  localStorage.setItem("isAuth", "false");
+  localStorage.removeItem("isAuth")
 });
 
 export const fetchUser = createAsyncThunk(
@@ -49,7 +49,6 @@ export const fetchUser = createAsyncThunk(
         withCredentials: true,
       });
       localStorage.setItem("isAuth", "true");
-      console.log(response.data.data);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Fetch user failed");

@@ -1,6 +1,5 @@
 import { createFactory } from "hono/factory";
 import * as TradeModel from "../models/trade.model.ts";
-import { prisma } from "../index.ts";
 const factory = createFactory();
 
 export const buyPhoto = factory.createHandlers(async (c) => {
@@ -32,6 +31,7 @@ export const buyPhoto = factory.createHandlers(async (c) => {
     );
   }
 });
+
 export const getphotohistorybyuser = factory.createHandlers(async (c) => {
   try {
     const userId = Number(c.req.query("userId"));

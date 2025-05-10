@@ -27,20 +27,15 @@ const ProfileList = () => {
   const { profileUser } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(getPhotoUser());
-    }
-
-    if (param.id) {
-      dispatch(getUserById(param.id));
-    }
-  }, [dispatch, isAuthenticated, param.id]);
+    dispatch(getPhotoUser());
+    dispatch(getUserById(param.id));
+  }, [dispatch]);
 
   const newPhotolist = isAuthenticated
     ? photoListUser
     : (profileUser.creates ?? []);
 
-  const handdleName = (item) => {
+  const handleName = (item) => {
     return isAuthenticated ? item : profileUser.name;
   };
 
@@ -64,12 +59,12 @@ const ProfileList = () => {
                       key={item.id}
                       name={item.title}
                       price={item.price}
-                      username={handdleName(item.user?.name)}
+                      username={handleName(item.user?.name)}
                       url={item.thumbnail_url}
                       id={item.id}
                     />
                   ))}
-                  {isAuthenticated === "true" && <AddPicture />}
+                  {isAuthenticated && <AddPicture />}
                 </div>
               </div>
             </CardContent>

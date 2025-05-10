@@ -1,12 +1,12 @@
 import { prisma } from "../index.ts";
 
 const uploadPhoto = async (data: {
-  title: string;
-  description: string;
-  thumbnail_url: string;
-  price: number;
-  user_id: number;
-  categoryIds: number[];
+  title: string
+  description: string
+  thumbnail_url: string
+  price: number
+  user_id: number
+  categoryIds: number[]
 }) => {
   return prisma.picture.create({
     data: {
@@ -124,23 +124,10 @@ const getPhotosByPriceLowToHigh = async () => {
   });
 };
 
-const getNewestPhotos = async () => {
-  return prisma.picture.findMany({
-    orderBy: {
-      create_at: "asc",
-    },
-    include: {
-      user: {
-        select: { name: true },
-      },
-    },
-  });
-};
-
-// const getBestSellerPhotos = async () => {
+// const getNewestPhotos = async () => {
 //   return prisma.picture.findMany({
 //     orderBy: {
-//       trade: 'desc',
+//       create_at: 'desc',
 //     },
 //     include: {
 //       user: {
@@ -149,6 +136,19 @@ const getNewestPhotos = async () => {
 //     },
 //   });
 // };
+
+// const getBestSellerPhotos = async () => {
+//   return prisma.picture.findMany({
+//     orderBy: {
+//       trade: { _count: 'desc' }
+//     },
+//     include: {
+//       user: { select: { name: true } },
+//       _count: { select: { trade: true } }
+//     },
+//   });
+// };
+
 
 const updatePhoto = async (
   id: number,
@@ -189,8 +189,12 @@ export {
   getPhotosByCategory,
   getPhotosByPriceHighToLow,
   getPhotosByPriceLowToHigh,
-  getNewestPhotos,
-  //   getBestSellerPhotos,
+  // getNewestPhotos,
+  // getBestSellerPhotos,
   updatePhoto,
   deletePhoto,
+  // getPhotosBySearchword,
+  // getPhotosByUserTradeHistory,
+  // getPhotosLikedByUser,
+  // updatePhotoPriceByLikes,
 };

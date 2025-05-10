@@ -19,7 +19,7 @@ export const generateNewJWTAndSetCookie = async (
   ]);
   const now = new Date();
   setCookie(c, "accessToken", accessToken, {
-    expires: new Date(now.getTime() + 30 * 60 * 1000),
+    expires: new Date(now.getTime() + 60 * 60 * 1000),
   });
   setCookie(c, "refreshToken", refreshToken, {
     expires: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),

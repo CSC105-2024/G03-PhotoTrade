@@ -17,7 +17,7 @@ export const getAllPhoto = createAsyncThunk(
 );
 
 export const getPhotoByCategory = createAsyncThunk(
-  "photo/category/:category",
+  "photo/category/:id",
   async (categoryId) => {
     const response = await axios.get(
       `http://localhost:3000/api/v1/photo/category/${categoryId}`,
@@ -25,6 +25,17 @@ export const getPhotoByCategory = createAsyncThunk(
     return response.data;
   },
 );
+
+export const deletePhotoById = createAsyncThunk(
+  "photo/delete/:id",
+  async (id) => {
+    const response = await axios.delete(
+      `http://localhost:3000/api/v1/photo/${id}`,
+    );
+    return response.data;
+  },
+);
+
 
 export const createPhoto = createAsyncThunk("photo/upload", async (payload) => {
   try {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,9 +18,11 @@ import { Heart, Ellipsis } from "lucide-react";
 import Ellipse from "@/assets/Ellipse.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePhotoById } from "@/reducer/photo";
 
 const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
+  const dispatch = useDispatch()
   const [like, setLike] = useState(alwaysLike);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -65,7 +67,13 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>Add collection</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Delete</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    dispatch(deletePhotoById(id))
+                  }}
+                >
+                  Delete
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}

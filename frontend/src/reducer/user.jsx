@@ -1,19 +1,19 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const getUserById = createAsyncThunk("user/getById", async (id) => {
+export const getUserById = createAsyncThunk('user/getById', async (id) => {
   const response = await axios.get(`http://localhost:3000/api/v1/user/${id}`);
   return response.data.data;
 });
 
-export const getUserAll = createAsyncThunk("user/getAll", async () => {
-  const response = await axios.get("http://localhost:3000/api/v1/user/all");
+export const getUserAll = createAsyncThunk('user/getAll', async () => {
+  const response = await axios.get('http://localhost:3000/api/v1/user/all');
   return response.data.data;
 });
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: {
     loading: false,
     success: false,

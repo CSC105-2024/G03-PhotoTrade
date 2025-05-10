@@ -14,6 +14,8 @@
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.17",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
     "vite": "^6.2.4"
   },
   "dependencies": {
@@ -55,5 +57,11 @@
     "zod": "^3.24.2"
   },
   "description": "",
-  "type": "module"
+  "type": "module",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
 }

@@ -1,10 +1,10 @@
-import { prisma } from "../index.ts";
+import { prisma } from '../index.ts';
 
 export const getrank = async () => {
   const topUsers = await prisma.user.findMany({
     orderBy: {
       trade: {
-        _count: "desc",
+        _count: 'desc',
       },
     },
     take: 10,

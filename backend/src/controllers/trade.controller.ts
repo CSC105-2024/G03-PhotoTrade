@@ -1,5 +1,5 @@
-import { createFactory } from "hono/factory";
-import * as TradeModel from "../models/trade.model.ts";
+import { createFactory } from 'hono/factory';
+import * as TradeModel from '../models/trade.model.ts';
 const factory = createFactory();
 
 export const buyPhoto = factory.createHandlers(async (c) => {
@@ -12,14 +12,14 @@ export const buyPhoto = factory.createHandlers(async (c) => {
           success: false,
           msg: `Must have userId and pictureId`,
         },
-        500,
+        500
       );
     }
     const result = await TradeModel.buyphoto(Number(userId), Number(pictureId));
     return c.json({
       success: true,
       data: result,
-      msg: "buy successfully",
+      msg: 'buy successfully',
     });
   } catch (e) {
     return c.json(
@@ -27,28 +27,28 @@ export const buyPhoto = factory.createHandlers(async (c) => {
         success: false,
         msg: `Internal Server Error: ${e}`,
       },
-      500,
+      500
     );
   }
 });
 
 export const getphotohistorybyuser = factory.createHandlers(async (c) => {
   try {
-    const userId = Number(c.req.query("userId"));
+    const userId = Number(c.req.query('userId'));
     if (!userId) {
       return c.json(
         {
           success: false,
           msg: `Must have userId`,
         },
-        500,
+        500
       );
     }
     const history = await TradeModel.getphotohistorybyuser(userId);
     return c.json({
       success: true,
       data: history,
-      msg: "get history successfully",
+      msg: 'get history successfully',
     });
   } catch (e) {
     return c.json(
@@ -56,7 +56,7 @@ export const getphotohistorybyuser = factory.createHandlers(async (c) => {
         success: false,
         msg: `Internal Server Error: ${e}`,
       },
-      500,
+      500
     );
   }
 });

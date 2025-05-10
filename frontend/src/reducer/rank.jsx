@@ -1,13 +1,13 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const getRank = createAsyncThunk("rank/getrank", async () => {
+export const getRank = createAsyncThunk('rank/getrank', async () => {
   const response = await axios.get(`http://localhost:3000/api/v1/rank/getrank`);
   return response.data.data;
 });
 const rankSlice = createSlice({
-  name: "rank",
+  name: 'rank',
   initialState: {
     loading: false,
     success: false,

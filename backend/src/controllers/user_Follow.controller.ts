@@ -1,18 +1,15 @@
-import { createFactory } from "hono/factory";
-import * as UserFollowModel from "../models/user_Follow.models.ts";
+import { createFactory } from 'hono/factory';
+import * as UserFollowModel from '../models/user_Follow.models.ts';
 const factory = createFactory();
 
 export const followUser = factory.createHandlers(async (c) => {
   try {
     const { followerId, followingId } = await c.req.json();
-    const result = await UserFollowModel.followUser(
-      Number(followerId),
-      Number(followingId),
-    );
+    const result = await UserFollowModel.followUser(Number(followerId), Number(followingId));
     return c.json({
       success: true,
       data: result,
-      msg: "follow successfully",
+      msg: 'follow successfully',
     });
   } catch (e) {
     return c.json(
@@ -20,7 +17,7 @@ export const followUser = factory.createHandlers(async (c) => {
         success: false,
         msg: `Internal Server Error: ${e}`,
       },
-      500,
+      500
     );
   }
 });
@@ -31,7 +28,7 @@ export const unfollowUser = factory.createHandlers(async (c) => {
     await UserFollowModel.unfollowUser(Number(followerId), Number(followingId));
     return c.json({
       success: true,
-      msg: "unfollow successfully",
+      msg: 'unfollow successfully',
     });
   } catch (e) {
     return c.json(
@@ -39,7 +36,7 @@ export const unfollowUser = factory.createHandlers(async (c) => {
         success: false,
         msg: `Internal Server Error: ${e}`,
       },
-      500,
+      500
     );
   }
 });

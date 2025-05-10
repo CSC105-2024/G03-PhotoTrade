@@ -1,35 +1,36 @@
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { Heart, Ellipsis } from "lucide-react";
-import Ellipse from "@/assets/Ellipse.png";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { deletePhotoById } from "@/reducer/photo";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '../ui/button';
+import { Heart, Ellipsis } from 'lucide-react';
+import Ellipse from '@/assets/Ellipse.png';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deletePhotoById } from '@/reducer/photo';
 
 const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [like, setLike] = useState(alwaysLike);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
 
   const formatNumber = (number) => {
-    const unitList = ["", "K", "M", "G"];
+    const unitList = ['', 'K', 'M', 'G'];
     let sign = Math.sign(number);
     let unit = 0;
 
@@ -39,16 +40,11 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
     }
     return sign * Math.abs(number) + unitList[unit];
   };
-
   return (
     <Card className="w-[250px] h-[400px] rounded-xl pt-0 mb-5 shadow-lg border bg-background text-foreground">
       <Link to={`/market/${id}`}>
         <CardHeader className="px-0 hover:opacity-90 cursor-pointer">
-          <img
-            src={url}
-            alt="Sun"
-            className="w-full h-[200px] rounded-t-xl aspect-square object-cover"
-          />
+          <img src={url} alt="Sun" className="w-full h-[200px] rounded-t-xl aspect-square object-cover" />
         </CardHeader>
       </Link>
 
@@ -64,11 +60,26 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>Add collection</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Add collection</DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem>
+                        collection1
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        collection2
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        collection3
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
-                    dispatch(deletePhotoById(id))
+                    dispatch(deletePhotoById(id));
                   }}
                 >
                   Delete
@@ -80,17 +91,12 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
 
         <div className="mt-2">
           <h2 className="text-sm font-semibold">Price</h2>
-          <p className="text-sm text-muted-foreground">
-            ฿ {formatNumber(price)}
-          </p>
+          <p className="text-sm text-muted-foreground">฿ {formatNumber(price)}</p>
         </div>
       </CardContent>
 
       <CardFooter className="flex justify-between items-center">
-        <div
-          className="flex items-center mt-2 cursor-pointer"
-          onClick={() => navigate("/user/auth/dashboard/1")}
-        >
+        <div className="flex items-center mt-2 cursor-pointer" onClick={() => navigate('/user/auth/dashboard/1')}>
           <Avatar>
             <AvatarImage src={Ellipse} alt="User avatar" />
             <AvatarFallback>CN</AvatarFallback>
@@ -100,7 +106,7 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
         <Heart
           onClick={() => setLike(!like)}
           className={`cursor-pointer transition-all ${
-            like ? "text-destructive fill-destructive" : "text-muted-foreground"
+            like ? 'text-destructive fill-destructive' : 'text-muted-foreground'
           }`}
         />
       </CardFooter>

@@ -15,8 +15,7 @@ const Collection = () => {
   };
   return (
     <Card>
-      <CardContent>
-        <div className="grid grid-cols-3 md:max-h-md gap-3">
+        <div className="grid grid-cols-3 md:max-h-md gap-3 ">
           <div className="col-span-3 max-h-96 overflow-hidden rounded-md cursor-pointer">
             <button onClick={PhotoClick} className="cursor-pointer">
               <img
@@ -39,12 +38,12 @@ const Collection = () => {
             </button>
           </div>
 
-          <div
-            className={`${styles.bgCustom} col-span-1 size-full rounded-md flex items-center justify-center cursor-pointer`}
-            onClick={() => navigate("/market")}
-          >
-            <a href="#">525+</a>
+          <div className="col-span-1 cursor-pointer">
+            <button onClick={PhotoClick} className="cursor-pointer">
+              <img src={Home_3} className="rounded-md" alt="3" />
+            </button>
           </div>
+
         </div>
 
         <CardFooter>
@@ -62,7 +61,6 @@ const Collection = () => {
             </div>
           </div>
         </CardFooter>
-      </CardContent>
     </Card>
   );
 };

@@ -11,6 +11,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import AddPicture from "@/components/card/add-picture";
+import AddCollection from "@/components/card/add-collection";
 import Picture from "@/components/card/picture";
 import Collection from "@/components/card/collection";
 import { getPhotoUser } from "@/reducer/photo";
@@ -80,6 +81,7 @@ const ProfileList = () => {
                   <Collection />
                   <Collection />
                   <Collection />
+                  <AddCollection />
                 </div>
               </div>
             </CardContent>

@@ -21,7 +21,7 @@ export const login = createAsyncThunk('auth/login', async (payload, { rejectWith
 
 export const logout = createAsyncThunk('auth/logout', async () => {
   await axios.post('http://localhost:3000/api/v1/user/logout', {}, { withCredentials: true });
-  localStorage.removeItem('isAuth');
+  localStorage.setItem('isAuth', 'false');
 });
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWithValue }) => {
@@ -29,7 +29,11 @@ export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWi
     const response = await axios.get('http://localhost:3000/api/v1/user/me', {
       withCredentials: true,
     });
-    localStorage.setItem('isAuth', 'true');
+    if (response.status !== 401) {
+      localStorage.setItem('isAuth', 'true');
+    } else {
+      localStorage.setItem('isAuth', 'false');
+    }
     return response.data.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || 'Fetch user failed');

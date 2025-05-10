@@ -27,7 +27,6 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
-  const showMenu = location.pathname === "/user/auth/dashboard/1";
 
   const formatNumber = (number) => {
     const unitList = ["", "K", "M", "G"];
@@ -56,7 +55,7 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
       <CardContent>
         <CardTitle className="text-xl flex items-start">
           {name}
-          {isAuthenticated && showMenu && (
+          {isAuthenticated && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="ml-auto">

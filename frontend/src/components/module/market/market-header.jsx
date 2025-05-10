@@ -1,10 +1,12 @@
-import React from 'react';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Dropdowncategoryprofile } from '@/components/dropdown/selectcategory';
-import { Dropdownfilter } from '@/components/dropdown/selectfilter';
-import { Calculator, Calendar, CreditCard, Settings, Smile, User } from 'lucide-react';
-
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Calendar,
+  Smile,
+  Calculator,
+  CreditCard,
+  Settings,
+  User,
+} from 'lucide-react';
 import {
   Command,
   CommandEmpty,
@@ -15,82 +17,94 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from '@/components/ui/command';
-import { useState, useRef, useEffect } from 'react';
-import { set } from 'react-hook-form';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Dropdowncategoryprofile } from '@/components/dropdown/selectcategory';
+import { Dropdownfilter } from '@/components/dropdown/selectfilter';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPhoto } from '@/reducer/photo';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [showCommand, setShowCommand] = useState(false);
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate()
   const commandRef = useRef(null);
+  const dispatch = useDispatch();
+  const { photoList } = useSelector((state) => state.photo);
+
+  const tempPhoto = search
+    ? photoList.filter((photo) =>
+        photo.title.toLowerCase().includes(search.toLowerCase())
+      )
+    : photoList;
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (commandRef.current && !commandRef.current.contains(event.target)) {
-        setShowCommand(false)
+    dispatch(getAllPhoto());
+
+    const handleClickOutside = (event) => {
+      if (
+        commandRef.current &&
+        !commandRef.current.contains(event.target)
+      ) {
+        setShowCommand(false);
       }
-    }
+    };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [commandRef]);
+  }, [dispatch]);
 
   return (
     <section className="md:pt-20">
       <div>
         <h1 className="text-4xl font-bold">Browse Marketplace</h1>
-        <p className="mt-2 text-neutral-500">Browse through more than 50k Photo on the Photo Marketplace.</p>
+        <p className="mt-2 text-neutral-500">
+          Browse through more than 50k Photo on the Photo Marketplace.
+        </p>
       </div>
 
       <div className="relative ml-auto flex-1 md:grow-0 my-6">
         <div className="flex space-x-3">
-          <Command className="rounded-lg border shadow-md md:min-w-[450px]" ref={commandRef}>
+          <Command
+            className="rounded-lg border shadow-md md:min-w-[450px]"
+            ref={commandRef}
+          >
             <CommandInput
               placeholder="Type a command or search..."
-              onClick={() => {
-                setShowCommand(true);
-              }}
+              onChange={(e) => setSearch(e.target.value)}
+              onClick={() => setShowCommand(true)}
             />
+
             {showCommand && (
-              <div>
-                <CommandList>
-                  <CommandEmpty>No results found.</CommandEmpty>
-                  <CommandGroup heading="Suggestions">
-                    <CommandItem>
-                      <Calendar />
-                      <span>Calendar</span>
-                    </CommandItem>
-                    <CommandItem>
-                      <Smile />
-                      <span>Search Emoji</span>
-                    </CommandItem>
-                    <CommandItem disabled>
-                      <Calculator />
-                      <span>Calculator</span>
-                    </CommandItem>
+              <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+
+                {tempPhoto.length > 0 && (
+                  <CommandGroup heading="Photos">
+                    {tempPhoto.map((photo) => (
+                      <CommandItem
+                        key={photo.id}
+                        value={photo.title}
+                        onSelect={() => {
+                          setShowCommand(false);
+                          navigate(`/market/${photo.id}`)
+                        }}
+                      >
+                        <Avatar>
+                          <AvatarImage src={photo.thumbnail_url} />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <p>{photo.title}</p>
+                        </CommandItem>
+                    ))}
                   </CommandGroup>
-                  <CommandSeparator />
-                  <CommandGroup heading="Settings">
-                    <CommandItem>
-                      <User />
-                      <span>Profile</span>
-                      <CommandShortcut>⌘P</CommandShortcut>
-                    </CommandItem>
-                    <CommandItem>
-                      <CreditCard />
-                      <span>Billing</span>
-                      <CommandShortcut>⌘B</CommandShortcut>
-                    </CommandItem>
-                    <CommandItem>
-                      <Settings />
-                      <span>Settings</span>
-                      <CommandShortcut>⌘S</CommandShortcut>
-                    </CommandItem>
-                  </CommandGroup>
-                </CommandList>
-              </div>
+                )}
+              </CommandList>
             )}
           </Command>
+
           <Dropdownfilter />
           <Dropdowncategoryprofile />
         </div>

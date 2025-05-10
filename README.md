@@ -49,8 +49,14 @@ npx tsx script.ts
 Prisma ORM comes with a built-in GUI to view and edit the data in your database. You can open it using the following command:
 
 ```bash
-npx prisma studio
+npx prisma 
 ```
+## Husky
+make sure your are run this command before git add .
+```bash
+npm run prepare
+```
+
 
 ## Endpoints
 # Category 

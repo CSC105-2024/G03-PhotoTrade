@@ -24,7 +24,6 @@ const MarketList = () => {
   const { photoList, total } = useSelector((state) => state.photo);
   const currentPage = parseInt(searchParams.get("page") || "1");
   const perPage = parseInt(searchParams.get("pageSize") || "5");
-  console.log(currentPage, perPage);
 
   // const [selectedCategories, setSelectedCategories] = useState([]);
   // useEffect(() => {
@@ -53,9 +52,9 @@ const MarketList = () => {
         </TabsList>
 
         <TabsContent value="photo">
-          <Card>
+          <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center md:justify-between items-center min-h-screen">
+              <div className="flex justify-center mt-10 md:justify-between items-center ">
                 <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
                   {photoList.map((item) => (
                     <Picture
@@ -74,9 +73,9 @@ const MarketList = () => {
         </TabsContent>
 
         <TabsContent value="collections">
-          <Card>
+          <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center md:justify-between items-center">
+              <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols md:grid-cols-3 mx-auto gap-4">
                   <Collection />
                   <Collection />

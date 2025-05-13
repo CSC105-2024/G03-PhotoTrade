@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Pagination,
   PaginationContent,
@@ -9,23 +9,24 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import AddPicture from "@/components/card/add-picture";
-import AddCollection from "@/components/card/add-collection";
-import Picture from "@/components/card/picture";
-import Collection from "@/components/card/collection";
-import { getPhotoUser } from "@/reducer/photo";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getUserById } from "@/reducer/user";
-import { fetchUser } from "@/reducer/auth";
-import { getCollectionById } from "@/reducer/collection";
+} from '@/components/ui/pagination';
+import AddPicture from '@/components/card/add-picture';
+import AddCollection from '@/components/card/add-collection';
+import Picture from '@/components/card/picture';
+import Collection from '@/components/card/collection';
+import { getPhotoUser, getPhotoLikebyId, getPhotosByUserTradeHistory } from '@/reducer/photo';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getUserById } from '@/reducer/user';
+import { fetchUser } from '@/reducer/auth';
+import { getCollectionById } from '@/reducer/collection';
 
 const ProfileList = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [likedPhotos, setLikedPhotos] = useState([]);
 
-  const { photoListUser } = useSelector((state) => state.photo);
+  const { photoListUser, tradeHistory } = useSelector((state) => state.photo);
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   const { profileUser } = useSelector((state) => state.user);
   const { collection } = useSelector((state) => state.collection);
@@ -34,17 +35,18 @@ const ProfileList = () => {
     dispatch(getUserById(id));
     dispatch(getCollectionById(id));
     dispatch(getPhotoUser());
+    dispatch(getPhotoLikebyId(id)).then((action) => {
+      if (action.payload) {
+        setLikedPhotos(action.payload);
+      }
+    });
+    dispatch(getPhotosByUserTradeHistory(id));
     dispatch(fetchUser());
   }, [dispatch, id]);
 
-  const newPhotolist = isAuthenticated
-    ? photoListUser
-    : profileUser?.creates ?? [];
-
+  const newPhotolist = isAuthenticated ? photoListUser : (profileUser?.creates ?? []);
   const newCollection = Array.isArray(collection) ? collection : [];
-
   const handleName = (item) => (isAuthenticated ? item : profileUser?.name);
-
   return (
     <>
       <Tabs defaultValue="listings">
@@ -85,10 +87,13 @@ const ProfileList = () => {
                   {newCollection.map((item) => (
                     <Collection
                       key={item.id}
+                      id={item.id}
                       name={item.name}
                       username={item.user?.name}
+                      pictures={item.pictures.map((p) => p.picture)}
                     />
                   ))}
+
                   {isAuthenticated && userInfo?.id === parseInt(id) && <AddCollection />}
                 </div>
               </div>
@@ -101,7 +106,17 @@ const ProfileList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
-                  
+                  {Array.isArray(tradeHistory) &&
+                    tradeHistory.map((item) => (
+                      <Picture
+                        key={item.id}
+                        name={item.title}
+                        price={item.price}
+                        username={item.user?.name || ''}
+                        url={item.pictures}
+                        id={item.id}
+                      />
+                    ))}
                 </div>
               </div>
             </CardContent>
@@ -113,7 +128,17 @@ const ProfileList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
-                  
+                  {Array.isArray(likedPhotos) &&
+                    likedPhotos.map((item) => (
+                      <Picture
+                        key={item.id}
+                        name={item.title}
+                        price={item.price}
+                        username={item.user?.name || ''}
+                        url={item.thumbnail_url}
+                        id={item.id}
+                      />
+                    ))}
                 </div>
               </div>
             </CardContent>

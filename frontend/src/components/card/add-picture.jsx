@@ -28,6 +28,7 @@ const AddPicture = () => {
     });
 
     const fileUrl = await res.json();
+    console.log(fileUrl.url);
     setValue(fileUrl);
   };
 

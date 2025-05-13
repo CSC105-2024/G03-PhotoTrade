@@ -54,7 +54,32 @@ export const getPhotoId = createAsyncThunk('photo/id', async (id) => {
     console.error('Error get photo by user photo:', error);
     throw error;
   }
-});
+}); 
+
+export const getPhotoLikebyId = createAsyncThunk('photo/liked/user/:id', async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:3000/api/v1/photo/liked/user/${id}`);
+    console.log(response.data.data);
+    return response.data.data;
+  } catch (error) {
+    console.error('Error get photo liked by user :', error);
+    throw error;
+  }
+}); 
+
+export const getPhotosByUserTradeHistory = createAsyncThunk(
+  'photo/trade/user/:id',
+  async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/photo/trade/user/${userId}`);
+      console.log(response.data.data);
+      return response.data.data;
+    } catch (error) {
+      console.error('Error getting user trade history:', error);
+      throw error;
+    }
+  }
+);
 
 const photoSlice = createSlice({
   name: 'photo',
@@ -130,6 +155,35 @@ const photoSlice = createSlice({
       })
       .addCase(getPhotoId.pending, (state) => {
         state.success = true;
+        state.loading = false;
+      })
+      
+      .addCase(getPhotoLikebyId.fulfilled, (state, action) => {
+        state.photoListId = action.payload;
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(getPhotoLikebyId.rejected, (state) => {
+        state.photoListId = {};
+        state.success = false;
+        state.loading = false;
+      })
+      .addCase(getPhotoLikebyId.pending, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+
+      .addCase(getPhotosByUserTradeHistory.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getPhotosByUserTradeHistory.fulfilled, (state, action) => {
+        state.tradeHistory = action.payload;
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(getPhotosByUserTradeHistory.rejected, (state) => {
+        state.tradeHistory = [];
+        state.success = false;
         state.loading = false;
       })
 

@@ -197,21 +197,21 @@ const getPhotosByPriceLowToHigh = factory.createHandlers(async (c) => {
 //   return c.json({ success: true, data: photos, msg: 'Search successful' });
 // });
 
-// const getPhotosByUserTradeHistory = factory.createHandlers(async (c) => {
-//   const userId = Number(c.req.param('userId'));
-//   const trades = await photoModel.getPhotosByUserTradeHistory(userId);
+const getPhotosByUserTradeHistory = factory.createHandlers(async (c) => {
+  const userId = Number(c.req.param('userId'));
+  const trades = await photoModel.getPhotosByUserTradeHistory(userId);
 
-//   const photos = trades.map((trade) => trade.picture);
-//   return c.json({ success: true, data: photos, msg: 'User trade history fetched' });
-// });
+  const photos = trades.map((trade) => trade.picture);
+  return c.json({ success: true, data: photos, msg: 'User trade history fetched' });
+});
 
-// const getPhotosLikedByUser = factory.createHandlers(async (c) => {
-//   const userId = Number(c.req.param('userId'));
-//   const likes = await photoModel.getPhotosLikedByUser(userId);
+const getPhotosLikedByUser = factory.createHandlers(async (c) => {
+  const userId = Number(c.req.param('userId'));
+  const likes = await photoModel.getPhotosLikedByUser(userId);
 
-//   const photos = likes.map((like) => like.picture);
-//   return c.json({ success: true, data: photos, msg: 'Liked photos fetched' });
-// });
+  const photos = likes.map((like) => like.picture);
+  return c.json({ success: true, data: photos, msg: 'Liked photos fetched' });
+});
 
 // const updatePhotoPriceByLikes = factory.createHandlers(async (c) => {
 //   const id = Number(c.req.param('id'));
@@ -241,7 +241,7 @@ export {
   // getNewestPhotos,
   // getBestSellerPhotos,
   // getPhotosBySearchword,
-  // getPhotosByUserTradeHistory,
-  // getPhotosLikedByUser,
+  getPhotosByUserTradeHistory,
+  getPhotosLikedByUser,
   // updatePhotoPriceByLikes,
 };

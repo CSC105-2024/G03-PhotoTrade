@@ -1,22 +1,14 @@
-import Picture from "@/components/card/picture";
-import Collection from "@/components/card/collection";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CardContent, Card } from "@/components/ui/card";
-import { getAllPhoto, getPhotoByCategory } from "@/reducer/photo";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
-import { useSearchParams } from "react-router-dom";
-import { getCollectionAll } from "@/reducer/collection";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
+import Picture from '@/components/card/picture';
+import Collection from '@/components/card/collection';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { CardContent, Card } from '@/components/ui/card';
+import { PaginationWithLinks } from '@/components/ui/pagination-with-links';
+import { getAllPhoto, getPhotoByCategory } from '@/reducer/photo';
+import { getCollectionAll } from '@/reducer/collection';
 
 const MarketList = () => {
   const dispatch = useDispatch();
@@ -24,24 +16,15 @@ const MarketList = () => {
 
   const { photoList, total } = useSelector((state) => state.photo);
   const { collection } = useSelector((state) => state.collection);
-  const currentPage = parseInt(searchParams.get("page") || "1");
-  const perPage = parseInt(searchParams.get("pageSize") || "5");
-
-  // const [selectedCategories, setSelectedCategories] = useState([]);
-  // useEffect(() => {
-  //   if (selectedCategories.length === 0) {
-  //     dispatch(getAllPhoto(currentPage, perPage));
-  //   } else {
-  //     dispatch(getPhotoByCategory(selectedCategories));
-  //   }
-  // }, [dispatch, selectedCategories]);
+  const currentPage = parseInt(searchParams.get('page') || '1');
+  const perPage = parseInt(searchParams.get('pageSize') || '5');
 
   useEffect(() => {
     dispatch(getAllPhoto({ page: currentPage, perPage }));
-    dispatch(getCollectionAll())
+    dispatch(getCollectionAll());
     setSearchParams({ page: currentPage, pageSize: perPage });
   }, [dispatch, currentPage, perPage, setSearchParams]);
-
+  const collectionsWithFourPhotos = collection.filter((item) => item.pictures && item.pictures.length === 4);
   return (
     <section>
       <Tabs defaultValue="photo">
@@ -57,7 +40,7 @@ const MarketList = () => {
         <TabsContent value="photo">
           <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center mt-10 md:justify-between items-center ">
+              <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
                   {photoList.map((item) => (
                     <Picture
@@ -80,12 +63,14 @@ const MarketList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols md:grid-cols-3 mx-auto gap-4">
-                  {collection.map((item) => (
-                      <Collection 
-                        key={item.id}
-                        name={item.name}
-                        username={item.user?.name}
-                      />
+                  {collectionsWithFourPhotos.map((item) => (
+                    <Collection
+                      key={item.id}
+                      id={item.id}
+                      name={item.name}
+                      username={item.user?.name}
+                      pictures={item.pictures.map((p) => p.picture)}
+                    />
                   ))}
                 </div>
               </div>

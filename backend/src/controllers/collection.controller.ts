@@ -12,7 +12,7 @@ export const getCollectionsByUserId = factory.createHandlers(async (c) => {
   const userId = Number(c.req.param('id'));
   const data = await CollectionModel.getCollectionsByUserId(userId);
   return c.json({ success: true, data });
-});
+}); 
 
 export const getTop3Collections = factory.createHandlers(async (c) => {
   const data = await CollectionModel.getTop3Collections();

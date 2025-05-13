@@ -149,6 +149,18 @@ const getPhotosByPriceLowToHigh = async () => {
 //   });
 // };
 
+const getPhotosLikedByUser = async (userId: number) => {
+  return prisma.user_Like.findMany({
+    where: { user_id: userId },
+    include: {
+      picture: {
+        include: {
+          user: { select: { name: true } },
+        },
+      },
+    },
+  });
+};
 
 const updatePhoto = async (
   id: number,
@@ -166,6 +178,19 @@ const updatePhoto = async (
       description: data.description,
       thumbnail_url: data.thumbnail_url,
       price: data.price,
+    },
+  });
+};
+
+const getPhotosByUserTradeHistory = async (userId: number) => {
+  return prisma.trade.findMany({
+    where: { user_id: userId },
+    include: {
+      picture: {
+        include: {
+          user: { select: { name: true } },
+        },
+      },
     },
   });
 };
@@ -194,7 +219,7 @@ export {
   updatePhoto,
   deletePhoto,
   // getPhotosBySearchword,
-  // getPhotosByUserTradeHistory,
-  // getPhotosLikedByUser,
+  getPhotosByUserTradeHistory,
+  getPhotosLikedByUser,
   // updatePhotoPriceByLikes,
 };

@@ -2,8 +2,18 @@ import { prisma } from '../index.ts'
 
 export const getAllCollections = async () => {
   return prisma.collection.findMany({
-    include: { 
-      pictures: true,
+    include: {
+      pictures: {
+        include: {
+          picture: {
+            select: {
+              id: true,
+              title: true,
+              thumbnail_url: true
+            }
+          }
+        }
+      },
       user: {
         select: {
           name: true
@@ -16,8 +26,18 @@ export const getAllCollections = async () => {
 export const getCollectionsByUserId = async (userId: number) => {
   return prisma.collection.findMany({
     where: { user_id: userId },
-    include: { 
-      pictures: true,
+    include: {
+      pictures: {
+        include: {
+          picture: {
+            select: {
+              id: true,
+              title: true,
+              thumbnail_url: true
+            }
+          }
+        }
+      },
       user: {
         select: {
           name: true
@@ -27,11 +47,33 @@ export const getCollectionsByUserId = async (userId: number) => {
   });
 };
 
+
 export const getTop3Collections = async () => {
   return prisma.collection.findMany({
     take: 3,
-    orderBy: { pictures: { _count: 'desc' } },
-    include: { pictures: true },
+    orderBy: {
+      pictures: {
+        _count: 'desc'
+      }
+    },
+    include: {
+      pictures: {
+        include: {
+          picture: {
+            select: {
+              id: true,
+              title: true,
+              thumbnail_url: true
+            }
+          }
+        }
+      },
+      user: {
+        select: {
+          name: true
+        }
+      }
+    },
   });
 };
 

@@ -1,5 +1,5 @@
 import { createFactory } from 'hono/factory';
-import * as CollectionModel from '../models/collection.models.ts';
+import * as CollectionModel from '../models/collection.model.ts';
 
 const factory = createFactory();
 
@@ -9,7 +9,7 @@ export const getAllCollections = factory.createHandlers(async (c) => {
 });
 
 export const getCollectionsByUserId = factory.createHandlers(async (c) => {
-  const userId = Number(c.req.param('userid'));
+  const userId = Number(c.req.param('id'));
   const data = await CollectionModel.getCollectionsByUserId(userId);
   return c.json({ success: true, data });
 });

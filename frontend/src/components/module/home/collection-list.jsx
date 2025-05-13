@@ -7,7 +7,7 @@ const CollectionList = () => {
       title={"Trending Collection"}
       description={"Checkout Our Weekly Trending Collection On Our Platform"}
     >
-      <div className="flex justify-center md:justify-between">
+      <div className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-rows-auto md:grid-cols-3 gap-5">
           <Collection />
           <Collection />

@@ -75,7 +75,7 @@ function CommandList({
   return (
     (<CommandPrimitive.List
       data-slot="command-list"
-      className={cn("absolute z-50 top-full mt-2 w-full max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto bg-popover text-popover-foreground shadow-md rounded-md", className)}
+      className={cn("absolute z-20 top-full mt-2 w-full max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto bg-popover text-popover-foreground shadow-md rounded-md", className)}
       {...props} />)
   );
 }

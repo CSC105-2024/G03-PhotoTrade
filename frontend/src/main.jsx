@@ -4,7 +4,6 @@ import "./index.css";
 import routes from "~react-pages";
 import {
   BrowserRouter,
-  matchPath,
   useLocation,
   useRoutes,
 } from "react-router-dom";
@@ -29,6 +28,7 @@ const App = () => {
       dispatch(fetchUser());
     }
   }, [dispatch, isAuthenticated]);
+
 
   let isLayout = <Layout>{route}</Layout>;
 

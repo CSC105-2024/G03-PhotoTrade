@@ -1,5 +1,5 @@
 import { createFactory } from 'hono/factory';
-import * as UserLikeModel from '../models/user_Like.models.ts';
+import * as UserLikeModel from '../models/user_Like.model.ts';
 
 const factory = createFactory();
 

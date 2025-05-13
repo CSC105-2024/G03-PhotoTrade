@@ -41,10 +41,10 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
     return sign * Math.abs(number) + unitList[unit];
   };
   return (
-    <Card className="w-[250px] h-[400px] rounded-xl pt-0 mb-5 shadow-lg border bg-background text-foreground">
+    <Card className="w-[250px] h-[400px] pt-0 mb-5 overflow-hidden">
       <Link to={`/market/${id}`}>
         <CardHeader className="px-0 hover:opacity-90 cursor-pointer">
-          <img src={url} alt="Sun" className="w-full h-[200px] rounded-t-xl aspect-square object-cover" />
+          <img src={url} alt={name} className="w-full h-[200px] aspect-square object-cover" />
         </CardHeader>
       </Link>
 

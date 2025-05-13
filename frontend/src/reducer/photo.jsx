@@ -131,6 +131,20 @@ const photoSlice = createSlice({
       .addCase(getPhotoId.pending, (state) => {
         state.success = true;
         state.loading = false;
+      })
+
+      .addCase(deletePhotoById.fulfilled, (state, action) => {
+        state.photoList = state.photoList((photo) => photo.id !== action.payload.id)
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(deletePhotoById.rejected, (state) => {
+        state.success = false;
+        state.loading = false;
+      })
+      .addCase(deletePhotoById.pending, (state) => {
+        state.success = true;
+        state.loading = false;
       });
   },
 });

@@ -8614,16 +8614,19 @@ export namespace Prisma {
   export type User_FollowMinAggregateOutputType = {
     follower_id: number | null
     following_id: number | null
+    is_follow: boolean | null
   }
 
   export type User_FollowMaxAggregateOutputType = {
     follower_id: number | null
     following_id: number | null
+    is_follow: boolean | null
   }
 
   export type User_FollowCountAggregateOutputType = {
     follower_id: number
     following_id: number
+    is_follow: number
     _all: number
   }
 
@@ -8641,16 +8644,19 @@ export namespace Prisma {
   export type User_FollowMinAggregateInputType = {
     follower_id?: true
     following_id?: true
+    is_follow?: true
   }
 
   export type User_FollowMaxAggregateInputType = {
     follower_id?: true
     following_id?: true
+    is_follow?: true
   }
 
   export type User_FollowCountAggregateInputType = {
     follower_id?: true
     following_id?: true
+    is_follow?: true
     _all?: true
   }
 
@@ -8743,6 +8749,7 @@ export namespace Prisma {
   export type User_FollowGroupByOutputType = {
     follower_id: number
     following_id: number
+    is_follow: boolean
     _count: User_FollowCountAggregateOutputType | null
     _avg: User_FollowAvgAggregateOutputType | null
     _sum: User_FollowSumAggregateOutputType | null
@@ -8767,6 +8774,7 @@ export namespace Prisma {
   export type User_FollowSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     follower_id?: boolean
     following_id?: boolean
+    is_follow?: boolean
     follower?: boolean | UserDefaultArgs<ExtArgs>
     following?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user_Follow"]>
@@ -8774,6 +8782,7 @@ export namespace Prisma {
   export type User_FollowSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     follower_id?: boolean
     following_id?: boolean
+    is_follow?: boolean
     follower?: boolean | UserDefaultArgs<ExtArgs>
     following?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user_Follow"]>
@@ -8781,6 +8790,7 @@ export namespace Prisma {
   export type User_FollowSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     follower_id?: boolean
     following_id?: boolean
+    is_follow?: boolean
     follower?: boolean | UserDefaultArgs<ExtArgs>
     following?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user_Follow"]>
@@ -8788,9 +8798,10 @@ export namespace Prisma {
   export type User_FollowSelectScalar = {
     follower_id?: boolean
     following_id?: boolean
+    is_follow?: boolean
   }
 
-  export type User_FollowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"follower_id" | "following_id", ExtArgs["result"]["user_Follow"]>
+  export type User_FollowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"follower_id" | "following_id" | "is_follow", ExtArgs["result"]["user_Follow"]>
   export type User_FollowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     follower?: boolean | UserDefaultArgs<ExtArgs>
     following?: boolean | UserDefaultArgs<ExtArgs>
@@ -8813,6 +8824,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       follower_id: number
       following_id: number
+      is_follow: boolean
     }, ExtArgs["result"]["user_Follow"]>
     composites: {}
   }
@@ -9240,6 +9252,7 @@ export namespace Prisma {
   interface User_FollowFieldRefs {
     readonly follower_id: FieldRef<"User_Follow", 'Int'>
     readonly following_id: FieldRef<"User_Follow", 'Int'>
+    readonly is_follow: FieldRef<"User_Follow", 'Boolean'>
   }
     
 
@@ -11900,7 +11913,8 @@ export namespace Prisma {
 
   export const User_FollowScalarFieldEnum: {
     follower_id: 'follower_id',
-    following_id: 'following_id'
+    following_id: 'following_id',
+    is_follow: 'is_follow'
   };
 
   export type User_FollowScalarFieldEnum = (typeof User_FollowScalarFieldEnum)[keyof typeof User_FollowScalarFieldEnum]
@@ -11963,6 +11977,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -12338,6 +12359,7 @@ export namespace Prisma {
     NOT?: User_FollowWhereInput | User_FollowWhereInput[]
     follower_id?: IntFilter<"User_Follow"> | number
     following_id?: IntFilter<"User_Follow"> | number
+    is_follow?: BoolFilter<"User_Follow"> | boolean
     follower?: XOR<UserScalarRelationFilter, UserWhereInput>
     following?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -12345,6 +12367,7 @@ export namespace Prisma {
   export type User_FollowOrderByWithRelationInput = {
     follower_id?: SortOrder
     following_id?: SortOrder
+    is_follow?: SortOrder
     follower?: UserOrderByWithRelationInput
     following?: UserOrderByWithRelationInput
   }
@@ -12356,6 +12379,7 @@ export namespace Prisma {
     NOT?: User_FollowWhereInput | User_FollowWhereInput[]
     follower_id?: IntFilter<"User_Follow"> | number
     following_id?: IntFilter<"User_Follow"> | number
+    is_follow?: BoolFilter<"User_Follow"> | boolean
     follower?: XOR<UserScalarRelationFilter, UserWhereInput>
     following?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "follower_id_following_id">
@@ -12363,6 +12387,7 @@ export namespace Prisma {
   export type User_FollowOrderByWithAggregationInput = {
     follower_id?: SortOrder
     following_id?: SortOrder
+    is_follow?: SortOrder
     _count?: User_FollowCountOrderByAggregateInput
     _avg?: User_FollowAvgOrderByAggregateInput
     _max?: User_FollowMaxOrderByAggregateInput
@@ -12376,6 +12401,7 @@ export namespace Prisma {
     NOT?: User_FollowScalarWhereWithAggregatesInput | User_FollowScalarWhereWithAggregatesInput[]
     follower_id?: IntWithAggregatesFilter<"User_Follow"> | number
     following_id?: IntWithAggregatesFilter<"User_Follow"> | number
+    is_follow?: BoolWithAggregatesFilter<"User_Follow"> | boolean
   }
 
   export type CollectionWhereInput = {
@@ -12811,6 +12837,7 @@ export namespace Prisma {
   }
 
   export type User_FollowCreateInput = {
+    is_follow?: boolean
     follower: UserCreateNestedOneWithoutFollowingInput
     following: UserCreateNestedOneWithoutFollowersInput
   }
@@ -12818,9 +12845,11 @@ export namespace Prisma {
   export type User_FollowUncheckedCreateInput = {
     follower_id: number
     following_id: number
+    is_follow?: boolean
   }
 
   export type User_FollowUpdateInput = {
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
     follower?: UserUpdateOneRequiredWithoutFollowingNestedInput
     following?: UserUpdateOneRequiredWithoutFollowersNestedInput
   }
@@ -12828,20 +12857,23 @@ export namespace Prisma {
   export type User_FollowUncheckedUpdateInput = {
     follower_id?: IntFieldUpdateOperationsInput | number
     following_id?: IntFieldUpdateOperationsInput | number
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type User_FollowCreateManyInput = {
     follower_id: number
     following_id: number
+    is_follow?: boolean
   }
 
   export type User_FollowUpdateManyMutationInput = {
-
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type User_FollowUncheckedUpdateManyInput = {
     follower_id?: IntFieldUpdateOperationsInput | number
     following_id?: IntFieldUpdateOperationsInput | number
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CollectionCreateInput = {
@@ -13358,6 +13390,11 @@ export namespace Prisma {
     picture_id?: SortOrder
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type User_FollowFollower_idFollowing_idCompoundUniqueInput = {
     follower_id: number
     following_id: number
@@ -13366,6 +13403,7 @@ export namespace Prisma {
   export type User_FollowCountOrderByAggregateInput = {
     follower_id?: SortOrder
     following_id?: SortOrder
+    is_follow?: SortOrder
   }
 
   export type User_FollowAvgOrderByAggregateInput = {
@@ -13376,16 +13414,26 @@ export namespace Prisma {
   export type User_FollowMaxOrderByAggregateInput = {
     follower_id?: SortOrder
     following_id?: SortOrder
+    is_follow?: SortOrder
   }
 
   export type User_FollowMinOrderByAggregateInput = {
     follower_id?: SortOrder
     following_id?: SortOrder
+    is_follow?: SortOrder
   }
 
   export type User_FollowSumOrderByAggregateInput = {
     follower_id?: SortOrder
     following_id?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type CollectionCountOrderByAggregateInput = {
@@ -14050,6 +14098,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type UserUpdateOneRequiredWithoutFollowingNestedInput = {
     create?: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput>
     connectOrCreate?: UserCreateOrConnectWithoutFollowingInput
@@ -14311,6 +14363,19 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type PictureCreateWithoutUserInput = {
     title: string
     description: string
@@ -14382,11 +14447,13 @@ export namespace Prisma {
   }
 
   export type User_FollowCreateWithoutFollowingInput = {
+    is_follow?: boolean
     follower: UserCreateNestedOneWithoutFollowingInput
   }
 
   export type User_FollowUncheckedCreateWithoutFollowingInput = {
     follower_id: number
+    is_follow?: boolean
   }
 
   export type User_FollowCreateOrConnectWithoutFollowingInput = {
@@ -14399,11 +14466,13 @@ export namespace Prisma {
   }
 
   export type User_FollowCreateWithoutFollowerInput = {
+    is_follow?: boolean
     following: UserCreateNestedOneWithoutFollowersInput
   }
 
   export type User_FollowUncheckedCreateWithoutFollowerInput = {
     following_id: number
+    is_follow?: boolean
   }
 
   export type User_FollowCreateOrConnectWithoutFollowerInput = {
@@ -14537,6 +14606,7 @@ export namespace Prisma {
     NOT?: User_FollowScalarWhereInput | User_FollowScalarWhereInput[]
     follower_id?: IntFilter<"User_Follow"> | number
     following_id?: IntFilter<"User_Follow"> | number
+    is_follow?: BoolFilter<"User_Follow"> | boolean
   }
 
   export type User_FollowUpsertWithWhereUniqueWithoutFollowerInput = {
@@ -15629,10 +15699,12 @@ export namespace Prisma {
 
   export type User_FollowCreateManyFollowingInput = {
     follower_id: number
+    is_follow?: boolean
   }
 
   export type User_FollowCreateManyFollowerInput = {
     following_id: number
+    is_follow?: boolean
   }
 
   export type CollectionCreateManyUserInput = {
@@ -15703,27 +15775,33 @@ export namespace Prisma {
   }
 
   export type User_FollowUpdateWithoutFollowingInput = {
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
     follower?: UserUpdateOneRequiredWithoutFollowingNestedInput
   }
 
   export type User_FollowUncheckedUpdateWithoutFollowingInput = {
     follower_id?: IntFieldUpdateOperationsInput | number
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type User_FollowUncheckedUpdateManyWithoutFollowingInput = {
     follower_id?: IntFieldUpdateOperationsInput | number
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type User_FollowUpdateWithoutFollowerInput = {
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
     following?: UserUpdateOneRequiredWithoutFollowersNestedInput
   }
 
   export type User_FollowUncheckedUpdateWithoutFollowerInput = {
     following_id?: IntFieldUpdateOperationsInput | number
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type User_FollowUncheckedUpdateManyWithoutFollowerInput = {
     following_id?: IntFieldUpdateOperationsInput | number
+    is_follow?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CollectionUpdateWithoutUserInput = {

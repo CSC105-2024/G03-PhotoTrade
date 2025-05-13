@@ -25,9 +25,9 @@ npm run dev --workspaces
 1.  Run a migration to create your database tables with Prisma Migrate
     At this point, you have a Prisma schema but no database yet. Run the following command in your terminal to create the SQLite database and the User and Post tables represented by your models:
 
-        ```bash
-        npx prisma migrate dev
-        ```
+    ```bash
+      npx prisma migrate dev
+    ```
 
 2.  Reset all data in your database and re-apply migrations "For develop only".
     ```bash

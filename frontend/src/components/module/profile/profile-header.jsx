@@ -6,32 +6,37 @@ import { Separator } from "@/components/ui/separator";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "@/reducer/user";
+import { getFollowCount, following } from "@/reducer/follow";
 
 const ProfileHeader = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isFollow, setIsFollow] = useState(false);
   const dispatch = useDispatch();
   const { profileUser } = useSelector((state) => state.user);
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
+  const { count, isFollow } = useSelector((state) => state.follow);
 
   useEffect(() => {
     if (id) {
       dispatch(getUserById(id));
+      dispatch(getFollowCount(id))
     }
   }, [dispatch, id]);
 
   const isOwner = isAuthenticated && userInfo.id === parseInt(id);
 
   const handleButtonClick = () => {
-    setIsFollow(!isFollow);
+    const payload = {
+      followingId: id
+    }
+    dispatch(following(payload))
   };
 
   return (
     <div className="mb-6 md:pt-20">
       <div className="flex items-center">
         <Avatar className="h-24 w-24 border-3 border-white">
-          <AvatarImage src="https://github.com/shadcn.png" alt="User avatar" />
+          <AvatarImage src={profileUser?.profile_url} alt="User avatar" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 
@@ -40,12 +45,13 @@ const ProfileHeader = () => {
             {profileUser?.name}
           </h1>
           <div className="flex h-5 items-center space-x-2 text-sm  dark:text-gray-300">
-            <span>100 followers</span>
+            <p><span className="font-bold">{count?.followerCount}</span>{" "}follower</p>
             <Dot />
-            <span>100 following</span>
+            <p><span className="font-bold">{count?.followingCount}</span>{" "}following</p>
             <Separator orientation="vertical" />
             <span>100 images</span>
           </div>
+          <p>{profileUser.bio}</p>
         </div>
 
         <div className="ml-auto space-y-2 hidden md:flex">

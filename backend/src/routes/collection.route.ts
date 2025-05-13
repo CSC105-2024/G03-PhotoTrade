@@ -13,7 +13,7 @@ const collectionRoute = new Hono();
 collectionRoute.post('/', ...createCollection);
 collectionRoute.get('/', ...getAllCollections);
 collectionRoute.get('/top3', ...getTop3Collections);
-collectionRoute.get('/:userid', ...getCollectionsByUserId);
+collectionRoute.get('/:id', ...getCollectionsByUserId);
 collectionRoute.patch('/:id', ...addPhotoToCollection);
 collectionRoute.delete('/:id', ...deletePhotoFromCollection);
 

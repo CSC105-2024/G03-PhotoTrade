@@ -12,6 +12,12 @@ export const getUserAll = createAsyncThunk('user/getAll', async () => {
   return response.data.data;
 });
 
+export const updateUser = createAsyncThunk('user/update', async (payload) => {
+  const response = await axios.patch(`http://localhost:3000/api/v1/user/${payload.id}`, payload);
+  console.log(response.data.data)
+  return response.data.data;
+});
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -44,6 +50,17 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(getUserAll.rejected, (state) => {
+        state.success = false;
+        state.loading = false;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateUser.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(updateUser.rejected, (state) => {
         state.success = false;
         state.loading = false;
       });

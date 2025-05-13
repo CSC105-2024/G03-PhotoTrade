@@ -2,14 +2,28 @@ import { prisma } from '../index.ts'
 
 export const getAllCollections = async () => {
   return prisma.collection.findMany({
-    include: { pictures: true },
+    include: { 
+      pictures: true,
+      user: {
+        select: {
+          name: true
+        }
+      }
+    },
   });
 };
 
 export const getCollectionsByUserId = async (userId: number) => {
   return prisma.collection.findMany({
     where: { user_id: userId },
-    include: { pictures: true },
+    include: { 
+      pictures: true,
+      user: {
+        select: {
+          name: true
+        }
+      }
+    },
   });
 };
 

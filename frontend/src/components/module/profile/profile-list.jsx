@@ -18,27 +18,32 @@ import { getPhotoUser } from "@/reducer/photo";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getUserById } from "@/reducer/user";
+import { fetchUser } from "@/reducer/auth";
+import { getCollectionById } from "@/reducer/collection";
 
 const ProfileList = () => {
-  const param = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   const { photoListUser } = useSelector((state) => state.photo);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   const { profileUser } = useSelector((state) => state.user);
+  const { collection } = useSelector((state) => state.collection);
 
   useEffect(() => {
+    dispatch(getUserById(id));
+    dispatch(getCollectionById(id));
     dispatch(getPhotoUser());
-    dispatch(getUserById(param.id));
-  }, [dispatch]);
+    dispatch(fetchUser());
+  }, [dispatch, id]);
 
   const newPhotolist = isAuthenticated
     ? photoListUser
-    : (profileUser.creates ?? []);
+    : profileUser?.creates ?? [];
 
-  const handleName = (item) => {
-    return isAuthenticated ? item : profileUser.name;
-  };
+  const newCollection = Array.isArray(collection) ? collection : [];
+
+  const handleName = (item) => (isAuthenticated ? item : profileUser?.name);
 
   return (
     <>
@@ -65,7 +70,7 @@ const ProfileList = () => {
                       id={item.id}
                     />
                   ))}
-                  {isAuthenticated && <AddPicture />}
+                  {isAuthenticated && userInfo?.id === parseInt(id) && <AddPicture />}
                 </div>
               </div>
             </CardContent>
@@ -76,12 +81,15 @@ const ProfileList = () => {
           <Card className="min-h-screen">
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-3 mx-auto gap-4">
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <AddCollection />
+                <div className="grid grid-cols lg:grid-cols-3 mx-auto gap-4">
+                  {newCollection.map((item) => (
+                    <Collection
+                      key={item.id}
+                      name={item.name}
+                      username={item.user?.name}
+                    />
+                  ))}
+                  {isAuthenticated && userInfo?.id === parseInt(id) && <AddCollection />}
                 </div>
               </div>
             </CardContent>
@@ -93,10 +101,7 @@ const ProfileList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <Picture />
+                  
                 </div>
               </div>
             </CardContent>
@@ -108,10 +113,7 @@ const ProfileList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
-                  <Picture alwaysLike={true} />
-                  <Picture alwaysLike={true} />
-                  <Picture alwaysLike={true} />
-                  <Picture alwaysLike={true} />
+                  
                 </div>
               </div>
             </CardContent>
@@ -122,44 +124,24 @@ const ProfileList = () => {
       <Pagination className="mt-10">
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            />
+            <PaginationPrevious href="#" />
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink
-              href="#"
-              isActive
-              className="bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-white border border-gray-300 dark:border-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600 hover:text-blue-700 dark:hover:text-white transition-colors"
-            >
+            <PaginationLink href="#" isActive>
               1
             </PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            >
-              2
-            </PaginationLink>
+            <PaginationLink href="#">2</PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationLink
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            >
-              3
-            </PaginationLink>
+            <PaginationLink href="#">3</PaginationLink>
           </PaginationItem>
           <PaginationItem>
-            <PaginationEllipsis className="text-gray-700 dark:text-gray-400" />
+            <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            />
+            <PaginationNext href="#" />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

@@ -22,6 +22,7 @@ export const followUser = async (followerId: number, followingId: number) => {
     data: {
       follower_id: followerId,
       following_id: followingId,
+      is_follow: true,
     },
   });
 };

@@ -18,7 +18,6 @@ export function Dropdownfilter() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-700 hover:text-gray-100 dark:hover:bg-gray-200"
         >
           Select Filter
         </Button>

@@ -27,7 +27,7 @@ const RegisterForm = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { success, loading, userInfo } = useSelector((state) => state.auth);
+  const { success, loading } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordAgain, setShowPasswordAgain] = useState(false);
@@ -37,6 +37,7 @@ const RegisterForm = () => {
       name: data.name,
       email: data.email,
       password: data.password,
+      profile_url:  "http://res.cloudinary.com/dcpgrfpaf/image/upload/v1746696486/oxmxcfiln2cobpym6riq.png"
     };
     dispatch(createUser(newData));
   };

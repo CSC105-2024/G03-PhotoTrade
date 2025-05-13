@@ -26,7 +26,7 @@ const LoginForm = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
 
   const submitForm = (data) => {
     dispatch(login(data));

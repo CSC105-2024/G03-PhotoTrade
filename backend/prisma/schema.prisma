@@ -81,8 +81,9 @@ model User_Like {
 model User_Follow {
   follower_id  Int
   following_id Int
-  follower     User @relation("Follower", fields: [follower_id], references: [id])
-  following    User @relation("Following", fields: [following_id], references: [id])
+  is_follow    Boolean @default(false)
+  follower     User    @relation("Follower", fields: [follower_id], references: [id])
+  following    User    @relation("Following", fields: [following_id], references: [id])
 
   @@id([follower_id, following_id])
 }

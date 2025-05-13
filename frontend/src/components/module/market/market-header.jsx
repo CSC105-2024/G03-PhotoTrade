@@ -66,7 +66,7 @@ const Header = () => {
       </div>
 
       <div className="relative ml-auto flex-1 md:grow-0 my-6">
-        <div className="flex space-x-3">
+        <div className="md:flex space-x-3">
           <Command
             className="rounded-lg border shadow-md md:min-w-[450px]"
             ref={commandRef}
@@ -80,7 +80,6 @@ const Header = () => {
             {showCommand && (
               <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
-
                 {tempPhoto.length > 0 && (
                   <CommandGroup heading="Photos">
                     {tempPhoto.map((photo) => (
@@ -104,7 +103,6 @@ const Header = () => {
               </CommandList>
             )}
           </Command>
-
           <Dropdownfilter />
           <Dropdowncategoryprofile />
         </div>

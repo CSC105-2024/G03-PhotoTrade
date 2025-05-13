@@ -30,7 +30,6 @@ const AddPicture = () => {
     const fileUrl = await res.json();
     setValue(fileUrl);
   };
-  console.log('ff', value);
 
   const {
     register,
@@ -117,7 +116,7 @@ const AddPicture = () => {
                 <Input id="price" type="text" placeholder="Enter price" className="w-full" {...register('price')} />
               </div>
 
-              <Button variant="outline" className="w-full dark:text-white">
+              <Button className="w-full">
                 Upload
               </Button>
             </div>

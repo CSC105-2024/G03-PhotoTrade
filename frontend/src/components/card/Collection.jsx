@@ -1,66 +1,49 @@
-import React from "react";
 import Home_1 from "@/assets/Home_1.png";
 import Home_2 from "@/assets/Home_2.png";
-import Home_3 from "@/assets/Home_3.png";
 import Ellipse from "@/assets/Ellipse.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import styles from "../../style";
-import { Card, CardContent, CardFooter } from "../ui/card";
-import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
-const Collection = () => {
-  const navigate = useNavigate();
-  const PhotoClick = () => {
-    navigate("/market/1");
-  };
+const Collection = ({name, username}) => {
+
   return (
-    <Card>
-        <div className="grid grid-cols-3 md:max-h-md gap-3 ">
-          <div className="col-span-3 max-h-96 overflow-hidden rounded-md cursor-pointer">
-            <button onClick={PhotoClick} className="cursor-pointer">
-              <img
-                src={Home_1}
-                className="w-full h-full object-cover"
-                alt="1"
-              />
-            </button>
-          </div>
-
-          <div className="col-span-1 cursor-pointer">
-            <button onClick={PhotoClick} className="cursor-pointer">
-              <img src={Home_2} className="rounded-md" alt="2" />
-            </button>
-          </div>
-
-          <div className="col-span-1 cursor-pointer">
-            <button onClick={PhotoClick} className="cursor-pointer">
-              <img src={Home_3} className="rounded-md" alt="3" />
-            </button>
-          </div>
-
-          <div className="col-span-1 cursor-pointer">
-            <button onClick={PhotoClick} className="cursor-pointer">
-              <img src={Home_3} className="rounded-md" alt="3" />
-            </button>
-          </div>
-
+    <Card className="w-[300px] h-[465px] pt-0 mb-5 overflow-hidden">
+      <CardHeader className="px-0">
+        <div className="mb-1">
+          <img
+            src={Home_1}
+            className="w-full h-[200px] aspect-square"
+            alt="1"
+          />
         </div>
-
-        <CardFooter>
-          <div className="mt-5 md:mt-6">
-            <h1 className="text-xl text-bold">Sunset</h1>
-            <div
-              className="flex items-center mt-2 cursor-pointer"
-              onClick={() => navigate("/user/auth/dashboard/1")}
-            >
-              <Avatar>
-                <AvatarImage src={Ellipse} alt="first" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <span className="ml-3">YummyGuy</span>
-            </div>
-          </div>
-        </CardFooter>
+        <div className="grid grid-cols-3 gap-2">
+          <img 
+            src={Home_2} 
+            className="rounded-r-md" 
+            alt="2" 
+          />
+          <img 
+            src={Home_2} 
+            className="rounded-md" 
+            alt="2" 
+          />
+          <img 
+            src={Home_2} 
+            className="rounded-l-md" 
+            alt="2" 
+          />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <CardTitle className="text-xl flex items-start">{name}</CardTitle>
+        <div className="flex items-center mt-2 cursor-pointer" onClick={() => navigate('/user/auth/dashboard/1')}>
+          <Avatar>
+            <AvatarImage src={Ellipse} alt="User avatar" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <p className="ml-3 text-sm">{username}</p>
+        </div>
+      </CardContent>
     </Card>
   );
 };

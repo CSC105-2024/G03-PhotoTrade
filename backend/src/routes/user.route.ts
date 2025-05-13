@@ -1,11 +1,13 @@
 import { Hono } from 'hono';
 import {
+  getFollowCount,
   getUser,
   getUserAll,
   getUserById,
   loginController,
   logoutController,
   signUpController,
+  updateUserProfile,
 } from '../controllers/user.controller.ts';
 
 import { likePhoto, unlikePhoto } from '../controllers/user_Like.controller.ts';
@@ -20,10 +22,12 @@ userRoutes.post('/register', ...signUpController);
 userRoutes.post('/login', ...loginController);
 userRoutes.post('/logout', auth, ...logoutController);
 userRoutes.post('/like', ...likePhoto);
-userRoutes.post('/follow', ...followUser);
+userRoutes.post('/follow', auth, ...followUser);
 userRoutes.get('/me', auth, ...getUser);
 userRoutes.get('/all', ...getUserAll);
 userRoutes.get('/:id', ...getUserById);
+userRoutes.get('/followCount/:id', ...getFollowCount);
+userRoutes.patch('/:id', ...updateUserProfile);
 userRoutes.delete('/unfollow', ...unfollowUser);
 userRoutes.delete('/unlike', ...unlikePhoto);
 

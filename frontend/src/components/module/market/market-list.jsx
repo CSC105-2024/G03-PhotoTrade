@@ -16,12 +16,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
 import { useSearchParams } from "react-router-dom";
+import { getCollectionAll } from "@/reducer/collection";
 
 const MarketList = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { photoList, total } = useSelector((state) => state.photo);
+  const { collection } = useSelector((state) => state.collection);
   const currentPage = parseInt(searchParams.get("page") || "1");
   const perPage = parseInt(searchParams.get("pageSize") || "5");
 
@@ -36,6 +38,7 @@ const MarketList = () => {
 
   useEffect(() => {
     dispatch(getAllPhoto({ page: currentPage, perPage }));
+    dispatch(getCollectionAll())
     setSearchParams({ page: currentPage, pageSize: perPage });
   }, [dispatch, currentPage, perPage, setSearchParams]);
 
@@ -77,12 +80,13 @@ const MarketList = () => {
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
                 <div className="grid grid-cols md:grid-cols-3 mx-auto gap-4">
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
+                  {collection.map((item) => (
+                      <Collection 
+                        key={item.id}
+                        name={item.name}
+                        username={item.user?.name}
+                      />
+                  ))}
                 </div>
               </div>
             </CardContent>

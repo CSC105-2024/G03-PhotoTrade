@@ -21,7 +21,6 @@ export const login = createAsyncThunk('auth/login', async (payload, { rejectWith
 
 export const logout = createAsyncThunk('auth/logout', async () => {
   await axios.post('http://localhost:3000/api/v1/user/logout', {}, { withCredentials: true });
-  localStorage.setItem('isAuth', 'false');
 });
 
 export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWithValue }) => {
@@ -29,11 +28,6 @@ export const fetchUser = createAsyncThunk('auth/fetchUser', async (_, { rejectWi
     const response = await axios.get('http://localhost:3000/api/v1/user/me', {
       withCredentials: true,
     });
-    if (response.status !== 401) {
-      localStorage.setItem('isAuth', 'true');
-    } else {
-      localStorage.setItem('isAuth', 'false');
-    }
     return response.data.data;
   } catch (error) {
     return rejectWithValue(error.response?.data || 'Fetch user failed');
@@ -71,7 +65,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state) => {
         state.loading = false;
         state.success = true;
-        state.isAuthenticated = true;
+        localStorage.setItem("isAuth", "true")
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -87,6 +81,8 @@ const authSlice = createSlice({
         state.userInfo = action.payload;
         state.success = true;
         state.loading = false;
+        localStorage.setItem('isAuth', 'true');
+        state.isAuthenticated = true;
       })
       .addCase(fetchUser.rejected, (state) => {
         state.userInfo = {};
@@ -97,6 +93,7 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.userInfo = {};
         state.isAuthenticated = false;
+        localStorage.setItem('isAuth', "false");
         state.success = false;
         state.loading = false;
       });

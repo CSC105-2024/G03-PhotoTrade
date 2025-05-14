@@ -18,6 +18,19 @@ export const updateUser = createAsyncThunk('user/update', async (payload) => {
   return response.data.data;
 });
 
+export const getUserSalesCount = createAsyncThunk(
+  'user/salesCount',
+  async (userId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/v1/user/${userId}/sales`);
+      return response.data.count;
+    } catch (error) {
+      console.error('Error fetching user sales count:', error);
+      throw error;
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -25,6 +38,7 @@ const userSlice = createSlice({
     success: false,
     profileUser: {},
     userAll: {},
+    salesCount: 0,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -61,6 +75,18 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateUser.rejected, (state) => {
+        state.success = false;
+        state.loading = false;
+      })
+      .addCase(getUserSalesCount.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserSalesCount.fulfilled, (state, action) => {
+        state.salesCount = action.payload;
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(getUserSalesCount.rejected, (state) => {
         state.success = false;
         state.loading = false;
       });

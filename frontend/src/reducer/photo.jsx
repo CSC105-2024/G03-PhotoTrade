@@ -23,8 +23,17 @@ export const deletePhotoById = createAsyncThunk('photo/delete/:id', async (id) =
 
 export const createPhoto = createAsyncThunk('photo/upload', async (payload) => {
   try {
+    console.log('Creating photo with payload:', payload);
+    if (!payload.title || !payload.thumbnail_url || !payload.price || !payload.categoryIds) {
+      throw new Error('Missing required fields in payload');
+    }
+
+    if (!Array.isArray(payload.categoryIds) || payload.categoryIds.length === 0) {
+      throw new Error('categoryIds must be a non-empty array');
+    }
+
     const response = await axios.post('http://localhost:3000/api/v1/photo/upload', payload, { withCredentials: true });
-    console.log(response.data);
+    console.log('Photo upload response:', response.data);
     return response.data.data;
   } catch (error) {
     console.error('Error uploading photo:', error);
@@ -90,115 +99,144 @@ const photoSlice = createSlice({
     totalPic: 0,
     photoListUser: [],
     photoListId: {},
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getAllPhoto.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllPhoto.fulfilled, (state, action) => {
         state.photoList = action.payload.data;
         state.totalPic = action.payload.total;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(getAllPhoto.rejected, (state) => {
+      .addCase(getAllPhoto.rejected, (state, action) => {
         state.photoList = [];
         state.success = false;
         state.loading = false;
+        state.error = action.error.message;
       })
 
       .addCase(getPhotoByCategory.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getPhotoByCategory.fulfilled, (state, action) => {
         state.photoList = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(getPhotoByCategory.rejected, (state) => {
+      .addCase(getPhotoByCategory.rejected, (state, action) => {
         state.photoList = [];
         state.success = false;
         state.loading = false;
+        state.error = action.error.message;
       })
 
+      .addCase(createPhoto.pending, (state) => {
+        state.loading = true;
+        state.success = false;
+        state.error = null;
+      })
       .addCase(createPhoto.fulfilled, (state) => {
         state.success = true;
         state.loading = false;
+        state.error = null;
+      })
+      .addCase(createPhoto.rejected, (state, action) => {
+        state.success = false;
+        state.loading = false;
+        state.error = action.error.message;
       })
 
       .addCase(getPhotoUser.fulfilled, (state, action) => {
         state.photoListUser = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(getPhotoUser.rejected, (state) => {
+      .addCase(getPhotoUser.rejected, (state, action) => {
         state.photoListUser = [];
         state.success = false;
         state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(getPhotoUser.pending, (state) => {
-        state.success = true;
-        state.loading = false;
+        state.loading = true;
+        state.error = null;
       })
 
       .addCase(getPhotoId.fulfilled, (state, action) => {
         state.photoListId = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(getPhotoId.rejected, (state) => {
+      .addCase(getPhotoId.rejected, (state, action) => {
         state.photoListId = {};
         state.success = false;
         state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(getPhotoId.pending, (state) => {
-        state.success = true;
-        state.loading = false;
+        state.loading = true;
+        state.error = null;
       })
       
       .addCase(getPhotoLikebyId.fulfilled, (state, action) => {
         state.photoListId = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(getPhotoLikebyId.rejected, (state) => {
+      .addCase(getPhotoLikebyId.rejected, (state, action) => {
         state.photoListId = {};
         state.success = false;
         state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(getPhotoLikebyId.pending, (state) => {
-        state.success = true;
-        state.loading = false;
+        state.loading = true;
+        state.error = null;
       })
 
       .addCase(getPhotosByUserTradeHistory.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getPhotosByUserTradeHistory.fulfilled, (state, action) => {
         state.tradeHistory = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(getPhotosByUserTradeHistory.rejected, (state) => {
+      .addCase(getPhotosByUserTradeHistory.rejected, (state, action) => {
         state.tradeHistory = [];
         state.success = false;
         state.loading = false;
+        state.error = action.error.message;
       })
 
       .addCase(deletePhotoById.fulfilled, (state, action) => {
-        state.photoList = state.photoList((photo) => photo.id !== action.payload.id)
+        state.photoList = state.photoList.filter((photo) => photo.id !== action.payload.id);
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
-      .addCase(deletePhotoById.rejected, (state) => {
+      .addCase(deletePhotoById.rejected, (state, action) => {
         state.success = false;
         state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(deletePhotoById.pending, (state) => {
-        state.success = true;
-        state.loading = false;
+        state.loading = true;
+        state.error = null;
       });
   },
 });

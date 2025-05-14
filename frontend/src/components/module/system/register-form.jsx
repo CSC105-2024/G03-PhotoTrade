@@ -36,8 +36,8 @@ const RegisterForm = () => {
     const newData = {
       name: data.name,
       email: data.email,
-      password: data.password,
-      profile_url:  "http://res.cloudinary.com/dcpgrfpaf/image/upload/v1746696486/oxmxcfiln2cobpym6riq.png"
+      password: data.password, 
+      profile_url:  "http://res.cloudinary.com/dcpgrfpaf/image/upload/v1747209873/rxkq2oleojlbcu4xomhh.png"
     };
     dispatch(createUser(newData));
   };

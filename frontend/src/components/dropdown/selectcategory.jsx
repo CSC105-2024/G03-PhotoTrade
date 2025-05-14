@@ -12,14 +12,12 @@ import { Check, ChevronDown, Filter } from "lucide-react";
 import axios from "axios";
 
 export function Dropdowncategoryprofile({ onChange, value = [] }) {
-  // รับค่า value เป็น array ของ category ids
   const [selectedCategories, setSelectedCategories] = React.useState(
     Array.isArray(value) ? value : [value]
   );
   const [categories, setCategories] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
-  // ดึงข้อมูลหมวดหมู่จาก API
   React.useEffect(() => {
     const fetchCategories = async () => {
       try {

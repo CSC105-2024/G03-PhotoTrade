@@ -23,14 +23,12 @@ const Header = () => {
   const dispatch = useDispatch();
   const { photoList, loading } = useSelector((state) => state.photo);
   
-  // รับค่า query parameters ปัจจุบัน
   const currentPage = parseInt(searchParams.get('page') || '1');
   const perPage = parseInt(searchParams.get('pageSize') || '5');
   const sort = searchParams.get('sort') || '';
   const categoryParam = searchParams.get('category') || '';
   const categoryIds = categoryParam ? categoryParam.split(',').map(id => parseInt(id)) : [];
 
-  // ตัวแปรสำหรับป้องกันการเรียก API ซ้ำๆ
   const apiCallRef = useRef(false);
 
   const tempPhoto = search
@@ -40,11 +38,9 @@ const Header = () => {
     : photoList;
 
   useEffect(() => {
-    // เพิ่มการป้องกันการเรียก API ซ้ำ
     if (apiCallRef.current) return;
     apiCallRef.current = true;
 
-    // ดึงข้อมูลตาม filter
     const fetchData = async () => {
       try {
         if (categoryIds.length > 0) {
@@ -81,7 +77,6 @@ const Header = () => {
     };
   }, [dispatch, currentPage, perPage]);
 
-  // แยกการจัดการกับการเปลี่ยนแปลง filters ออกมาต่างหาก
   useEffect(() => {
     if (apiCallRef.current) return;
     
@@ -107,9 +102,7 @@ const Header = () => {
     }
   }, [dispatch, sort, categoryIds]);
 
-  // จัดการการเปลี่ยนแปลงตัวกรอง
   const handleSortChange = (sortType) => {
-    // อัปเดต query parameters
     const newParams = new URLSearchParams(searchParams);
     
     if (sortType) {
@@ -118,13 +111,11 @@ const Header = () => {
       newParams.delete('sort');
     }
     
-    newParams.set('page', '1'); // รีเซ็ตหน้าเป็นหน้าแรกเมื่อมีการกรอง
+    newParams.set('page', '1'); 
     setSearchParams(newParams);
   };
 
-  // จัดการการเปลี่ยนแปลงหมวดหมู่
   const handleCategoryChange = (selectedCategories) => {
-    // อัปเดต query parameters
     const newParams = new URLSearchParams(searchParams);
     
     if (selectedCategories.length > 0) {
@@ -133,7 +124,7 @@ const Header = () => {
       newParams.delete('category');
     }
     
-    newParams.set('page', '1'); // รีเซ็ตหน้าเป็นหน้าแรกเมื่อมีการกรอง
+    newParams.set('page', '1'); 
     setSearchParams(newParams);
   };
 
@@ -195,7 +186,6 @@ const Header = () => {
         </div>
       </div>
       
-      {/* แสดงสถานะการกรอง */}
       {(sort || categoryIds.length > 0) && (
         <div className="mb-4 flex items-center gap-2">
           <span className="text-sm text-muted-foreground">Filters applied:</span>

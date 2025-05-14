@@ -7,11 +7,13 @@ import Collection from '@/components/card/collection';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CardContent, Card } from '@/components/ui/card';
 import { PaginationWithLinks } from '@/components/ui/pagination-with-links';
-import { 
-  getAllPhoto, 
-  getPhotoByCategory, 
-  getPhotosByPriceLowToHigh, 
-  getPhotosByPriceHighToLow 
+import {
+  getAllPhoto,
+  getPhotoByCategory,
+  getPhotosByPriceLowToHigh,
+  getPhotosByPriceHighToLow,
+  getPhotosByNewest,
+  getPhotosByBestSeller,
 } from '@/reducer/photo';
 import { getCollectionAll } from '@/reducer/collection';
 import { Loader2 } from 'lucide-react';
@@ -22,44 +24,38 @@ const MarketList = () => {
 
   const { photoList, total, loading } = useSelector((state) => state.photo);
   const { collection } = useSelector((state) => state.collection);
-  
-  // รับค่า query parameters
+
   const currentPage = parseInt(searchParams.get('page') || '1');
   const perPage = parseInt(searchParams.get('pageSize') || '5');
   const sort = searchParams.get('sort') || '';
   const categoryParam = searchParams.get('category') || '';
-  const categoryIds = categoryParam ? categoryParam.split(',').map(id => parseInt(id)) : [];
+  const categoryIds = categoryParam ? categoryParam.split(',').map((id) => parseInt(id)) : [];
 
   useEffect(() => {
-    // เลือกการดึงข้อมูลตาม filter
     if (categoryIds.length > 0) {
-      // ถ้ามีการกรองตามหมวดหมู่
       dispatch(getPhotoByCategory(categoryIds));
     } else if (sort === 'price_low_to_high') {
-      // ถ้ามีการเรียงลำดับจากต่ำไปสูง
       dispatch(getPhotosByPriceLowToHigh());
     } else if (sort === 'price_high_to_low') {
-      // ถ้ามีการเรียงลำดับจากสูงไปต่ำ
       dispatch(getPhotosByPriceHighToLow());
+    } else if (sort === 'newest') {
+      dispatch(getPhotosByNewest());
+    } else if (sort === 'best_seller') {
+      dispatch(getPhotosByBestSeller());
     } else {
-      // ถ้าไม่มีการกรอง ให้ดึงข้อมูลทั้งหมดแบบแบ่งหน้า
       dispatch(getAllPhoto({ page: currentPage, perPage }));
     }
 
-    // ดึงข้อมูล collection เสมอ
     dispatch(getCollectionAll());
 
-    // อัปเดต URL parameters
     const newParams = new URLSearchParams(searchParams);
     newParams.set('page', currentPage.toString());
     newParams.set('pageSize', perPage.toString());
     setSearchParams(newParams);
   }, [dispatch, currentPage, perPage, sort, categoryParam, setSearchParams]);
 
-  // กรองคอลเลกชันที่มีรูปภาพครบ 4 รูป
   const collectionsWithFourPhotos = collection.filter((item) => item.pictures && item.pictures.length === 4);
 
-  // แสดงข้อความกำลังโหลด
   if (loading && photoList.length === 0) {
     return (
       <section className="h-[400px] flex items-center justify-center">
@@ -134,8 +130,7 @@ const MarketList = () => {
           </Card>
         </TabsContent>
       </Tabs>
-      
-      {/* แสดง Pagination เฉพาะเมื่อไม่มีการกรองหรือเรียงลำดับ */}
+
       {!categoryIds.length && !sort && (
         <PaginationWithLinks
           page={currentPage}

@@ -58,7 +58,7 @@ export const getPhotoId = createAsyncThunk('photo/id', async (id) => {
     console.error('Error get photo by user photo:', error);
     throw error;
   }
-}); 
+});
 
 export const getPhotoLikebyId = createAsyncThunk('photo/liked/user/:id', async (id) => {
   try {
@@ -69,66 +69,44 @@ export const getPhotoLikebyId = createAsyncThunk('photo/liked/user/:id', async (
     console.error('Error get photo liked by user :', error);
     throw error;
   }
-}); 
+});
 
-export const getPhotosByUserTradeHistory = createAsyncThunk(
-  'photo/trade/user/:id',
-  async (userId) => {
-    try {
-      const response = await axios.get(`http://localhost:3000/api/v1/photo/trade/user/${userId}`);
-      console.log(response.data.data);
-      return response.data.data;
-    } catch (error) {
-      console.error('Error getting user trade history:', error);
-      throw error;
-    }
-  }
-);
-
-export const getPhotoByCategory = createAsyncThunk(
-  'photo/category',
-  async (categoryIds, { getState }) => {
-    if (!categoryIds || (Array.isArray(categoryIds) && categoryIds.length === 0)) {
-      return [];
-    }
-    
-    const categoryIdsString = Array.isArray(categoryIds) ? categoryIds.join(',') : categoryIds;
-    
-    const response = await axios.get(`http://localhost:3000/api/v1/photo/category?categoryIds=${categoryIdsString}`);
+export const getPhotosByUserTradeHistory = createAsyncThunk('photo/trade/user/:id', async (userId) => {
+  try {
+    const response = await axios.get(`http://localhost:3000/api/v1/photo/trade/user/${userId}`);
+    console.log(response.data.data);
     return response.data.data;
-  },
-  {
-    condition: (categoryIds, { getState }) => {
-      const { photo } = getState();
-      if (photo.loading) {
-        return false;
-      }
-      return categoryIds && (Array.isArray(categoryIds) ? categoryIds.length > 0 : true);
-    }
+  } catch (error) {
+    console.error('Error getting user trade history:', error);
+    throw error;
   }
-);
+});
 
-export const getPhotosByPriceHighToLow = createAsyncThunk(
-  'photo/price-high-to-low',
-  async (_, { getState }) => {
-    const { photo } = getState();
-    if (photo.loading) return null;
-    
-    const response = await axios.get('http://localhost:3000/api/v1/photo/price/high-to-low');
-    return response.data.data;
-  }
-);
+export const getPhotoByCategory = createAsyncThunk('photo/category', async (categoryIds) => {
+  const categoryIdsString = Array.isArray(categoryIds) ? categoryIds.join(',') : categoryIds;
+  const response = await axios.get(`http://localhost:3000/api/v1/photo/category?categoryIds=${categoryIdsString}`);
+  return response.data.data;
+});
 
-export const getPhotosByPriceLowToHigh = createAsyncThunk(
-  'photo/price-low-to-high',
-  async (_, { getState }) => {
-    const { photo } = getState();
-    if (photo.loading) return null;
-    
-    const response = await axios.get('http://localhost:3000/api/v1/photo/price/low-to-high');
-    return response.data.data;
-  }
-);
+export const getPhotosByPriceHighToLow = createAsyncThunk('photo/price-high-to-low', async () => {
+  const response = await axios.get('http://localhost:3000/api/v1/photo/price/high-to-low');
+  return response.data.data;
+});
+
+export const getPhotosByPriceLowToHigh = createAsyncThunk('photo/price-low-to-high', async () => {
+  const response = await axios.get('http://localhost:3000/api/v1/photo/price/low-to-high');
+  return response.data.data;
+});
+
+export const getPhotosByNewest = createAsyncThunk('photo/newest', async () => {
+  const response = await axios.get('http://localhost:3000/api/v1/photo/newest');
+  return response.data.data;
+});
+
+export const getPhotosByBestSeller = createAsyncThunk('photo/best-seller', async () => {
+  const response = await axios.get('http://localhost:3000/api/v1/photo/best-seller');
+  return response.data.data;
+});
 
 const photoSlice = createSlice({
   name: 'photo',
@@ -170,6 +148,7 @@ const photoSlice = createSlice({
         state.photoList = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
       .addCase(getPhotoByCategory.rejected, (state, action) => {
         state.photoList = [];
@@ -227,7 +206,7 @@ const photoSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      
+
       .addCase(getPhotoLikebyId.fulfilled, (state, action) => {
         state.photoListId = action.payload;
         state.success = true;
@@ -286,6 +265,7 @@ const photoSlice = createSlice({
         state.photoList = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
       .addCase(getPhotosByPriceHighToLow.rejected, (state, action) => {
         state.photoList = [];
@@ -293,7 +273,7 @@ const photoSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      
+
       .addCase(getPhotosByPriceLowToHigh.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -302,8 +282,43 @@ const photoSlice = createSlice({
         state.photoList = action.payload;
         state.success = true;
         state.loading = false;
+        state.error = null;
       })
       .addCase(getPhotosByPriceLowToHigh.rejected, (state, action) => {
+        state.photoList = [];
+        state.success = false;
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      .addCase(getPhotosByNewest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getPhotosByNewest.fulfilled, (state, action) => {
+        state.photoList = action.payload;
+        state.success = true;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(getPhotosByNewest.rejected, (state, action) => {
+        state.photoList = [];
+        state.success = false;
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      
+      .addCase(getPhotosByBestSeller.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getPhotosByBestSeller.fulfilled, (state, action) => {
+        state.photoList = action.payload;
+        state.success = true;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(getPhotosByBestSeller.rejected, (state, action) => {
         state.photoList = [];
         state.success = false;
         state.loading = false;

@@ -9,34 +9,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { SortAsc, Filter } from "lucide-react";
+import { SortAsc } from "lucide-react";
 
 export function Dropdownfilter({ onFilterChange }) {
-  const [position, setPosition] = React.useState("1");
+  const [position, setPosition] = React.useState("best_seller");
   
   const handleValueChange = (value) => {
     setPosition(value);
     
     if (onFilterChange) {
-      let sortType;
-      switch (value) {
-        case "1":
-          sortType = "best_seller";
-          break;
-        case "2":
-          sortType = "newest";
-          break;
-        case "3":
-          sortType = "price_low_to_high";
-          break;
-        case "4":
-          sortType = "price_high_to_low";
-          break;
-        default:
-          sortType = "best_seller";
-      }
-      
-      onFilterChange(sortType);
+      onFilterChange(value);
     }
   };
 
@@ -55,12 +37,12 @@ export function Dropdownfilter({ onFilterChange }) {
         <DropdownMenuLabel>Sort Photos</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={position} onValueChange={handleValueChange}>
-          <DropdownMenuRadioItem value="1">Best seller</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="2">Newest</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="3">
+          <DropdownMenuRadioItem value="best_seller">Best seller</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="newest">Newest</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="price_low_to_high">
             Price: Low to High
           </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="4">
+          <DropdownMenuRadioItem value="price_high_to_low">
             Price: High to Low
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>

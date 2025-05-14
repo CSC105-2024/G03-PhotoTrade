@@ -85,43 +85,103 @@ const getPhotosByUser = async (userId: number) => {
 };
 
 const getPhotosByCategory = async (categoryIds: number[]) => {
-  return prisma.picture.findMany({
-    where: {
-      pic_category: {
-        some: {
-          category_id: {
-            in: categoryIds,
+  try {
+    if (!categoryIds || categoryIds.length === 0) {
+      return [];
+    }
+
+    console.log("Getting photos for categories:", categoryIds);
+
+    const photos = await prisma.picture.findMany({
+      where: {
+        pic_category: {
+          some: {
+            category_id: {
+              in: categoryIds,
+            },
           },
         },
       },
-    },
-  });
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true,
+          },
+        },
+        pic_category: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
+
+    console.log(`Found ${photos.length} photos for categories ${categoryIds}`);
+    return photos;
+  } catch (error) {
+    console.error("Error getting photos by category:", error);
+    throw error;
+  }
 };
 
 const getPhotosByPriceHighToLow = async () => {
-  return prisma.picture.findMany({
-    orderBy: {
-      price: "desc",
-    },
-    include: {
-      user: {
-        select: { name: true },
+  try {
+    const photos = await prisma.picture.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true,
+          },
+        },
+        pic_category: {
+          include: {
+            category: true,
+          },
+        },
       },
-    },
-  });
+      orderBy: {
+        price: 'desc', 
+      },
+    });
+
+    return photos;
+  } catch (error) {
+    console.error("Error getting photos by price high to low:", error);
+    throw error;
+  }
 };
 
 const getPhotosByPriceLowToHigh = async () => {
-  return prisma.picture.findMany({
-    orderBy: {
-      price: "asc",
-    },
-    include: {
-      user: {
-        select: { name: true },
+  try {
+    const photos = await prisma.picture.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true,
+          },
+        },
+        pic_category: {
+          include: {
+            category: true,
+          },
+        },
       },
-    },
-  });
+      orderBy: {
+        price: 'asc', 
+      },
+    });
+
+    return photos;
+  } catch (error) {
+    console.error("Error getting photos by price low to high:", error);
+    throw error;
+  }
 };
 
 // const getNewestPhotos = async () => {

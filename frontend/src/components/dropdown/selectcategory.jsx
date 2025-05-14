@@ -8,37 +8,42 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Check, ChevronDown } from "lucide-react";
-
-// ข้อมูลหมวดหมู่ที่มีรหัสประจำตัว
-const categories = [
-  { id: 1, name: "Lifestyle" },
-  { id: 2, name: "Food & Drink" },
-  { id: 3, name: "Business & Work" },
-  { id: 4, name: "Nature & Landscapes" },
-  { id: 5, name: "People & Portraits" },
-  { id: 6, name: "Travel & Transportation" },
-  { id: 7, name: "Animals & Pets" },
-  { id: 8, name: "Abstract & Backgrounds" },
-  { id: 9, name: "Seasonal Themes" },
-  { id: 10, name: "Sports & Fitness" },
-];
+import { Check, ChevronDown, Filter } from "lucide-react";
+import axios from "axios";
 
 export function Dropdowncategoryprofile({ onChange, value = [] }) {
   // รับค่า value เป็น array ของ category ids
   const [selectedCategories, setSelectedCategories] = React.useState(
     Array.isArray(value) ? value : [value]
   );
+  const [categories, setCategories] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
-  // ฟังก์ชันเปลี่ยนสถานะการเลือกหมวดหมู่
+  // ดึงข้อมูลหมวดหมู่จาก API
+  React.useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:3000/api/v1/category/all");
+        if (response.data && response.data.success && response.data.data) {
+          setCategories(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   const toggleCategory = (categoryId) => {
     setSelectedCategories((prev) => {
-      // ถ้ามีอยู่แล้วให้ลบออก ถ้าไม่มีให้เพิ่มเข้าไป
       const newSelection = prev.includes(categoryId)
         ? prev.filter((id) => id !== categoryId)
         : [...prev, categoryId];
       
-      // เรียก callback ส่งค่ากลับไปยัง parent component
       if (onChange) {
         onChange(newSelection);
       }
@@ -47,10 +52,9 @@ export function Dropdowncategoryprofile({ onChange, value = [] }) {
     });
   };
 
-  // สร้างข้อความที่แสดงบนปุ่ม
   const buttonText = () => {
     if (selectedCategories.length === 0) {
-      return "Select Categories";
+      return "All Categories";
     } else if (selectedCategories.length === 1) {
       const category = categories.find((c) => c.id === selectedCategories[0]);
       return category ? category.name : "Select Categories";
@@ -65,10 +69,13 @@ export function Dropdowncategoryprofile({ onChange, value = [] }) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            className="w-full justify-between"
+            className="flex items-center gap-2 w-full justify-between"
           >
-            <span className="truncate">{buttonText()}</span>
-            <ChevronDown className="h-4 w-4 opacity-50 ml-2" />
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4" />
+              <span className="truncate">{buttonText()}</span>
+            </div>
+            <ChevronDown className="h-4 w-4 opacity-50" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-[230px] max-h-[300px] overflow-y-auto">
@@ -90,19 +97,23 @@ export function Dropdowncategoryprofile({ onChange, value = [] }) {
             )}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {categories.map((category) => (
-            <DropdownMenuCheckboxItem
-              key={category.id}
-              checked={selectedCategories.includes(category.id)}
-              onCheckedChange={() => toggleCategory(category.id)}
-              className="flex items-center justify-between cursor-pointer"
-            >
-              <span>{category.name}</span>
-              {selectedCategories.includes(category.id) && (
-                <Check className="h-4 w-4 ml-2 text-primary" />
-              )}
-            </DropdownMenuCheckboxItem>
-          ))}
+          {loading ? (
+            <div className="py-2 px-2 text-center">Loading categories...</div>
+          ) : (
+            categories.map((category) => (
+              <DropdownMenuCheckboxItem
+                key={category.id}
+                checked={selectedCategories.includes(category.id)}
+                onCheckedChange={() => toggleCategory(category.id)}
+                className="flex items-center justify-between cursor-pointer"
+              >
+                <span>{category.name}</span>
+                {selectedCategories.includes(category.id) && (
+                  <Check className="h-4 w-4 ml-2 text-primary" />
+                )}
+              </DropdownMenuCheckboxItem>
+            ))
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

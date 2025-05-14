@@ -20,7 +20,7 @@ const ProfileHeader = () => {
     if (id) {
       dispatch(getUserById(id));
       dispatch(getFollowCount(id));
-      dispatch(getUserSalesCount(id)); // เรียกใช้ action เพื่อดึงข้อมูลจำนวนยอดขาย
+      dispatch(getUserSalesCount(id));
     }
   }, [dispatch, id]);
 

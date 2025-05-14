@@ -11,11 +11,6 @@ export const getAllPhoto = createAsyncThunk('photo/all', async ({ page, perPage 
   };
 });
 
-export const getPhotoByCategory = createAsyncThunk('photo/category/:id', async (categoryId) => {
-  const response = await axios.get(`http://localhost:3000/api/v1/photo/category/${categoryId}`);
-  return response.data;
-});
-
 export const deletePhotoById = createAsyncThunk('photo/delete/:id', async (id) => {
   const response = await axios.delete(`http://localhost:3000/api/v1/photo/${id}`);
   return response.data;
@@ -90,6 +85,51 @@ export const getPhotosByUserTradeHistory = createAsyncThunk(
   }
 );
 
+export const getPhotoByCategory = createAsyncThunk(
+  'photo/category',
+  async (categoryIds, { getState }) => {
+    if (!categoryIds || (Array.isArray(categoryIds) && categoryIds.length === 0)) {
+      return [];
+    }
+    
+    const categoryIdsString = Array.isArray(categoryIds) ? categoryIds.join(',') : categoryIds;
+    
+    const response = await axios.get(`http://localhost:3000/api/v1/photo/category?categoryIds=${categoryIdsString}`);
+    return response.data.data;
+  },
+  {
+    condition: (categoryIds, { getState }) => {
+      const { photo } = getState();
+      if (photo.loading) {
+        return false;
+      }
+      return categoryIds && (Array.isArray(categoryIds) ? categoryIds.length > 0 : true);
+    }
+  }
+);
+
+export const getPhotosByPriceHighToLow = createAsyncThunk(
+  'photo/price-high-to-low',
+  async (_, { getState }) => {
+    const { photo } = getState();
+    if (photo.loading) return null;
+    
+    const response = await axios.get('http://localhost:3000/api/v1/photo/price/high-to-low');
+    return response.data.data;
+  }
+);
+
+export const getPhotosByPriceLowToHigh = createAsyncThunk(
+  'photo/price-low-to-high',
+  async (_, { getState }) => {
+    const { photo } = getState();
+    if (photo.loading) return null;
+    
+    const response = await axios.get('http://localhost:3000/api/v1/photo/price/low-to-high');
+    return response.data.data;
+  }
+);
+
 const photoSlice = createSlice({
   name: 'photo',
   initialState: {
@@ -130,7 +170,6 @@ const photoSlice = createSlice({
         state.photoList = action.payload;
         state.success = true;
         state.loading = false;
-        state.error = null;
       })
       .addCase(getPhotoByCategory.rejected, (state, action) => {
         state.photoList = [];
@@ -237,8 +276,41 @@ const photoSlice = createSlice({
       .addCase(deletePhotoById.pending, (state) => {
         state.loading = true;
         state.error = null;
+      })
+
+      .addCase(getPhotosByPriceHighToLow.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getPhotosByPriceHighToLow.fulfilled, (state, action) => {
+        state.photoList = action.payload;
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(getPhotosByPriceHighToLow.rejected, (state, action) => {
+        state.photoList = [];
+        state.success = false;
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      
+      .addCase(getPhotosByPriceLowToHigh.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getPhotosByPriceLowToHigh.fulfilled, (state, action) => {
+        state.photoList = action.payload;
+        state.success = true;
+        state.loading = false;
+      })
+      .addCase(getPhotosByPriceLowToHigh.rejected, (state, action) => {
+        state.photoList = [];
+        state.success = false;
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 
+export const { clearPhotoState } = photoSlice.actions;
 export default photoSlice.reducer;

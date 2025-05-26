@@ -30,7 +30,7 @@ const ProfilEdit = () => {
     },
   });
 
-  const submitForm = (data) => {
+  const submitForm = async (data) => {
     const payload = {
       id: userInfo.id,
       name: data.name,
@@ -38,12 +38,22 @@ const ProfilEdit = () => {
       bio: data.bio,
       profile_url: value
     };
-    Object.keys(payload).map((key) => {
+    
+    Object.keys(payload).forEach((key) => {
       if (payload[key] === "") {
-        delete payload[key]
+        delete payload[key];
       }
-    })
-    dispatch(updateUser(payload))
+    });
+    
+    try {
+      await dispatch(updateUser(payload)).unwrap();
+      setTimeout(() => {
+        navigate(`/user/auth/dashboard/${userInfo.id}`);
+      }, 500);
+      
+    } catch (error) {
+      console.error("Update failed:", error);
+    }
   }
   console.log(value)
 
@@ -124,9 +134,6 @@ const ProfilEdit = () => {
         </div>
         <Button
           type="submit"
-          onClick={() => {
-            navigate(`/user/auth/dashboard/${userInfo.id}`)
-          }}
         >
           Submit
         </Button>

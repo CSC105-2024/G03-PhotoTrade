@@ -12,10 +12,9 @@ export const getUserAll = createAsyncThunk('user/getAll', async () => {
   return response.data.data;
 });
 
-export const updateUser = createAsyncThunk('user/update', async (payload) => {
-  const response = await axios.patch(`http://localhost:3000/api/v1/user/${payload.id}`, payload);
-  console.log(response.data.data)
-  return response.data.data;
+export const updateUser = createAsyncThunk('user/updateUser', async (userData) => {
+  const response = await axios.put(`http://localhost:3000/api/v1/user/${userData.id}`, userData);
+  return response.data;
 });
 
 export const getUserSalesCount = createAsyncThunk(
@@ -70,13 +69,14 @@ const userSlice = createSlice({
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
       })
-      .addCase(updateUser.fulfilled, (state) => {
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.profileUser = action.payload;
         state.success = true;
         state.loading = false;
       })
       .addCase(updateUser.rejected, (state) => {
-        state.success = false;
         state.loading = false;
+        state.success = false;
       })
       .addCase(getUserSalesCount.pending, (state) => {
         state.loading = true;

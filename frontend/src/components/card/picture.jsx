@@ -19,17 +19,48 @@ import { Heart, Ellipsis } from 'lucide-react';
 import Ellipse from '@/assets/Ellipse.png';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deletePhotoById } from '@/reducer/photo';
+import { toast } from 'sonner';
 
-const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
+const Picture = ({ alwaysLike = false, name, price, username, url, id, userId }) => {
   const dispatch = useDispatch();
   const [like, setLike] = useState(alwaysLike);
   const navigate = useNavigate();
   const location = useLocation();
+  
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
-  const isMarketPath = location.pathname === '/market'
-  console.log(isMarketPath)
+  const isMarketPath = location.pathname === '/market';
+  console.log(isMarketPath);
+
+  const handleImageClick = (e) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      toast.error("Please login to view image details");
+      navigate("/user/unauth/login");
+      return;
+    }
+  };
+
+  const handleLikeClick = () => {
+    if (!isAuthenticated) {
+      toast.error("Please login to like images");
+      navigate("/user/unauth/login");
+      return;
+    }
+    setLike(!like);
+  };
+
+  const handleUserClick = () => {
+    if (!isAuthenticated) {
+      toast.error("Please login to view user profiles");
+      navigate("/user/unauth/login");
+      return;
+    }
+    navigate(`/user/auth/dashboard/${userId}`);
+  };
+
   const formatNumber = (number) => {
     const unitList = ['', 'K', 'M', 'G'];
     let sign = Math.sign(number);
@@ -44,16 +75,22 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
   
   return (
     <Card className="w-[250px] h-[400px] pt-0 mb-5 overflow-hidden">
-      <Link to={`/market/${id}`}>
-        <CardHeader className="px-0 hover:opacity-90 cursor-pointer">
+      {isAuthenticated ? (
+        <Link to={`/market/${id}`}>
+          <CardHeader className="px-0 hover:opacity-90 cursor-pointer">
+            <img src={url} alt={name} className="w-full h-[200px] aspect-square object-cover" />
+          </CardHeader>
+        </Link>
+      ) : (
+        <CardHeader className="px-0 hover:opacity-90 cursor-pointer" onClick={handleImageClick}>
           <img src={url} alt={name} className="w-full h-[200px] aspect-square object-cover" />
         </CardHeader>
-      </Link>
+      )}
 
       <CardContent>
         <CardTitle className="text-xl flex items-start">
           {name}
-          {!isMarketPath && (
+          {!isMarketPath && isAuthenticated && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="ml-auto">
@@ -98,7 +135,7 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
       </CardContent>
 
       <CardFooter className="flex justify-between items-center">
-        <div className="flex items-center mt-2 cursor-pointer" onClick={() => navigate('/user/auth/dashboard/1')}>
+        <div className="flex items-center mt-2 cursor-pointer" onClick={handleUserClick}>
           <Avatar>
             <AvatarImage src={Ellipse} alt="User avatar" />
             <AvatarFallback>CN</AvatarFallback>
@@ -106,10 +143,10 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id }) => {
           <p className="ml-3 text-sm">{username}</p>
         </div>
         <Heart
-          onClick={() => setLike(!like)}
+          onClick={handleLikeClick}
           className={`cursor-pointer transition-all ${
             like ? 'text-destructive fill-destructive' : 'text-muted-foreground'
-          }`}
+          } ${!isAuthenticated ? 'opacity-50' : ''}`}
         />
       </CardFooter>
     </Card>

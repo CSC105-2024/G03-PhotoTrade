@@ -9,6 +9,7 @@ import {
   signUpController,
   updateUserProfile,
   getUserSalesCount,
+  updateUser,
 } from '../controllers/user.controller.ts';
 
 import { likePhoto, unlikePhoto } from '../controllers/user_Like.controller.ts';
@@ -30,6 +31,7 @@ userRoutes.get('/:id/sales', ...getUserSalesCount);
 userRoutes.get('/:id', ...getUserById);
 userRoutes.get('/followCount/:id', ...getFollowCount);
 userRoutes.patch('/:id', ...updateUserProfile);
+userRoutes.put('/:id', ...updateUser); 
 userRoutes.delete('/unfollow', ...unfollowUser);
 userRoutes.delete('/unlike', ...unlikePhoto);
 

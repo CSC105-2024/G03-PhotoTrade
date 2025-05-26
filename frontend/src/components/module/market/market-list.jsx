@@ -95,6 +95,7 @@ const MarketList = () => {
                         username={item.user?.name}
                         url={item.thumbnail_url}
                         id={item.id}
+                        userId={item.user?.id}
                       />
                     ))}
                   </div>
@@ -120,6 +121,7 @@ const MarketList = () => {
                         id={item.id}
                         name={item.name}
                         username={item.user?.name}
+                        userId={item.user?.id}
                         pictures={item.pictures.map((p) => p.picture)}
                       />
                     ))}

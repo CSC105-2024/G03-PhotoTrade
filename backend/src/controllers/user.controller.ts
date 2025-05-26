@@ -201,6 +201,32 @@ const updateUserProfile = factory.createHandlers(
   }
 );
 
+const updateUser = factory.createHandlers(async (c) => {
+  try {
+    const id = Number(c.req.param('id'));
+    const { name, email, bio, profile_url } = await c.req.json();
+
+    const user = await prisma.user.update({
+      where: { id },
+      data: {
+        ...(name && { name }),
+        ...(email && { email }),
+        ...(bio && { bio }),
+        ...(profile_url && { profile_url })
+      }
+    });
+
+    return c.json({
+      success: true,
+      message: 'User updated successfully',
+      data: user,
+    });
+  } catch (error) {
+    console.error("Update user error:", error);
+    throw new HTTPException(500, { message: "Internal Server Error" });
+  }
+});
+
 const getFollowCount = factory.createHandlers(async (c) => {
   try {
     const id = c.req.param("id");
@@ -280,6 +306,7 @@ export {
   getUserById,
   getUserAll,
   updateUserProfile,
+  updateUser,
   getFollowCount,
   getUserSalesCount
 };

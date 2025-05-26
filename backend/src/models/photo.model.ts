@@ -39,7 +39,10 @@ const getAllPhotos = async (page: number, perPage: number) => {
     take: perPage,
     include: {
       user: {
-        select: { name: true },
+        select: {
+          id: true,    
+          name: true
+        },
       },
       pic_category: {
         include: {
@@ -197,7 +200,7 @@ const deletePhoto = async (id: number) => {
   });
 };
 
- const getPhotosByCategory = async (categoryIds: number[]) => {
+const getPhotosByCategory = async (categoryIds: number[]) => {
   try {
     const photos = await prisma.picture.findMany({
       where: {
@@ -231,7 +234,7 @@ const deletePhoto = async (id: number) => {
   }
 };
 
- const getPhotosByPriceHighToLow = async () => {
+const getPhotosByPriceHighToLow = async () => {
   try {
     const photos = await prisma.picture.findMany({
       include: {
@@ -259,7 +262,7 @@ const deletePhoto = async (id: number) => {
   }
 };
 
- const getPhotosByPriceLowToHigh = async () => {
+const getPhotosByPriceLowToHigh = async () => {
   try {
     const photos = await prisma.picture.findMany({
       include: {

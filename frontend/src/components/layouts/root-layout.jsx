@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
           {children}
         </main>
       </div>
-      <Footer />
+      <Footer /> 
       <Toaster richColors position="bottom-right" />
     </div>
   );

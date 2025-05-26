@@ -30,7 +30,7 @@ const Feature2 = () => {
 
         <div className="mt-7">
           <a
-            onClick={() => navigate("/user/auth/dashboard/1")}
+            onClick={() => navigate("/user/unauth/login")}
             className="cursor-pointer"
           >
             Join Now →

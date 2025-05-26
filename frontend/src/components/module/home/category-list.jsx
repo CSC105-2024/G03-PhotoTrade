@@ -36,7 +36,7 @@ const CategoryList = () => {
   }, []);
 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/market/${categoryId}`);
+    navigate(`/market?category=${categoryId}`);
   };
 
   if (loading) {

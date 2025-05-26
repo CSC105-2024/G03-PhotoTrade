@@ -24,7 +24,7 @@ const CollectionList = () => {
       pictures: formattedPictures
     };
   };
-
+  
   const collectionsWithFourPhotos = topCollections && Array.isArray(topCollections) 
     ? topCollections.filter((item) => 
         item.pictures && 

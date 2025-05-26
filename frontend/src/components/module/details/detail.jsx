@@ -52,12 +52,67 @@ const Detail = () => {
   return (
     <div className="md:pt-16">
       <BreadcrumbTop />
-      <AspectRatio ratio={3 / 2} className="border border-gray-500 rounded-md">
+      <AspectRatio ratio={3 / 2} className="border border-gray-500 rounded-md  relative overflow-hidden">
         <img
           src={photoListId.thumbnail_url}
           alt="Image"
           className="w-full h-full rounded-md object-contain"
         />
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-45">
+            <div className="text-white text-4xl font-bold opacity-30 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute top-8 left-8 rotate-45">
+            <div className="text-white text-3xl font-bold opacity-25 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute top-8 right-8 rotate-45">
+            <div className="text-white text-3xl font-bold opacity-25 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute bottom-8 left-8 rotate-45">
+            <div className="text-white text-3xl font-bold opacity-25 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute bottom-8 right-8 rotate-45">
+            <div className="text-white text-3xl font-bold opacity-25 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute top-1/2 left-8 transform -translate-y-1/2 rotate-45">
+            <div className="text-white text-3xl font-bold opacity-25 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute top-1/2 right-8 transform -translate-y-1/2 rotate-45">
+            <div className="text-white text-3xl font-bold opacity-25 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute top-1/4 left-1/4 rotate-45">
+            <div className="text-white text-2xl font-bold opacity-20 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+
+          <div className="absolute top-3/4 right-1/4 rotate-45">
+            <div className="text-white text-2xl font-bold opacity-20 select-none">
+              PHOTOTRADE
+            </div>
+          </div>
+        </div>
       </AspectRatio>
 
       <div className="mb-6 grid grid-cols-1 md:grid-cols-2">

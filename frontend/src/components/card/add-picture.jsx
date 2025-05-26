@@ -26,9 +26,9 @@ const AddPicture = () => {
     try {
       const data = new FormData();
       data.append('file', file);
-      data.append('upload_preset', 'photo_trade');
+      data.append('upload_preset', 'addpic');
 
-      const res = await fetch('https://api.cloudinary.com/v1_1/dcpgrfpaf/image/upload', {
+      const res = await fetch('https://api.cloudinary.com/v1_1/dc7tbudqa/image/upload', {
         method: 'POST',
         body: data,
       });

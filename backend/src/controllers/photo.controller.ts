@@ -88,33 +88,6 @@ const getPhotosByUser = factory.createHandlers(async (c) => {
   });
 });
 
-const getPhotosByCategory = factory.createHandlers(async (c) => {
-  const categoryIdsParam = c.req.query("categoryIds");
-
-  if (!categoryIdsParam) {
-    return c.json(
-      {
-        success: false,
-        msg: "Missing categoryIds query parameter",
-      },
-      400,
-    );
-  }
-
-  const categoryIds = categoryIdsParam
-    .split(",")
-    .map((id) => Number(id.trim()))
-    .filter((id) => !isNaN(id));
-
-  const photos = await photoModel.getPhotosByCategory(categoryIds);
-
-  return c.json({
-    success: true,
-    data: photos,
-    msg: "Get photos by category successfully",
-  });
-});
-
 const updatePhoto = factory.createHandlers(async (c) => {
   const id = Number(c.req.param('id'));
   const body = await c.req.json();
@@ -151,51 +124,80 @@ const deletePhoto = factory.createHandlers(async (c) => {
   });
 });
 
+const getPhotosByCategory = factory.createHandlers(async (c) => {
+  try {
+    const categoryIdsParam = c.req.query("categoryIds");
+    
+    if (!categoryIdsParam) {
+      return c.json({
+        success: false,
+        msg: "Category IDs parameter is required",
+      }, 400);
+    }
+    
+    const categoryIds = categoryIdsParam
+      .split(",")
+      .map(id => parseInt(id.trim(), 10))
+      .filter(id => !isNaN(id));
+    
+    if (categoryIds.length === 0) {
+      return c.json({
+        success: false,
+        msg: "No valid category IDs provided",
+      }, 400);
+    }
+    
+    const photos = await photoModel.getPhotosByCategory(categoryIds);
+    
+    return c.json({
+      success: true,
+      data: photos,
+      msg: "Get photos by category successfully",
+    });
+  } catch (error) {
+    console.error("Error getting photos by category:", error);
+    return c.json({
+      success: false,
+      msg: "Failed to get photos by category",
+    }, 500);
+  }
+});
+
 const getPhotosByPriceHighToLow = factory.createHandlers(async (c) => {
-  const photos = await photoModel.getPhotosByPriceHighToLow();
-  return c.json({
-    success: true,
-    data: photos,
-    msg: 'Get photos by price high to low successfully',
-  });
+  try {
+    const photos = await photoModel.getPhotosByPriceHighToLow();
+    
+    return c.json({
+      success: true,
+      data: photos,
+      msg: "Get photos by price high to low successfully",
+    });
+  } catch (error) {
+    console.error("Error getting photos by price high to low:", error);
+    return c.json({
+      success: false,
+      msg: "Failed to get photos by price high to low",
+    }, 500);
+  }
 });
 
 const getPhotosByPriceLowToHigh = factory.createHandlers(async (c) => {
-  const photos = await photoModel.getPhotosByPriceLowToHigh();
-  return c.json({
-    success: true,
-    data: photos,
-    msg: 'Get photos by price low to high successfully',
-  });
+  try {
+    const photos = await photoModel.getPhotosByPriceLowToHigh();
+    
+    return c.json({
+      success: true,
+      data: photos,
+      msg: "Get photos by price low to high successfully",
+    });
+  } catch (error) {
+    console.error("Error getting photos by price low to high:", error);
+    return c.json({
+      success: false,
+      msg: "Failed to get photos by price low to high",
+    }, 500);
+  }
 });
-
-// const getNewestPhotos = factory.createHandlers(async (c) => {
-//   const photos = await photoModel.getNewestPhotos();
-//   return c.json({
-//     success: true,
-//     data: photos,
-//     msg: 'Get newest photos successfully',
-//   });
-// });
-
-// const getBestSellerPhotos = factory.createHandlers(async (c) => {
-//   const photos = await photoModel.getBestSellerPhotos();
-//   return c.json({
-//     success: true,
-//     data: photos,
-//     msg: 'Get best seller photos successfully',
-//   });
-// });
-
-// const getPhotosBySearchword = factory.createHandlers(async (c) => {
-//   const search = c.req.query('search');
-//   if (!search) {
-//     return c.json({ success: false, msg: 'Missing search query' }, 400);
-//   }
-
-//   const photos = await photoModel.getPhotosBySearchword(search);
-//   return c.json({ success: true, data: photos, msg: 'Search successful' });
-// });
 
 const getPhotosByUserTradeHistory = factory.createHandlers(async (c) => {
   const userId = Number(c.req.param('userId'));
@@ -211,6 +213,42 @@ const getPhotosLikedByUser = factory.createHandlers(async (c) => {
 
   const photos = likes.map((like) => like.picture);
   return c.json({ success: true, data: photos, msg: 'Liked photos fetched' });
+});
+
+const getNewestPhotos = factory.createHandlers(async (c) => {
+  try {
+    const photos = await photoModel.getNewestPhotos();
+    
+    return c.json({
+      success: true,
+      data: photos,
+      msg: "Get newest photos successfully",
+    });
+  } catch (error) {
+    console.error("Error getting newest photos:", error);
+    return c.json({
+      success: false,
+      msg: "Failed to get newest photos",
+    }, 500);
+  }
+});
+
+const getBestSellerPhotos = factory.createHandlers(async (c) => {
+  try {
+    const photos = await photoModel.getBestSellerPhotos();
+    
+    return c.json({
+      success: true,
+      data: photos,
+      msg: "Get best seller photos successfully",
+    });
+  } catch (error) {
+    console.error("Error getting best seller photos:", error);
+    return c.json({
+      success: false,
+      msg: "Failed to get best seller photos",
+    }, 500);
+  }
 });
 
 // const updatePhotoPriceByLikes = factory.createHandlers(async (c) => {
@@ -238,8 +276,8 @@ export {
   deletePhoto,
   getPhotosByPriceHighToLow,
   getPhotosByPriceLowToHigh,
-  // getNewestPhotos,
-  // getBestSellerPhotos,
+  getNewestPhotos,
+  getBestSellerPhotos,
   // getPhotosBySearchword,
   getPhotosByUserTradeHistory,
   getPhotosLikedByUser,

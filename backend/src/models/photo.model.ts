@@ -84,70 +84,61 @@ const getPhotosByUser = async (userId: number) => {
   });
 };
 
-const getPhotosByCategory = async (categoryIds: number[]) => {
-  return prisma.picture.findMany({
-    where: {
-      pic_category: {
-        some: {
-          category_id: {
-            in: categoryIds,
+const getNewestPhotos = async () => {
+  try {
+    return prisma.picture.findMany({
+      orderBy: {
+        create_at: 'desc',
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true
+          },
+        },
+        pic_category: {
+          include: {
+            category: true,
           },
         },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.error("Error getting newest photos:", error);
+    throw error;
+  }
 };
 
-const getPhotosByPriceHighToLow = async () => {
-  return prisma.picture.findMany({
-    orderBy: {
-      price: "desc",
-    },
-    include: {
-      user: {
-        select: { name: true },
+
+const getBestSellerPhotos = async () => {
+  try {
+    return prisma.picture.findMany({
+      orderBy: {
+        trade: { _count: 'desc' }
       },
-    },
-  });
-};
-
-const getPhotosByPriceLowToHigh = async () => {
-  return prisma.picture.findMany({
-    orderBy: {
-      price: "asc",
-    },
-    include: {
-      user: {
-        select: { name: true },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true
+          }
+        },
+        pic_category: {
+          include: {
+            category: true,
+          },
+        },
+        _count: { select: { trade: true } }
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.error("Error getting best seller photos:", error);
+    throw error;
+  }
 };
-
-// const getNewestPhotos = async () => {
-//   return prisma.picture.findMany({
-//     orderBy: {
-//       create_at: 'desc',
-//     },
-//     include: {
-//       user: {
-//         select: { name: true },
-//       },
-//     },
-//   });
-// };
-
-// const getBestSellerPhotos = async () => {
-//   return prisma.picture.findMany({
-//     orderBy: {
-//       trade: { _count: 'desc' }
-//     },
-//     include: {
-//       user: { select: { name: true } },
-//       _count: { select: { trade: true } }
-//     },
-//   });
-// };
 
 const getPhotosLikedByUser = async (userId: number) => {
   return prisma.user_Like.findMany({
@@ -206,6 +197,96 @@ const deletePhoto = async (id: number) => {
   });
 };
 
+ const getPhotosByCategory = async (categoryIds: number[]) => {
+  try {
+    const photos = await prisma.picture.findMany({
+      where: {
+        pic_category: {
+          some: {
+            category_id: {
+              in: categoryIds,
+            },
+          },
+        },
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true,
+          },
+        },
+        pic_category: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
+    return photos;
+  } catch (error) {
+    console.error("Error getting photos by category:", error);
+    throw error;
+  }
+};
+
+ const getPhotosByPriceHighToLow = async () => {
+  try {
+    const photos = await prisma.picture.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true,
+          },
+        },
+        pic_category: {
+          include: {
+            category: true,
+          },
+        },
+      },
+      orderBy: {
+        price: 'desc',
+      },
+    });
+    return photos;
+  } catch (error) {
+    console.error("Error getting photos by price high to low:", error);
+    throw error;
+  }
+};
+
+ const getPhotosByPriceLowToHigh = async () => {
+  try {
+    const photos = await prisma.picture.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            profile_url: true,
+          },
+        },
+        pic_category: {
+          include: {
+            category: true,
+          },
+        },
+      },
+      orderBy: {
+        price: 'asc',
+      },
+    });
+    return photos;
+  } catch (error) {
+    console.error("Error getting photos by price low to high:", error);
+    throw error;
+  }
+};
+
 export {
   uploadPhoto,
   getAllPhotos,
@@ -214,8 +295,8 @@ export {
   getPhotosByCategory,
   getPhotosByPriceHighToLow,
   getPhotosByPriceLowToHigh,
-  // getNewestPhotos,
-  // getBestSellerPhotos,
+  getNewestPhotos,
+  getBestSellerPhotos,
   updatePhoto,
   deletePhoto,
   // getPhotosBySearchword,

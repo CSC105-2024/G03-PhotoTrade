@@ -241,7 +241,36 @@ const getFollowCount = factory.createHandlers(async (c) => {
     throw new HTTPException(500, { message: "Internal Server Error" });
   }
 });
+const getUserSalesCount = factory.createHandlers(async (c) => {
+  try {
+    const id = c.req.param("id");
 
+    if (!id) {
+      throw new HTTPException(400, {
+        message: 'Missing "id" parameter in the URL. Example: /users/sales/123',
+        cause: { form: true },
+      });
+    }
+
+    const userId = parseInt(id);
+    
+    const salesCount = await prisma.trade.count({
+      where: {
+        picture: {
+          user_id: userId
+        }
+      }
+    });
+
+    return c.json({
+      success: true,
+      count: salesCount
+    });
+  } catch (error) {
+    console.error("Get user sales count error:", error);
+    throw new HTTPException(500, { message: "Internal Server Error" });
+  }
+});
 
 export {
   signUpController,
@@ -251,5 +280,6 @@ export {
   getUserById,
   getUserAll,
   updateUserProfile,
-  getFollowCount
+  getFollowCount,
+  getUserSalesCount
 };

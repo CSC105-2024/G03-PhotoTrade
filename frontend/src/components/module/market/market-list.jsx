@@ -22,13 +22,6 @@ const MarketList = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-<<<<<<< HEAD
-  const { photoList, totalPic } = useSelector((state) => state.photo);
-  const { collection } = useSelector((state) => state.collection);
-  const currentPage = parseInt(searchParams.get('page') ||'1');
-  const perPage = parseInt(searchParams.get('pageSize') || '5');
-  
-=======
   const { photoList, total, loading } = useSelector((state) => state.photo);
   const { collection } = useSelector((state) => state.collection);
 
@@ -38,7 +31,6 @@ const MarketList = () => {
   const categoryParam = searchParams.get('category') || '';
   const categoryIds = categoryParam ? categoryParam.split(',').map((id) => parseInt(id)) : [];
 
->>>>>>> 1296858d2f3e7a06a2bc8aa54a77b6a22ae1abdf
   useEffect(() => {
     if (categoryIds.length > 0) {
       dispatch(getPhotoByCategory(categoryIds));
@@ -138,16 +130,6 @@ const MarketList = () => {
           </Card>
         </TabsContent>
       </Tabs>
-<<<<<<< HEAD
-      <PaginationWithLinks
-        page={currentPage}
-        pageSize={perPage}
-        totalCount={totalPic}
-        pageSizeSelectOptions={{
-          pageSizeOptions: [5, 10, 25, 50],
-        }}
-      />
-=======
 
       {!categoryIds.length && !sort && (
         <PaginationWithLinks
@@ -159,7 +141,6 @@ const MarketList = () => {
           }}
         />
       )}
->>>>>>> 1296858d2f3e7a06a2bc8aa54a77b6a22ae1abdf
     </section>
   );
 };

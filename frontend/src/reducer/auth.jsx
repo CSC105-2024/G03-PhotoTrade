@@ -66,10 +66,12 @@ const authSlice = createSlice({
         state.loading = false;
         state.success = true;
         localStorage.setItem("isAuth", "true")
+        state.isAuthenticated = true
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state) => {
         state.loading = false;
         state.success = false;
+        localStorage.setItem("isAuth", "false")
         state.isAuthenticated = false;
         state.userInfo = {};
       })

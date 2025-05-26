@@ -14,11 +14,11 @@ const MarketList = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { photoList, total } = useSelector((state) => state.photo);
+  const { photoList, totalPic } = useSelector((state) => state.photo);
   const { collection } = useSelector((state) => state.collection);
-  const currentPage = parseInt(searchParams.get('page') || '1');
+  const currentPage = parseInt(searchParams.get('page') ||'1');
   const perPage = parseInt(searchParams.get('pageSize') || '5');
-
+  
   useEffect(() => {
     dispatch(getAllPhoto({ page: currentPage, perPage }));
     dispatch(getCollectionAll());
@@ -81,7 +81,7 @@ const MarketList = () => {
       <PaginationWithLinks
         page={currentPage}
         pageSize={perPage}
-        totalCount={total}
+        totalCount={totalPic}
         pageSizeSelectOptions={{
           pageSizeOptions: [5, 10, 25, 50],
         }}

@@ -24,7 +24,7 @@ const Collection = ({ id, name, username, pictures }) => {
       <CardHeader className="px-0">
         <div className="mb-1">
           {mainImage ? (
-            <img src={mainImage} className="w-full h-[200px] aspect-square object-cover" alt="Collection main image" />
+            <img src={mainImage} className="w-full h-[200px]  object-cover" alt="Collection main image" />
           ) : (
             <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
               <span className="text-gray-400 text-sm">No image</span>

@@ -32,7 +32,6 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const isMarketPath = location.pathname === '/market';
-  console.log(isMarketPath);
 
   const handleImageClick = (e) => {
     if (!isAuthenticated) {

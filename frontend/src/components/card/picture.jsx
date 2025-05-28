@@ -16,26 +16,39 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '../ui/button';
 import { Heart, Ellipsis } from 'lucide-react';
-import Ellipse from '@/assets/Ellipse.png';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePhotoById } from '@/reducer/photo';
 import { likePhoto, unlikePhoto, clearLikeState } from '@/reducer/user';
+import { getCollectionById, addPhotoToCollection } from '@/reducer/collection';
 import { toast } from 'sonner';
 
 const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, user_url, isLiked = false }) => {
   const dispatch = useDispatch();
   const [like, setLike] = useState(alwaysLike || isLiked);
+  const [collections, setCollections] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   const { likeLoading, likeSuccess, likeError } = useSelector((state) => state.user);
+  const { collection, loading: collectionLoading } = useSelector((state) => state.collection);
 
   const isMarketPath = location.pathname === '/market';
 
-  // Update like state when isLiked prop changes
+  useEffect(() => {
+    if (isAuthenticated && userInfo?.id) {
+      dispatch(getCollectionById(userInfo.id));
+    }
+  }, [isAuthenticated, userInfo?.id, dispatch]);
+
+  useEffect(() => {
+    if (collection && Array.isArray(collection)) {
+      setCollections(collection);
+    }
+  }, [collection]);
+
   useEffect(() => {
     setLike(alwaysLike || isLiked);
   }, [alwaysLike, isLiked]);
@@ -56,23 +69,25 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
       return;
     }
 
-    if (likeLoading) return; // ป้องกันการกดซ้ำ
+    if (likeLoading) return;
 
     try {
       if (like) {
-        // Unlike
-        await dispatch(unlikePhoto({
-          userId: userInfo.id,
-          pictureId: id
-        })).unwrap();
+        await dispatch(
+          unlikePhoto({
+            userId: userInfo.id,
+            pictureId: id,
+          })
+        ).unwrap();
         setLike(false);
         toast.success('Photo unliked successfully');
       } else {
-        // Like
-        await dispatch(likePhoto({
-          userId: userInfo.id,
-          pictureId: id
-        })).unwrap();
+        await dispatch(
+          likePhoto({
+            userId: userInfo.id,
+            pictureId: id,
+          })
+        ).unwrap();
         setLike(true);
         toast.success('Photo liked successfully');
       }
@@ -91,7 +106,22 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
     navigate(`/user/auth/dashboard/${userId}`);
   };
 
-  // Clear like state when component unmounts or success
+  const handleAddToCollection = async (collectionId) => {
+    try {
+      await dispatch(
+        addPhotoToCollection({
+          collectionId: collectionId,
+          pictureId: id,
+        })
+      ).unwrap();
+      window.location.reload();
+      toast.success('Photo added to collection successfully');
+    } catch (error) {
+      const errorMessage = error?.message || error?.toString() || 'This photo is already in the collection';
+      toast.error(errorMessage);
+    }
+  };
+
   useEffect(() => {
     if (likeSuccess) {
       dispatch(clearLikeState());
@@ -140,9 +170,19 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
                   <DropdownMenuSubTrigger>Add collection</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
-                      <DropdownMenuItem>collection1</DropdownMenuItem>
-                      <DropdownMenuItem>collection2</DropdownMenuItem>
-                      <DropdownMenuItem>collection3</DropdownMenuItem>
+                      {collections.length > 0 ? (
+                        collections.map((col) => (
+                          <DropdownMenuItem
+                            key={col.id}
+                            onClick={() => handleAddToCollection(col.id)}
+                            disabled={collectionLoading}
+                          >
+                            {col.name}
+                          </DropdownMenuItem>
+                        ))
+                      ) : (
+                        <DropdownMenuItem disabled>No collections available</DropdownMenuItem>
+                      )}
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
@@ -162,7 +202,7 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
         <div className="mt-2">
           <h2 className="text-sm font-semibold">Price</h2>
           <p className="text-sm text-muted-foreground">฿ {formatNumber(price)}</p>
-        </div> 
+        </div>
       </CardContent>
 
       <CardFooter className="flex justify-between items-center">

@@ -22,8 +22,9 @@ const MarketList = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { photoList, total, loading } = useSelector((state) => state.photo);
+  const { photoList, totalPic, loading } = useSelector((state) => state.photo);
   const { collection } = useSelector((state) => state.collection);
+  console.log(totalPic)
 
   const currentPage = parseInt(searchParams.get('page') || '1');
   const perPage = parseInt(searchParams.get('pageSize') || '5');
@@ -52,7 +53,7 @@ const MarketList = () => {
     newParams.set('page', currentPage.toString());
     newParams.set('pageSize', perPage.toString());
     setSearchParams(newParams);
-  }, [dispatch, currentPage, perPage, sort, categoryParam, setSearchParams]);
+  }, [dispatch, currentPage, perPage, sort, categoryParam]);
 
   const collectionsWithFourPhotos = collection.filter((item) => item.pictures && item.pictures.length === 4);
 
@@ -137,7 +138,7 @@ const MarketList = () => {
         <PaginationWithLinks
           page={currentPage}
           pageSize={perPage}
-          totalCount={total}
+          totalCount={totalPic}
           pageSizeSelectOptions={{
             pageSizeOptions: [5, 10, 25, 50],
           }}

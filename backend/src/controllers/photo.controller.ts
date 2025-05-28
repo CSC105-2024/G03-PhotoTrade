@@ -34,11 +34,13 @@ const uploadPhoto = factory.createHandlers(async (c) => {
 
 const getAllPhotos = factory.createHandlers(async (c) => {
   const { _start, _limit } = c.req.query();
-  const start = parseInt(_start) || 1;
-  const limit = parseInt(_limit) || 5;
+  const start = _start !== undefined ? parseInt(_start) : 0;
+  const limit = _limit !== undefined ? parseInt(_limit) : 5;
+
 
   const { photos, total } = await photoModel.getAllPhotos(start, limit);
-  c.header("X-Total-Count", total.toString());
+  c.header("Access-Control-Expose-Headers", "x-total-count");
+  c.header("x-total-count", total.toString());
 
   return c.json({
     success: true,

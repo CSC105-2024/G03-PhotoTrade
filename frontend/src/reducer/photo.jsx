@@ -3,8 +3,7 @@ import axios from 'axios';
 
 export const getAllPhoto = createAsyncThunk('photo/all', async ({ page, perPage }) => {
   const response = await axios.get(`http://localhost:3000/api/v1/photo/all?_start=${page}&_limit=${perPage}`);
-  const totalPic = parseInt(response.headers['X-Total-Count'] || '0');
-  console.log(response.data.data);
+  const totalPic = parseInt(response.headers['x-total-count'] || '0');
   return {
     data: response.data.data,
     total: totalPic,

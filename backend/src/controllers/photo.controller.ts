@@ -210,7 +210,7 @@ const getPhotosLikedByUser = factory.createHandlers(async (c) => {
       msg: "Invalid user ID provided",
     }, 400);
   }
-
+ 
   try {
     const likes = await photoModel.getPhotosLikedByUser(userId);
     const photos = likes.map((like) => like.picture);

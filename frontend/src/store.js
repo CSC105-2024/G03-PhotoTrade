@@ -4,6 +4,7 @@ import authSlice from './reducer/auth';
 import userSlice from './reducer/user';
 import rankSlice from './reducer/rank';
 import photoSlice from './reducer/photo';
+import tradeReducer from './reducer/trade';
 import collectionSlice from './reducer/collection'
 import followSlice from './reducer/follow'
 
@@ -14,6 +15,7 @@ const store = configureStore({
     user: userSlice,
     rank: rankSlice,
     photo: photoSlice,
+    trade: tradeReducer,
     collection: collectionSlice,
     follow: followSlice,
   },

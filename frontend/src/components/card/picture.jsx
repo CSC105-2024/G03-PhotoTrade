@@ -21,17 +21,24 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePhotoById } from '@/reducer/photo';
+import { likePhoto, unlikePhoto, clearLikeState } from '@/reducer/user';
 import { toast } from 'sonner';
 
-const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, user_url }) => {
+const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, user_url, isLiked = false }) => {
   const dispatch = useDispatch();
-  const [like, setLike] = useState(alwaysLike);
+  const [like, setLike] = useState(alwaysLike || isLiked);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
+  const { likeLoading, likeSuccess, likeError } = useSelector((state) => state.user);
 
   const isMarketPath = location.pathname === '/market';
+
+  // Update like state when isLiked prop changes
+  useEffect(() => {
+    setLike(alwaysLike || isLiked);
+  }, [alwaysLike, isLiked]);
 
   const handleImageClick = (e) => {
     if (!isAuthenticated) {
@@ -42,13 +49,37 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
     }
   };
 
-  const handleLikeClick = () => {
+  const handleLikeClick = async () => {
     if (!isAuthenticated) {
       toast.error('Please login to like images');
       navigate('/user/unauth/login');
       return;
     }
-    setLike(!like);
+
+    if (likeLoading) return; // ป้องกันการกดซ้ำ
+
+    try {
+      if (like) {
+        // Unlike
+        await dispatch(unlikePhoto({
+          userId: userInfo.id,
+          pictureId: id
+        })).unwrap();
+        setLike(false);
+        toast.success('Photo unliked successfully');
+      } else {
+        // Like
+        await dispatch(likePhoto({
+          userId: userInfo.id,
+          pictureId: id
+        })).unwrap();
+        setLike(true);
+        toast.success('Photo liked successfully');
+      }
+    } catch (error) {
+      toast.error('Failed to update like status');
+      console.error('Like/Unlike error:', error);
+    }
   };
 
   const handleUserClick = () => {
@@ -59,6 +90,13 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
     }
     navigate(`/user/auth/dashboard/${userId}`);
   };
+
+  // Clear like state when component unmounts or success
+  useEffect(() => {
+    if (likeSuccess) {
+      dispatch(clearLikeState());
+    }
+  }, [likeSuccess, dispatch]);
 
   const formatNumber = (number) => {
     const unitList = ['', 'K', 'M', 'G'];
@@ -139,7 +177,7 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, u
           onClick={handleLikeClick}
           className={`cursor-pointer transition-all ${
             like ? 'text-destructive fill-destructive' : 'text-muted-foreground'
-          } ${!isAuthenticated ? 'opacity-50' : ''}`}
+          } ${!isAuthenticated || likeLoading ? 'opacity-50' : ''}`}
         />
       </CardFooter>
     </Card>

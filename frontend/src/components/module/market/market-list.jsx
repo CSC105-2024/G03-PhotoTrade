@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import {
   getPhotosByPriceHighToLow,
   getPhotosByNewest,
   getPhotosByBestSeller,
+  getPhotoLikebyId,
 } from '@/reducer/photo';
 import { getCollectionAll } from '@/reducer/collection';
 import { Loader2 } from 'lucide-react';
@@ -21,16 +22,21 @@ import { Loader2 } from 'lucide-react';
 const MarketList = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [likedPhotos, setLikedPhotos] = useState([]);
 
   const { photoList, totalPic, loading } = useSelector((state) => state.photo);
   const { collection } = useSelector((state) => state.collection);
-  console.log(totalPic)
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
 
   const currentPage = parseInt(searchParams.get('page') || '1');
   const perPage = parseInt(searchParams.get('pageSize') || '5');
   const sort = searchParams.get('sort') || '';
   const categoryParam = searchParams.get('category') || '';
   const categoryIds = categoryParam ? categoryParam.split(',').map((id) => parseInt(id)) : [];
+
+  const isPhotoLiked = (photoId) => {
+    return Array.isArray(likedPhotos) && likedPhotos.some(photo => photo.id === photoId);
+  };
 
   useEffect(() => {
     if (categoryIds.length > 0) {
@@ -49,11 +55,19 @@ const MarketList = () => {
 
     dispatch(getCollectionAll());
 
+    if (isAuthenticated && userInfo?.id) {
+      dispatch(getPhotoLikebyId(userInfo.id)).then((action) => {
+        if (action.payload) {
+          setLikedPhotos(action.payload);
+        }
+      });
+    }
+
     const newParams = new URLSearchParams(searchParams);
     newParams.set('page', currentPage.toString());
     newParams.set('pageSize', perPage.toString());
     setSearchParams(newParams);
-  }, [dispatch, currentPage, perPage, sort, categoryParam]);
+  }, [dispatch, currentPage, perPage, sort, categoryParam, isAuthenticated, userInfo?.id]);
 
   const collectionsWithFourPhotos = collection.filter((item) => item.pictures && item.pictures.length === 4);
 
@@ -98,6 +112,7 @@ const MarketList = () => {
                         id={item.id}
                         userId={item.user?.id}
                         user_url={item.user?.profile_url}
+                        isLiked={isPhotoLiked(item.id)}
                       />
                     ))}
                   </div>

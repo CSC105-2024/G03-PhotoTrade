@@ -79,20 +79,6 @@ export function Dropdowncategoryprofile({ onChange, value = [] }) {
         <DropdownMenuContent align="start" className="w-[230px] max-h-[300px] overflow-y-auto">
           <DropdownMenuLabel className="flex justify-between items-center">
             <span>Categories</span>
-            {selectedCategories.length > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedCategories([]);
-                  if (onChange) onChange([]);
-                }}
-                className="h-auto py-1 px-2 text-xs"
-              >
-                Clear all
-              </Button>
-            )}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {loading ? (
@@ -106,9 +92,7 @@ export function Dropdowncategoryprofile({ onChange, value = [] }) {
                 className="flex items-center justify-between cursor-pointer"
               >
                 <span>{category.name}</span>
-                {selectedCategories.includes(category.id) && (
-                  <Check className="h-4 w-4 ml-2 text-primary" />
-                )}
+                
               </DropdownMenuCheckboxItem>
             ))
           )}

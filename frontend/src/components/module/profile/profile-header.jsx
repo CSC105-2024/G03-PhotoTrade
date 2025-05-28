@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById, getUserSalesCount } from "@/reducer/user";
-import { getFollowCount, following } from "@/reducer/follow";
+import { getFollowCount, following, unfollowing } from "@/reducer/follow";
 
 const ProfileHeader = () => {
   const { id } = useParams();
@@ -14,7 +14,7 @@ const ProfileHeader = () => {
   const dispatch = useDispatch();
   const { profileUser, salesCount } = useSelector((state) => state.user);
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
-  const { count, isFollow } = useSelector((state) => state.follow);
+  const { count, isFollow, loading } = useSelector((state) => state.follow);
 
   useEffect(() => {
     if (id) {
@@ -26,11 +26,31 @@ const ProfileHeader = () => {
 
   const isOwner = isAuthenticated && userInfo.id === parseInt(id);
 
-  const handleButtonClick = () => {
-    const payload = {
-      followingId: id
-    };
-    dispatch(following(payload));
+  const handleFollowToggle = async () => {
+    if (loading) return; // ป้องกันการกดซ้ำ
+
+    try {
+      if (isFollow) {
+        // Unfollow
+        await dispatch(unfollowing({
+          followerId: userInfo.id,
+          followingId: parseInt(id)
+        })).unwrap();
+        
+        // Refresh follow count
+        dispatch(getFollowCount(id));
+      } else {
+        // Follow
+        await dispatch(following({
+          followingId: parseInt(id)
+        })).unwrap();
+        
+        // Refresh follow count
+        dispatch(getFollowCount(id));
+      }
+    } catch (error) {
+      console.error('Follow/Unfollow error:', error);
+    }
   };
 
   return (
@@ -86,14 +106,22 @@ const ProfileHeader = () => {
               className={isFollow 
                 ? "bg-red-500 hover:bg-red-600 text-white" 
                 : "border-gray-600 dark:border-gray-700 dark:text-gray-100"}
-              onClick={handleButtonClick}
+              onClick={handleFollowToggle}
+              disabled={loading}
             >
-              {isFollow ? (
-                <UserMinus className="mr-1" />
+              {loading ? (
+                "Loading..."
+              ) : isFollow ? (
+                <>
+                  <UserMinus className="mr-1" />
+                  Unfollow
+                </>
               ) : (
-                <UserPlus className="mr-1" />
+                <>
+                  <UserPlus className="mr-1" />
+                  Follow
+                </>
               )}
-              {isFollow ? "Unfollow" : "Follow"}
             </Button>
           )}
         </div>
@@ -117,14 +145,22 @@ const ProfileHeader = () => {
             className={isFollow 
               ? "bg-red-500 hover:bg-red-600 text-white" 
               : "border-gray-600 dark:border-gray-700 dark:text-gray-100"}
-            onClick={handleButtonClick}
+            onClick={handleFollowToggle}
+            disabled={loading}
           >
-            {isFollow ? (
-              <UserMinus className="mr-1" />
+            {loading ? (
+              "Loading..."
+            ) : isFollow ? (
+              <>
+                <UserMinus className="mr-1" />
+                Unfollow
+              </>
             ) : (
-              <UserPlus className="mr-1" />
+              <>
+                <UserPlus className="mr-1" />
+                Follow
+              </>
             )}
-            {isFollow ? "Unfollow" : "Follow"}
           </Button>
         )}
       </div>

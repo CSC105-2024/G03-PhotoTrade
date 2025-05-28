@@ -30,6 +30,49 @@ export const getUserSalesCount = createAsyncThunk(
   }
 );
 
+export const likePhoto = createAsyncThunk('user/likePhoto', async ({ userId, pictureId }, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.post('http://localhost:3000/api/v1/user/like', {
+      userId: Number(userId),
+      pictureId: Number(pictureId)
+    }, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error liking photo:', error);
+    return rejectWithValue(error.response?.data || 'Like failed');
+  }
+});
+
+export const unlikePhoto = createAsyncThunk('user/unlikePhoto', async ({ userId, pictureId }, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.delete('http://localhost:3000/api/v1/user/unlike', {
+      data: {
+        userId: Number(userId),
+        pictureId: Number(pictureId)
+      },
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error unliking photo:', error);
+    return rejectWithValue(error.response?.data || 'Unlike failed');
+  }
+});
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -38,8 +81,17 @@ const userSlice = createSlice({
     profileUser: {},
     userAll: {},
     salesCount: 0,
+    likeLoading: false,
+    likeSuccess: false,
+    likeError: null,
   },
-  reducers: {},
+  reducers: {
+    clearLikeState: (state) => {
+      state.likeLoading = false;
+      state.likeSuccess = false;
+      state.likeError = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUserById.pending, (state) => {
@@ -89,8 +141,39 @@ const userSlice = createSlice({
       .addCase(getUserSalesCount.rejected, (state) => {
         state.success = false;
         state.loading = false;
+      })
+      .addCase(likePhoto.pending, (state) => {
+        state.likeLoading = true;
+        state.likeSuccess = false;
+        state.likeError = null;
+      })
+      .addCase(likePhoto.fulfilled, (state, action) => {
+        state.likeLoading = false;
+        state.likeSuccess = true;
+        state.likeError = null;
+      })
+      .addCase(likePhoto.rejected, (state, action) => {
+        state.likeLoading = false;
+        state.likeSuccess = false;
+        state.likeError = action.payload;
+      })
+      .addCase(unlikePhoto.pending, (state) => {
+        state.likeLoading = true;
+        state.likeSuccess = false;
+        state.likeError = null;
+      })
+      .addCase(unlikePhoto.fulfilled, (state, action) => {
+        state.likeLoading = false;
+        state.likeSuccess = true;
+        state.likeError = null;
+      })
+      .addCase(unlikePhoto.rejected, (state, action) => {
+        state.likeLoading = false;
+        state.likeSuccess = false;
+        state.likeError = action.payload;
       });
   },
 });
 
+export const { clearLikeState } = userSlice.actions;
 export default userSlice.reducer;

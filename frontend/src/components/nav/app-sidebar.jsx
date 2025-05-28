@@ -12,6 +12,7 @@ import {
   Map,
   Store,
   CircleUser,
+  LogIn,
 } from "lucide-react";
 
 import {
@@ -28,8 +29,11 @@ import {
 
 import NavUser from "./nav-user";
 import { navLinks } from "@/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ScrollToBottom } from "@/hooks/use-scrollto";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 const items = [
   {
@@ -49,136 +53,30 @@ const items = [
   },
 ];
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
-};
-
 const AppSidebar = ({ ...props }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [active, setActive] = useState(location.pathname);
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location.pathname]);
+
+  const handleLinkClick = (item) => {
+    if (item.url === "/footer") {
+      setActive("/footer");
+      ScrollToBottom();
+    } else {
+      setActive(item.url === "" ? "/" : item.url);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleSignInClick = () => {
+    navigate("/user/unauth/login");
+  };
+
   return (
     <Sidebar {...props}>
       <SidebarContent>
@@ -188,20 +86,32 @@ const AppSidebar = ({ ...props }) => {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton 
+                    asChild
+                    className={`${
+                      active === (item.url === "" ? "/" : item.url) || 
+                      (item.url === "/footer" && active === "/footer")
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                        : ""
+                    }`}
+                  >
                     {item.url === "/footer" ? (
                       <a
                         onClick={(e) => {
                           e.preventDefault();
-                          ScrollToBottom();
+                          handleLinkClick(item);
                         }}
-                        className="flex items-center"
+                        className="flex items-center cursor-pointer"
                       >
                         <item.icon className="w-5 h-5 mr-2" />
                         <span>{item.title}</span>
                       </a>
                     ) : (
-                      <Link to={item.url} className="flex items-center">
+                      <Link 
+                        to={item.url} 
+                        className="flex items-center"
+                        onClick={() => handleLinkClick(item)}
+                      >
                         <item.icon className="w-5 h-5 mr-2" />
                         <span>{item.title}</span>
                       </Link>
@@ -214,7 +124,24 @@ const AppSidebar = ({ ...props }) => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {isAuthenticated && userInfo ? (
+          <NavUser user={{
+            name: userInfo.name || "User",
+            email: userInfo.email || "user@example.com",
+            avatar: userInfo.avatar || "/avatars/default.jpg"
+          }} />
+        ) : (
+          <div className="p-4">
+            <Button
+              onClick={handleSignInClick}
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+              variant="default"
+            >
+              <LogIn className="w-4 h-4 mr-2" />
+              Sign In
+            </Button>
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

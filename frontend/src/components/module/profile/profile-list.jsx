@@ -37,6 +37,11 @@ const ProfileList = () => {
     return newPhotolist.slice(startIndex, endIndex);
   }, [newPhotolist, currentPage, perPage]);
 
+  // Helper function to check if photo is liked
+  const isPhotoLiked = (photoId) => {
+    return Array.isArray(likedPhotos) && likedPhotos.some(photo => photo.id === photoId);
+  };
+
   useEffect(() => {
     dispatch(getUserById(id));
     dispatch(getCollectionById(id));
@@ -83,6 +88,7 @@ const ProfileList = () => {
                         id={item.id}
                         userId={item.user?.id}
                         user_url={item.user?.profile_url}
+                        isLiked={isPhotoLiked(item.id)}
                       />
                     ))}
                     {isAuthenticated && userInfo?.id === parseInt(id) && <AddPicture />}
@@ -137,6 +143,7 @@ const ProfileList = () => {
                           id={item.id}
                           userId={item.user?.id}
                           user_url={item.user?.profile_url}
+                          isLiked={isPhotoLiked(item.id)}
                         />
                       ))}
                   </div>
@@ -167,6 +174,7 @@ const ProfileList = () => {
                           id={item.id}
                           userId={item.user?.id}
                           user_url={item.user?.profile_url}
+                          isLiked={true} // ใน favorites tab จะ liked เสมอ
                         />
                       ))}
                   </div>

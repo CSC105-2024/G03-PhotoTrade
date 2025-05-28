@@ -14,6 +14,14 @@ export const following = createAsyncThunk('follow/following', async (payload) =>
   return response.data.data;
 });
 
+export const unfollowing = createAsyncThunk('follow/unfollowing', async (payload) => {
+  const response = await axios.delete('http://localhost:3000/api/v1/user/unfollow', {
+    data: payload,
+    withCredentials: true
+  });
+  console.log(response.data)
+  return response.data;
+});
 
 const followSlice = createSlice({
   name: 'follow',
@@ -57,7 +65,22 @@ const followSlice = createSlice({
         state.success = false;
         state.loading = false;
       })
+
+      .addCase(unfollowing.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(unfollowing.fulfilled, (state) => {
+        state.success = true;
+        state.loading = false;
+        state.isFollow = false;
+        localStorage.setItem('isFollow', 'false')
+      })
+      .addCase(unfollowing.rejected, (state) => {
+        state.success = false;
+        state.loading = false;
+      });
   },
 });
 
+export const { setFollowStatus } = followSlice.actions;
 export default followSlice.reducer;

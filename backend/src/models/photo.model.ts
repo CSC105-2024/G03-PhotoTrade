@@ -41,7 +41,8 @@ const getAllPhotos = async (page: number, perPage: number) => {
       user: {
         select: {
           id: true,    
-          name: true
+          name: true,
+          profile_url: true,
         },
       },
       pic_category: {
@@ -144,12 +145,27 @@ const getBestSellerPhotos = async () => {
 };
 
 const getPhotosLikedByUser = async (userId: number) => {
-  return prisma.user_Like.findMany({
+  if (!userId || userId <= 0) {
+    throw new Error("Invalid user ID");
+  }
+
+  return await prisma.user_Like.findMany({
     where: { user_id: userId },
     include: {
       picture: {
         include: {
-          user: { select: { name: true } },
+          user: { 
+            select: { 
+              id: true,
+              name: true, 
+              profile_url: true 
+            } 
+          },
+          pic_category: {
+            include: {
+              category: true,
+            },
+          },
         },
       },
     },
@@ -177,12 +193,27 @@ const updatePhoto = async (
 };
 
 const getPhotosByUserTradeHistory = async (userId: number) => {
-  return prisma.trade.findMany({
+  if (!userId || userId <= 0) {
+    throw new Error("Invalid user ID");
+  }
+
+  return await prisma.trade.findMany({
     where: { user_id: userId },
     include: {
       picture: {
         include: {
-          user: { select: { name: true } },
+          user: { 
+            select: { 
+              id: true,
+              name: true, 
+              profile_url: true 
+            } 
+          },
+          pic_category: {
+            include: {
+              category: true,
+            },
+          },
         },
       },
     },
@@ -302,8 +333,6 @@ export {
   getBestSellerPhotos,
   updatePhoto,
   deletePhoto,
-  // getPhotosBySearchword,
   getPhotosByUserTradeHistory,
   getPhotosLikedByUser,
-  // updatePhotoPriceByLikes,
 };

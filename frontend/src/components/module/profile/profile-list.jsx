@@ -8,14 +8,15 @@ import Picture from '@/components/card/picture';
 import Collection from '@/components/card/collection';
 import { getPhotoUser, getPhotoLikebyId, getPhotosByUserTradeHistory } from '@/reducer/photo';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom'; 
+import { useParams, useSearchParams } from 'react-router-dom';
 import { getUserById } from '@/reducer/user';
 import { fetchUser } from '@/reducer/auth';
 import { getCollectionById } from '@/reducer/collection';
 
 const ProfileList = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [likedPhotos, setLikedPhotos] = useState([]);
 
   const currentPage = parseInt(searchParams.get('page') || '1');
@@ -64,7 +65,10 @@ const ProfileList = () => {
             <CardContent>
               {paginatedPhotolist.length === 0 ? (
                 <div className="flex justify-center items-center h-[400px]">
-                  <p className="text-muted-foreground">No photos found.</p>
+                  <div className="text-center">
+                    <p className="text-muted-foreground mb-4">No photos found.</p>
+                    {isAuthenticated && userInfo?.id === parseInt(id) && <AddPicture />}
+                  </div>
                 </div>
               ) : (
                 <div className="flex justify-center mt-10 md:justify-between items-center">
@@ -78,9 +82,10 @@ const ProfileList = () => {
                         url={item.thumbnail_url}
                         id={item.id}
                         userId={item.user?.id}
+                        user_url={item.user?.profile_url}
                       />
                     ))}
-                    {isAuthenticated && userInfo?.id === parseInt(id) && currentPage === 1 && <AddPicture />}
+                    {isAuthenticated && userInfo?.id === parseInt(id) && <AddPicture />}
                   </div>
                 </div>
               )}
@@ -100,6 +105,7 @@ const ProfileList = () => {
                       name={item.name}
                       username={item.user?.name}
                       pictures={item.pictures.map((p) => p.picture)}
+                      user_url={item.user?.profile_url}
                     />
                   ))}
 
@@ -113,21 +119,29 @@ const ProfileList = () => {
         <TabsContent value="purchases">
           <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
-                  {Array.isArray(tradeHistory) &&
-                    tradeHistory.map((item) => (
-                      <Picture
-                        key={item.id}
-                        name={item.title}
-                        price={item.price}
-                        username={item.user?.name || ''}
-                        url={item.pictures}
-                        id={item.id}
-                      />
-                    ))}
+              {Array.isArray(tradeHistory) && tradeHistory.length === 0 ? (
+                <div className="flex justify-center items-center h-[400px]">
+                  <p className="text-muted-foreground">No purchases found.</p>
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center mt-10 md:justify-between items-center">
+                  <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
+                    {Array.isArray(tradeHistory) &&
+                      tradeHistory.map((item) => (
+                        <Picture
+                          key={item.id}
+                          name={item.title}
+                          price={item.price}
+                          username={handleName(item.user?.name)}
+                          url={item.thumbnail_url}
+                          id={item.id}
+                          userId={item.user?.id}
+                          user_url={item.user?.profile_url}
+                        />
+                      ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -135,21 +149,29 @@ const ProfileList = () => {
         <TabsContent value="favorites">
           <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
-                  {Array.isArray(likedPhotos) &&
-                    likedPhotos.map((item) => (
-                      <Picture
-                        key={item.id}
-                        name={item.title}
-                        price={item.price}
-                        username={item.user?.name || ''}
-                        url={item.thumbnail_url}
-                        id={item.id}
-                      />
-                    ))}
+              {Array.isArray(likedPhotos) && likedPhotos.length === 0 ? (
+                <div className="flex justify-center items-center h-[400px]">
+                  <p className="text-muted-foreground">No favorites found.</p>
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center mt-10 md:justify-between items-center">
+                  <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
+                    {Array.isArray(likedPhotos) &&
+                      likedPhotos.map((item) => (
+                        <Picture
+                          key={item.id}
+                          name={item.title}
+                          price={item.price}
+                          username={item.user?.name}
+                          url={item.thumbnail_url}
+                          id={item.id}
+                          userId={item.user?.id}
+                          user_url={item.user?.profile_url}
+                        />
+                      ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

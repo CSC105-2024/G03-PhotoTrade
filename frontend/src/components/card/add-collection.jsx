@@ -17,13 +17,19 @@ const AddCollection = () => {
 
   const { register, handleSubmit } = useForm()
 
-  const submitForm = (data) => {
+  const submitForm = async (data) => {
     const payload = {
-      userId : parseInt(id),
+      userId: parseInt(id),
       name: data.name
+    };
+    
+    try {
+      await dispatch(createCollection(payload));
+      window.location.reload();
+    } catch (error) {
+      console.error('Error creating collection:', error);
     }
-    dispatch(createCollection(payload))
-  }
+  };
 
   return (
     <Dialog>

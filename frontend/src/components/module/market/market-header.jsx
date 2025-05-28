@@ -206,6 +206,7 @@ const Header = () => {
               newParams.set('page', '1');
               newParams.set('pageSize', perPage.toString());
               setSearchParams(newParams);
+              window.location.reload();
             }}
           >
             Clear all filters

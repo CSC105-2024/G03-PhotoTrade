@@ -96,6 +96,7 @@ const MarketList = () => {
                         url={item.thumbnail_url}
                         id={item.id}
                         userId={item.user?.id}
+                        user_url={item.user?.profile_url}
                       />
                     ))}
                   </div>

@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { useNavigate } from 'react-router-dom';
 
-const Collection = ({ id, name, username, pictures }) => {
+const Collection = ({ id, name, username, pictures  , user_url }) => {
   const navigate = useNavigate();
 
   const mainImage = pictures[0]?.thumbnail_url;
@@ -59,7 +59,7 @@ const Collection = ({ id, name, username, pictures }) => {
         <CardTitle className="text-xl flex items-start">{name}</CardTitle>
         <div className="flex items-center mt-2 cursor-pointer" onClick={() => navigate(`/user/auth/dashboard/${id}`)}>
           <Avatar>
-            <AvatarImage src={Ellipse} alt="User avatar" />
+            <AvatarImage src={user_url} alt="User avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <p className="ml-3 text-sm">{username}</p>

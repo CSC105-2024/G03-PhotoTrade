@@ -36,19 +36,22 @@ export const buyphoto = async (userId: number, pictureId: number) => {
 };
 
 export const getphotohistorybyuser = async (userId: number) => {
-    return await prisma.trade.findMany({
-        where: {
-            user_id: userId,
-        },
+  return await prisma.trade.findMany({
+    where: {
+      user_id: userId,
+    },
+    include: {
+      picture: {
         include: {
-            picture: {
-                include: {
-                    user: {
-                        select: { name: true },
-                    },
-                },
+          user: {
+            select: {
+              name: true,
+              id: true,
+              profile_url: true, 
             },
+          },
         },
-    });
-
+      },
+    },
+  });
 };

@@ -199,20 +199,50 @@ const getPhotosByPriceLowToHigh = factory.createHandlers(async (c) => {
   }
 });
 
-const getPhotosByUserTradeHistory = factory.createHandlers(async (c) => {
-  const userId = Number(c.req.param('userId'));
-  const trades = await photoModel.getPhotosByUserTradeHistory(userId);
-
-  const photos = trades.map((trade) => trade.picture);
-  return c.json({ success: true, data: photos, msg: 'User trade history fetched' });
-});
-
 const getPhotosLikedByUser = factory.createHandlers(async (c) => {
   const userId = Number(c.req.param('userId'));
-  const likes = await photoModel.getPhotosLikedByUser(userId);
+  
+  if (!userId || isNaN(userId) || userId <= 0) {
+    return c.json({
+      success: false,
+      msg: "Invalid user ID provided",
+    }, 400);
+  }
 
-  const photos = likes.map((like) => like.picture);
-  return c.json({ success: true, data: photos, msg: 'Liked photos fetched' });
+  try {
+    const likes = await photoModel.getPhotosLikedByUser(userId);
+    const photos = likes.map((like) => like.picture);
+    return c.json({ success: true, data: photos, msg: 'Liked photos fetched' });
+  } catch (error) {
+    console.error('Error fetching liked photos:', error);
+    return c.json({
+      success: false,
+      msg: "Failed to fetch liked photos",
+    }, 500);
+  }
+});
+
+const getPhotosByUserTradeHistory = factory.createHandlers(async (c) => {
+  const userId = Number(c.req.param('userId'));
+  
+  if (!userId || isNaN(userId) || userId <= 0) {
+    return c.json({
+      success: false,
+      msg: "Invalid user ID provided",
+    }, 400);
+  }
+
+  try {
+    const trades = await photoModel.getPhotosByUserTradeHistory(userId);
+    const photos = trades.map((trade) => trade.picture);
+    return c.json({ success: true, data: photos, msg: 'User trade history fetched' });
+  } catch (error) {
+    console.error('Error fetching trade history:', error);
+    return c.json({
+      success: false,
+      msg: "Failed to fetch trade history",
+    }, 500);
+  }
 });
 
 const getNewestPhotos = factory.createHandlers(async (c) => {
@@ -279,7 +309,7 @@ export {
   getNewestPhotos,
   getBestSellerPhotos,
   // getPhotosBySearchword,
-  getPhotosByUserTradeHistory,
   getPhotosLikedByUser,
+  getPhotosByUserTradeHistory,
   // updatePhotoPriceByLikes,
 };

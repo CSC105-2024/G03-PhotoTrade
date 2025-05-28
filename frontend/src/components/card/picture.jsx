@@ -23,12 +23,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deletePhotoById } from '@/reducer/photo';
 import { toast } from 'sonner';
 
-const Picture = ({ alwaysLike = false, name, price, username, url, id, userId }) => {
+const Picture = ({ alwaysLike = false, name, price, username, url, id, userId, user_url }) => {
   const dispatch = useDispatch();
   const [like, setLike] = useState(alwaysLike);
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const isMarketPath = location.pathname === '/market';
@@ -37,16 +37,16 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId })
   const handleImageClick = (e) => {
     if (!isAuthenticated) {
       e.preventDefault();
-      toast.error("Please login to view image details");
-      navigate("/user/unauth/login");
+      toast.error('Please login to view image details');
+      navigate('/user/unauth/login');
       return;
     }
   };
 
   const handleLikeClick = () => {
     if (!isAuthenticated) {
-      toast.error("Please login to like images");
-      navigate("/user/unauth/login");
+      toast.error('Please login to like images');
+      navigate('/user/unauth/login');
       return;
     }
     setLike(!like);
@@ -54,8 +54,8 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId })
 
   const handleUserClick = () => {
     if (!isAuthenticated) {
-      toast.error("Please login to view user profiles");
-      navigate("/user/unauth/login");
+      toast.error('Please login to view user profiles');
+      navigate('/user/unauth/login');
       return;
     }
     navigate(`/user/auth/dashboard/${userId}`);
@@ -65,14 +65,14 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId })
     const unitList = ['', 'K', 'M', 'G'];
     let sign = Math.sign(number);
     let unit = 0;
-    
+
     while (Math.abs(number) >= 1000) {
       unit = unit + 1;
       number = Math.floor(Math.abs(number) / 100) / 10;
     }
     return sign * Math.abs(number) + unitList[unit];
   };
-  
+
   return (
     <Card className="w-[250px] h-[400px] pt-0 mb-5 overflow-hidden">
       {isAuthenticated ? (
@@ -103,15 +103,9 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId })
                   <DropdownMenuSubTrigger>Add collection</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
-                      <DropdownMenuItem>
-                        collection1
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        collection2
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        collection3
-                      </DropdownMenuItem>
+                      <DropdownMenuItem>collection1</DropdownMenuItem>
+                      <DropdownMenuItem>collection2</DropdownMenuItem>
+                      <DropdownMenuItem>collection3</DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
@@ -131,13 +125,13 @@ const Picture = ({ alwaysLike = false, name, price, username, url, id, userId })
         <div className="mt-2">
           <h2 className="text-sm font-semibold">Price</h2>
           <p className="text-sm text-muted-foreground">฿ {formatNumber(price)}</p>
-        </div>
+        </div> 
       </CardContent>
 
       <CardFooter className="flex justify-between items-center">
         <div className="flex items-center mt-2 cursor-pointer" onClick={handleUserClick}>
           <Avatar>
-            <AvatarImage src={Ellipse} alt="User avatar" />
+            <AvatarImage src={user_url} alt="User avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <p className="ml-3 text-sm">{username}</p>

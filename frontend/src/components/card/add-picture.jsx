@@ -61,7 +61,7 @@ const AddPicture = () => {
     setSelectedCategories(categoryIds);
   };
 
-  const submitForm = (data) => {
+  const submitForm = async (data) => {
     const payload = {
       title: data.name,
       description: data.description,
@@ -69,7 +69,13 @@ const AddPicture = () => {
       price: parseInt(data.price),
       categoryIds: selectedCategories, 
     };
-    dispatch(createPhoto(payload));
+    
+    try {
+      await dispatch(createPhoto(payload));
+      window.location.reload();
+    } catch (error) {
+      console.error('Error creating photo:', error);
+    }
   };
 
   return (

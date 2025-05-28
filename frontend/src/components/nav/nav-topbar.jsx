@@ -31,12 +31,6 @@ const Navbar = () => {
     setActive(location.pathname);
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchUser());
-    }
-  }, [dispatch]);
-
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
@@ -57,7 +51,11 @@ const Navbar = () => {
       <div className="container mx-auto md:text-sm">
         <div className="flex items-center justify-between">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link to="/" className="text-xl font-bold" onClick={() => setActive("/")}>
+            <Link
+              to="/"
+              className="text-xl font-bold"
+              onClick={() => setActive("/")}
+            >
               PhotoTrade
             </Link>
           </motion.div>
@@ -67,7 +65,9 @@ const Navbar = () => {
               <li
                 key={item.id}
                 className={`cursor-pointer ${styles.underEffect} ${
-                  active === `/${item.id}` ? "dark:text-white" : "text-neutral-500"
+                  active === `/${item.id}`
+                    ? "dark:text-white"
+                    : "text-neutral-500"
                 }`}
                 onClick={() => handleLinkClick(item)}
               >
@@ -82,16 +82,26 @@ const Navbar = () => {
             {/* Theme Toggle */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" size="icon" className="hidden rounded-full md:flex">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="hidden rounded-full md:flex"
+                >
                   <Sun className="h-[1.2rem] w-[1.2rem] transition-all rotate-0 scale-100 dark:-rotate-90 dark:scale-0" />
                   <Moon className="absolute h-[1.2rem] w-[1.2rem] text-white transition-all rotate-90 scale-0 dark:rotate-0 dark:scale-100" />
                   <span className="sr-only">Toggle theme</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("light")}>
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("dark")}>
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setTheme("system")}>
+                  System
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -99,7 +109,11 @@ const Navbar = () => {
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="secondary" size="icon" className="hidden rounded-full md:flex">
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="hidden rounded-full md:flex"
+                  >
                     <CircleUser className="h-5 w-5" />
                     <span className="sr-only">Toggle user menu</span>
                   </Button>

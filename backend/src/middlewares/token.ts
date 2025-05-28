@@ -18,26 +18,24 @@ export const auth = createMiddleware(async (c, next) => {
       payload: { userId },
     } = await jwtVerify<{ userId: number }>(
       accessToken,
-      new TextEncoder().encode(env.JWT_ACCESS_SECRET)
+      new TextEncoder().encode(env.JWT_ACCESS_SECRET),
     );
 
     c.set("userId", userId);
     await next();
   } catch {
-
     try {
       const {
         payload: { userId },
       } = await jwtVerify<{ userId: number }>(
         refreshToken,
-        new TextEncoder().encode(env.JWT_REFRESH_SECRET)
+        new TextEncoder().encode(env.JWT_REFRESH_SECRET),
       );
 
       generateNewJWTAndSetCookie(c, userId);
       c.set("userId", userId);
       await next();
     } catch {
-
       deleteCookie(c, "accessToken", { httpOnly: true });
       deleteCookie(c, "refreshToken", { httpOnly: true });
       throw new HTTPException(401, { message: "Unauthorized" });

@@ -29,7 +29,12 @@ const Feature2 = () => {
         </p>
 
         <div className="mt-7">
-          <a onClick={() => navigate("/user/auth/dashboard/1")} className="cursor-pointer">Join Now →</a>
+          <a
+            onClick={() => navigate("/user/unauth/login")}
+            className="cursor-pointer"
+          >
+            Join Now →
+          </a>
         </div>
       </div>
     </section>

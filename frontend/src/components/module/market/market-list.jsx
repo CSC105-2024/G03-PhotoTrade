@@ -1,39 +1,84 @@
-import React from "react";
-import Picture from "@/components/card/picture";
-import Collection from "@/components/card/collection";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+
+import Picture from '@/components/card/picture';
+import Collection from '@/components/card/collection';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { CardContent, Card } from '@/components/ui/card';
+import { PaginationWithLinks } from '@/components/ui/pagination-with-links';
 import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CardContent, Card } from "@/components/ui/card";
-import { getAllPhoto , getPhotoByCategory } from "@/reducer/photo";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+  getAllPhoto,
+  getPhotoByCategory,
+  getPhotosByPriceLowToHigh,
+  getPhotosByPriceHighToLow,
+  getPhotosByNewest,
+  getPhotosByBestSeller,
+  getPhotoLikebyId,
+} from '@/reducer/photo';
+import { getCollectionAll } from '@/reducer/collection';
+import { Loader2 } from 'lucide-react';
 
 const MarketList = () => {
   const dispatch = useDispatch();
-  const { photoList, loading } = useSelector((state) => state.photo);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [likedPhotos, setLikedPhotos] = useState([]);
 
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const { photoList, totalPic, loading } = useSelector((state) => state.photo);
+  const { collection } = useSelector((state) => state.collection);
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
+
+  const currentPage = parseInt(searchParams.get('page') || '1');
+  const perPage = parseInt(searchParams.get('pageSize') || '5');
+  const sort = searchParams.get('sort') || '';
+  const categoryParam = searchParams.get('category') || '';
+  const categoryIds = categoryParam ? categoryParam.split(',').map((id) => parseInt(id)) : [];
+
+  const isPhotoLiked = (photoId) => {
+    return Array.isArray(likedPhotos) && likedPhotos.some(photo => photo.id === photoId);
+  };
 
   useEffect(() => {
-    if (selectedCategories.length === 0) {
-      dispatch(getAllPhoto());
+    if (categoryIds.length > 0) {
+      dispatch(getPhotoByCategory(categoryIds));
+    } else if (sort === 'price_low_to_high') {
+      dispatch(getPhotosByPriceLowToHigh());
+    } else if (sort === 'price_high_to_low') {
+      dispatch(getPhotosByPriceHighToLow());
+    } else if (sort === 'newest') {
+      dispatch(getPhotosByNewest());
+    } else if (sort === 'best_seller') {
+      dispatch(getPhotosByBestSeller());
     } else {
-      dispatch(getPhotoByCategory(selectedCategories));
+      dispatch(getAllPhoto({ page: currentPage, perPage }));
     }
-  }, [dispatch, selectedCategories]);
-  
-  useEffect(() => {
-    dispatch(getAllPhoto());
-  }, [dispatch]);
+
+    dispatch(getCollectionAll());
+
+    if (isAuthenticated && userInfo?.id) {
+      dispatch(getPhotoLikebyId(userInfo.id)).then((action) => {
+        if (action.payload) {
+          setLikedPhotos(action.payload);
+        }
+      });
+    }
+
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', currentPage.toString());
+    newParams.set('pageSize', perPage.toString());
+    setSearchParams(newParams);
+  }, [dispatch, currentPage, perPage, sort, categoryParam, isAuthenticated, userInfo?.id]);
+
+  const collectionsWithFourPhotos = collection.filter((item) => item.pictures && item.pictures.length === 4);
+
+  if (loading && photoList.length === 0) {
+    return (
+      <section className="h-[400px] flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <span className="ml-2">Loading items...</span>
+      </section>
+    );
+  }
 
   return (
     <section>
@@ -48,86 +93,73 @@ const MarketList = () => {
         </TabsList>
 
         <TabsContent value="photo">
-          <Card>
+          <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center md:justify-between items-center min-h-screen">
-                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
-                  {photoList.map((item) => (
-                    <Picture
-                      key={item.id}
-                      name={item.title}
-                      price={item.price}
-                      username={item.user.name}
-                    />
-                  ))}
+              {photoList.length === 0 ? (
+                <div className="flex justify-center items-center h-[400px]">
+                  <p className="text-muted-foreground">No photos found matching your criteria.</p>
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center mt-10 md:justify-between items-center">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-auto gap-4">
+                    {photoList.map((item) => (
+                      <Picture
+                        key={item.id}
+                        name={item.title}
+                        price={item.price}
+                        username={item.user?.name}
+                        url={item.thumbnail_url}
+                        id={item.id}
+                        userId={item.user?.id}
+                        user_url={item.user?.profile_url}
+                        isLiked={isPhotoLiked(item.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
 
         <TabsContent value="collections">
-          <Card>
+          <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-3 mx-auto gap-4">
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
+              {collectionsWithFourPhotos.length === 0 ? (
+                <div className="flex justify-center items-center h-[400px]">
+                  <p className="text-muted-foreground">No collections found.</p>
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center mt-10 md:justify-between items-center">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mx-auto gap-4">
+                    {collectionsWithFourPhotos.map((item) => (
+                      <Collection
+                        key={item.id}
+                        id={item.id}
+                        name={item.name}
+                        username={item.user?.name}
+                        userId={item.user?.id}
+                        pictures={item.pictures.map((p) => p.picture)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
 
-      <Pagination className="mt-10">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              href="#"
-              isActive
-              className="bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-white border border-gray-300 dark:border-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600 hover:text-blue-700 dark:hover:text-white transition-colors"
-            >
-              1
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            >
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            >
-              3
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis className="text-gray-700 dark:text-gray-400" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      {!categoryIds.length && !sort && (
+        <PaginationWithLinks
+          page={currentPage}
+          pageSize={perPage}
+          totalCount={totalPic}
+          pageSizeSelectOptions={{
+            pageSizeOptions: [5, 10, 25, 50],
+          }}
+        />
+      )}
     </section>
   );
 };

@@ -1,53 +1,92 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Ellipse from "@/assets/Ellipse.png";
 import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "@/reducer/auth";
+import { useForm } from "react-hook-form";
+import { updateUser } from "@/reducer/user";
 
 const ProfilEdit = () => {
+  const { userInfo } = useSelector((state) => state.auth);
   const fileInputRef = useRef(null);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.auth);
+  const [value, setValue] = useState(userInfo.profile_url || "");
+
+  const {
+    register,
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      bio: "",
+      profile_url: "",
+    },
+  });
+
+  const submitForm = async (data) => {
+    const payload = {
+      id: userInfo.id,
+      name: data.name,
+      email: data.email,
+      bio: data.bio,
+      profile_url: value
+    };
+    
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] === "") {
+        delete payload[key];
+      }
+    });
+    
+    try {
+      await dispatch(updateUser(payload)).unwrap();
+      setTimeout(() => {
+        navigate(`/user/auth/dashboard/${userInfo.id}`);
+      }, 500);
+      
+    } catch (error) {
+      console.error("Update failed:", error);
+    }
+  }
+  console.log(value)
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     const data = new FormData();
     data.append("file", file);
     data.append("upload_preset", "photo_trade");
-    data.append("cloud_name", "dcpgrfpaf"); 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dcpgrfpaf/image/upload", {
-      method: "POST",
-      body: data,
-    })
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dcpgrfpaf/image/upload",
+      {
+        method: "POST",
+        body: data,
+      },
+    );
     const fileUrl = await res.json();
-    console.log(fileUrl.url);
-    
+    setValue(fileUrl.url);
   };
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
-
+  console.log(userInfo)
   return (
     <div className="mb-6 md:pt-20 min-h-screen">
-      <Card className="bg-white dark:bg-[#18181b] shadow-md">
+      <Card>
         <CardContent className="flex justify-between items-center">
           <div className="flex items-center mt-2">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={Ellipse} alt="User avatar" />
+            <Avatar className="h-15 w-15">
+              <AvatarImage src={value} alt="User avatar" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p className="ml-3 text-sm text-gray-900 dark:text-white">
-              {user.userInfo.name}
+              {userInfo.name}
             </p>
           </div>
           <div>
@@ -72,32 +111,29 @@ const ProfilEdit = () => {
         </CardContent>
       </Card>
 
-      <form className="pt-4">
+      <form className="pt-4" onSubmit={handleSubmit(submitForm)}>
         <div className="mb-5">
           <Label htmlFor="username" className="mb-2 text-md">
             Username
           </Label>
-          <Input id="username" type="text" />
+          <Input id="name" type="text" {...register('name')}/>
         </div>
 
         <div className="mb-5">
           <Label htmlFor="email" className="mb-2 text-md">
             Email
           </Label>
-          <Input id="email" type="email" />
+          <Input id="email" type="email" {...register('email')}/>
         </div>
 
         <div className="mb-5">
           <Label htmlFor="bio" className="mb-2 text-md">
             Bio
           </Label>
-          <Input id="bio" type="text" />
+          <Input id="bio" type="text" {...register('bio')}/>
         </div>
         <Button
           type="submit"
-          onClick={() => {
-            navigate("/user/auth/dashboard");
-          }}
         >
           Submit
         </Button>

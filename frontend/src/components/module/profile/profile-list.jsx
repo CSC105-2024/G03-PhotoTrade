@@ -1,30 +1,60 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import AddPicture from "@/components/card/add-picture";
-import Picture from "@/components/card/picture";
-import Collection from "@/components/card/collection";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { PaginationWithLinks } from '@/components/ui/pagination-with-links';
+import AddPicture from '@/components/card/add-picture';
+import AddCollection from '@/components/card/add-collection';
+import Picture from '@/components/card/picture';
+import Collection from '@/components/card/collection';
+import { getPhotoUser, getPhotoLikebyId, getPhotosByUserTradeHistory } from '@/reducer/photo';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { getUserById } from '@/reducer/user';
+import { fetchUser } from '@/reducer/auth';
+import { getCollectionById } from '@/reducer/collection';
 
 const ProfileList = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [likedPhotos, setLikedPhotos] = useState([]);
+
+  const currentPage = parseInt(searchParams.get('page') || '1');
+  const perPage = parseInt(searchParams.get('pageSize') || '8');
+
+  const { photoListUser, tradeHistory, total } = useSelector((state) => state.photo);
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
+  const { profileUser } = useSelector((state) => state.user);
+  const { collection } = useSelector((state) => state.collection);
+
+  const newPhotolist = isAuthenticated ? photoListUser : (profileUser?.creates ?? []);
+  const newCollection = Array.isArray(collection) ? collection : [];
+  const handleName = (item) => (isAuthenticated ? item : profileUser?.name);
+
+  const paginatedPhotolist = React.useMemo(() => {
+    const startIndex = (currentPage - 1) * perPage;
+    const endIndex = startIndex + perPage;
+    return newPhotolist.slice(startIndex, endIndex);
+  }, [newPhotolist, currentPage, perPage]);
+
+  // Helper function to check if photo is liked
+  const isPhotoLiked = (photoId) => {
+    return Array.isArray(likedPhotos) && likedPhotos.some(photo => photo.id === photoId);
+  };
+
+  useEffect(() => {
+    dispatch(getUserById(id));
+    dispatch(getCollectionById(id));
+    dispatch(getPhotoUser());
+    dispatch(getPhotoLikebyId(id)).then((action) => {
+      if (action.payload) {
+        setLikedPhotos(action.payload);
+      }
+    });
+    dispatch(getPhotosByUserTradeHistory(id));
+    dispatch(fetchUser());
+  }, [dispatch, id, currentPage, perPage]);
+
   return (
     <>
       <Tabs defaultValue="listings">
@@ -38,14 +68,33 @@ const ProfileList = () => {
         <TabsContent value="listings">
           <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <AddPicture />
+              {paginatedPhotolist.length === 0 ? (
+                <div className="flex justify-center items-center h-[400px]">
+                  <div className="text-center">
+                    <p className="text-muted-foreground mb-4">No photos found.</p>
+                    {isAuthenticated && userInfo?.id === parseInt(id) && <AddPicture />}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center mt-10 md:justify-between items-center">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-auto gap-4">
+                    {paginatedPhotolist.map((item) => (
+                      <Picture
+                        key={item.id}
+                        name={item.title}
+                        price={item.price}
+                        username={handleName(item.user?.name)}
+                        url={item.thumbnail_url}
+                        id={item.id}
+                        userId={item.user?.id}
+                        user_url={item.user?.profile_url}
+                        isLiked={isPhotoLiked(item.id)}
+                      />
+                    ))}
+                    {isAuthenticated && userInfo?.id === parseInt(id) && <AddPicture />}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -54,11 +103,19 @@ const ProfileList = () => {
           <Card className="min-h-screen">
             <CardContent>
               <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-3 mx-auto gap-4">
-                  <Collection />
-                  <Collection />
-                  <Collection />
-                  <Collection />
+                <div className="grid grid-cols lg:grid-cols-3 mx-auto gap-4">
+                  {newCollection.map((item) => (
+                    <Collection
+                      key={item.id}
+                      id={item.id}
+                      name={item.name}
+                      username={item.user?.name}
+                      pictures={item.pictures.map((p) => p.picture)}
+                      user_url={item.user?.profile_url}
+                    />
+                  ))}
+
+                  {isAuthenticated && userInfo?.id === parseInt(id) && <AddCollection />}
                 </div>
               </div>
             </CardContent>
@@ -68,14 +125,30 @@ const ProfileList = () => {
         <TabsContent value="purchases">
           <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
-                  <Picture />
-                  <Picture />
-                  <Picture />
-                  <Picture />
+              {Array.isArray(tradeHistory) && tradeHistory.length === 0 ? (
+                <div className="flex justify-center items-center h-[400px]">
+                  <p className="text-muted-foreground">No purchases found.</p>
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center mt-10 md:justify-between items-center">
+                  <div className="grid grid-cols lg:grid-cols-4 mx-auto gap-4">
+                    {Array.isArray(tradeHistory) &&
+                      tradeHistory.map((item) => (
+                        <Picture
+                          key={item.id}
+                          name={item.title}
+                          price={item.price}
+                          username={handleName(item.user?.name)}
+                          url={item.thumbnail_url}
+                          id={item.id}
+                          userId={item.user?.id}
+                          user_url={item.user?.profile_url}
+                          isLiked={isPhotoLiked(item.id)}
+                        />
+                      ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -83,63 +156,43 @@ const ProfileList = () => {
         <TabsContent value="favorites">
           <Card className="min-h-screen">
             <CardContent>
-              <div className="flex justify-center mt-10 md:justify-between items-center">
-                <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
-                  <Picture alwaysLike={true} />
-                  <Picture alwaysLike={true} />
-                  <Picture alwaysLike={true} />
-                  <Picture alwaysLike={true} />
+              {Array.isArray(likedPhotos) && likedPhotos.length === 0 ? (
+                <div className="flex justify-center items-center h-[400px]">
+                  <p className="text-muted-foreground">No favorites found.</p>
                 </div>
-              </div>
+              ) : (
+                <div className="flex justify-center mt-10 md:justify-between items-center">
+                  <div className="grid grid-cols md:grid-cols-4 mx-auto gap-4">
+                    {Array.isArray(likedPhotos) &&
+                      likedPhotos.map((item) => (
+                        <Picture
+                          key={item.id}
+                          name={item.title}
+                          price={item.price}
+                          username={item.user?.name}
+                          url={item.thumbnail_url}
+                          id={item.id}
+                          userId={item.user?.id}
+                          user_url={item.user?.profile_url}
+                          isLiked={true} // ใน favorites tab จะ liked เสมอ
+                        />
+                      ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
 
-      <Pagination className="mt-10">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              href="#"
-              isActive
-              className="bg-blue-50 dark:bg-gray-700 text-blue-600 dark:text-white border border-gray-300 dark:border-gray-700 hover:bg-blue-100 dark:hover:bg-gray-600 hover:text-blue-700 dark:hover:text-white transition-colors"
-            >
-              1
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            >
-              2
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            >
-              3
-            </PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis className="text-gray-700 dark:text-gray-400" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white transition-colors"
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PaginationWithLinks
+        page={currentPage}
+        pageSize={perPage}
+        totalCount={newPhotolist.length}
+        pageSizeSelectOptions={{
+          pageSizeOptions: [4, 8, 12, 16],
+        }}
+      />
     </>
   );
 };

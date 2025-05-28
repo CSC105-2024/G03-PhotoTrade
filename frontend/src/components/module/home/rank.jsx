@@ -22,16 +22,12 @@ const Rank = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { rankUser, loading } = useSelector((state) => state.rank);
+  const { rankUser } = useSelector((state) => state.rank);
 
   useEffect(() => {
     dispatch(getRank());
   }, [dispatch]);
 
-  const top3name = rankUser?.slice(0, 3).map((item) => item.name);
-  const top3count = rankUser?.slice(0, 3).map((item) => item._count.trade);
-  const others = rankUser?.slice(3 , 10).map((item) => item);
-  console.log(top3count);
   return (
     <MainLayout
       title={"Top 10 Image Creators"}
@@ -50,32 +46,47 @@ const Rank = () => {
         <div className="flex justify-center items-end space-x-5 mt-24">
           <div className="flex flex-col items-center">
             <img
-              src={Ellipsebutbigger}
+              src={rankUser[1]?.profile_url}
               className="w-20 h-20 lg:w-34 lg:h-34 rounded-full border-4 border-gray-300 cursor-pointer"
-              alt={top3name[1]}
+              alt={rankUser[1]?.name}
+              onClick={() => navigate(`/user/auth/dashboard/${rankUser[1].id}`)}
             />
-            <span className="text-lg font-bold mt-2 max-w-20">{top3name[1]}</span>
-            <span className="text-lg font-bold mt-2 max-w-20">{top3count[1]}</span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {rankUser[1]?.name}
+            </span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {rankUser[1]?._count.trade}
+            </span>
             <span className="text-sm text-gray-500">2nd</span>
           </div>
           <div className="flex flex-col items-center ">
             <img
-              src={Ellipsebutbigger}
+              src={rankUser[0]?.profile_url}
               className="w-24 h-24 lg:w-38 lg:h-38 rounded-full border-4 border-yellow-400 cursor-pointer"
-              alt={top3name[0]}
+              alt={rankUser[0]?.name}
+              onClick={() => navigate(`/user/auth/dashboard/${rankUser[0].id}`)}
             />
-            <span className="text-xl font-bold mt-2 max-w-20">{top3name[0]}</span>
-            <span className="text-lg font-bold mt-2 max-w-20">{top3count[0]}</span>
+            <span className="text-xl font-bold mt-2 max-w-20">
+              {rankUser[0]?.name}
+            </span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {rankUser[0]?._count.trade}
+            </span>
             <span className="text-base text-yellow-500">1st</span>
           </div>
           <div className="flex flex-col items-center ">
             <img
-              src={Ellipsebutbigger}
+              src={rankUser[2]?.profile_url}
               className="w-20 h-20 lg:w-30 lg:h-30 rounded-full border-4 border-orange-700 cursor-pointer"
-              alt={top3name[2]}
+              alt={rankUser[2]?.name}
+              onClick={() => navigate(`/user/auth/dashboard/${rankUser[2].id}`)}
             />
-            <span className="text-lg font-bold mt-2 max-w-20">{top3name[2]}</span>
-            <span className="text-lg font-bold mt-2 max-w-20">{top3count[2]}</span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {rankUser[2]?.name}
+            </span>
+            <span className="text-lg font-bold mt-2 max-w-20">
+              {rankUser[2]?._count.trade}
+            </span>
             <span className="text-sm text-orange-700">3rd</span>
           </div>
         </div>
@@ -93,16 +104,19 @@ const Rank = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {others?.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.id}</TableCell>
-                  <TableCell
-                    onClick={() => navigate(`/user/auth/dashboard/${item.id}`)}
-                    className={"cursor-pointer"}
-                  >
-                    {item.name}
-                  </TableCell>
-                  <TableCell className="text-right">{item._count.trade}</TableCell>
+              {rankUser.filter((items) => items.id > 3)
+                .map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="font-medium">{item.id}</TableCell>
+                    <TableCell
+                      onClick={() => navigate(`/user/auth/dashboard/${item.id}`)}
+                      className={"cursor-pointer"}
+                    >
+                      {item.name}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {item._count.trade}
+                    </TableCell>
                 </TableRow>
               ))}
             </TableBody>

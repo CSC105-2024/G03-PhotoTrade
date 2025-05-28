@@ -1,6 +1,4 @@
 import * as React from "react";
-
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,22 +8,43 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { SortAsc } from "lucide-react";
 
-export function Dropdownfilter() {
-  const [position, setPosition] = React.useState("1");
+export function Dropdownfilter({ onFilterChange }) {
+  const [position, setPosition] = React.useState("best_seller");
+  
+  const handleValueChange = (value) => {
+    setPosition(value);
+    
+    if (onFilterChange) {
+      onFilterChange(value);
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-700 hover:text-gray-100 dark:hover:bg-gray-200">Select Filter</Button>
+        <Button
+          variant="outline"
+          className="flex items-center gap-2"
+        >
+          <SortAsc className="h-4 w-4" />
+          <span>Sort</span>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Sort</DropdownMenuLabel>
+        <DropdownMenuLabel>Sort Photos</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          <DropdownMenuRadioItem value="1">Best seller</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="2">Newest</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="3">Price: Low to High</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="4">Price: High to Low</DropdownMenuRadioItem>
+        <DropdownMenuRadioGroup value={position} onValueChange={handleValueChange}>
+          <DropdownMenuRadioItem value="best_seller">Best seller</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="newest">Newest</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="price_low_to_high">
+            Price: Low to High
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="price_high_to_low">
+            Price: High to Low
+          </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
